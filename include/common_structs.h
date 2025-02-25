@@ -259,7 +259,15 @@ typedef struct unk_Struct00 {
     /* 0x048 */ f32 unk_48;
     /* 0x04C */ u16 unk4C;
     /* 0x04E */ s16 unk4E;
-    /* 0x050 */ char pad50[0x88];
+    /* 0x050 */ char pad50[8];
+    /* 0x058 */ s16 unk58;
+    /* 0x05A */ s16 unk5A;
+    /* 0x05C */ s16 unk5C;
+    /* 0x05E */ char unk5E[2];
+    /* 0x060 */ s16 unk60;
+    /* 0x062 */ s16 unk62;
+    /* 0x064 */ s16 unk64;
+    /* 0x066 */ char pad66[0x72];
     /* 0x0D8 */ Vec4f unkD8;
     /* 0x0E8 */ s32 unkE8;
     /* 0x0EC */ s32 unkEC;
@@ -267,7 +275,7 @@ typedef struct unk_Struct00 {
     /* 0x0F4 */ s32 unkF4;
     /* 0x0F8 */ Mtx unkF8;
     /* 0x138 */ Mtx unk_138;
-    /* 0x178 */ char unk_178[0x380];
+    /* 0x178 */ char unk_178[0x380]; // more matrices?
 } unk_Struct00;
 
 typedef struct unk_Struct04 {
@@ -342,18 +350,27 @@ typedef struct GW_PLAYER {
 typedef struct unk_800ECDE0 {
 /* 0x00 */ s16 unk_00;
 /* 0x02 */ s16 unk_02;
-/* 0x04 */ s16 unk_04;
+/* 0x04 */ u16 unk_04;
 /* 0x06 */ s16 unk_06;
-/* 0x08 */ s32 unk_08;
+/* 0x08 */ s16 unk_08;
+/* 0x0A */ s16 unk_0A;
 /* 0x0C */ s16 unk_0C;
 /* 0x0E */ s16 unk_0E;
-/* 0x10 */ f32 unk_10;
-/* 0x14 */ f32 unk_14;
-/* 0x18 */ s32 unk_18;
-/* 0x1C */ s16 unk_1C;
+/* 0x10 */ s16 unk_10;
+/* 0x12 */ u8 unk_12;
+/* 0x13 */ u8 unk_13;
+/* 0x14 */ u8 unk_14;
+/* 0x15 */ u8 unk_15;
+/* 0x16 */ s8 unk_16;
+/* 0x17 */ s8 unk_17;
+/* 0x18 */ s8 unk_18;
+/* 0x19 */ u8 unk_19;
+/* 0x1A */ u8 unk_1A;
+/* 0x1B */ u8 unk_1B;
+/* 0x1C */ u8 unk_1C;
+/* 0x1D */ u8 unk_1D;
 /* 0x1E */ s16 unk_1E;
-/* 0x20 */ s16 unk_20;
-/* 0x22 */ s16 pad;
+/* 0x20 */ s32 unk_20;
 } unk_800ECDE0;
 
 // typedef struct viewAngle {
@@ -981,5 +998,22 @@ typedef struct unk3AC60Struct2 {
     /* 0x38 */ s16 unk_38;
     /* 0x3A */ s16 unk_3A;
 } unk3AC60Struct2; //sizeof unknown
+
+typedef struct unk_ProcessUserData08 {
+    /* 0x00 */ s16 unk00;
+    /* 0x02 */ char unk02[2];
+    /* 0x04 */ Object* unk04;
+} unk_ProcessUserData08;
+
+typedef struct unk_8003B8D4Struct {
+    /* 0x00 */ s16 unk00;
+    /* 0x02 */ s16 unk02;
+    /* 0x04 */ struct unk_ProcessUserData08* unk04;
+    /* 0x08 */ Process* unk08;
+    /* 0x0C */ s16 unk0C;
+    /* 0x0E */ s16 unk0E;
+    /* 0x10 */ char unk_10[0x58];
+    /* 0x68 */ s32 unk68;
+} unk_8003B8D4Struct;
 
 #endif
