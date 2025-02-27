@@ -99,6 +99,7 @@ segments:
       - [0x3AC60, c]
       - [0x3BF30, c]
       - [0x3C280, c, engine/memory] # mallocperm, malloctemp, ...?
+      - [0x3C420, c]
       - [0x3CED0, c]
       - [0x3DEB0, c]
       - [0x3E560, c]
@@ -571,7 +572,7 @@ segments:
       - [0xCB598, .rodata, 34D80]
       - [0xCB630, .rodata, 388E0]
       - [0xCB670, .rodata, 3AC60]
-      - [0xCB690, .rodata, engine/memory]
+      - [0xCB690, .rodata, 3C420]
       - [0xCB6B0, .rodata, 3DEB0]
       - [0xCB6C0, .rodata, 3F5B0]
       - [0xCB920, .rodata, 43760]
@@ -635,7 +636,7 @@ segments:
       - {type: bss, vram: 0x800CD9C0, name: globalBSS2}
       - {type: .bss, vram: 0x800EA180, name: lib/2.0I/io/sptask}
       - {type: bss, vram: 0x800EA1C0, name: globalBSS3}
-      
+
   - type: code
     start: 0xCDA50
     vram: 0x800F65E0
