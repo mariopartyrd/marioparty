@@ -21,7 +21,7 @@
  *====================================================================*/
 
 #include <libaudio.h>
-#include <assert.h>
+#include <libc/assert.h>
 
 
 void alSeqpDelete(ALSeqPlayer *seqp)

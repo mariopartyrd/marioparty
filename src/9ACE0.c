@@ -1,3 +1,12 @@
-#include "common.h"
+#include <libaudio.h>
+#include "synthInternals.h"
 
-INCLUDE_ASM("asm/nonmatchings/9ACE0", func_8009A0E0);
+/* alFilterNew */
+void func_8009A0E0(ALFilter* f, ALCmdHandler h, ALSetParam s, s32 type) {
+    f->source = 0;
+    f->handler = h;
+    f->setParam = s;
+    f->inp = 0;
+    f->outp = 0;
+    f->type = type;
+}

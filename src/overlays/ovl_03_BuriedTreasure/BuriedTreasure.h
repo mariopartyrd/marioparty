@@ -1,4 +1,5 @@
 #include "common.h"
+#include "sprite65770.h" /* D_800EC700: the sprite animations (pointer fields: host layout differs) */
 
 typedef struct unkStructSize4 {
     /* 0x00 */ s16 unk_00;
@@ -15,14 +16,6 @@ typedef struct unkStructSize6 {
     /* 0x02 */ s16 unk_02;
     /* 0x04 */ s16 unk_04;
 } unkStructSize6; //sizeof 6
-
-typedef struct unkStructSize0xC {
-    /* 0x00 */ u8* unk_00;
-    /* 0x04 */ u16 unk_04;
-    /* 0x06 */ char unk_06[2];
-    /* 0x08 */ s16 unk_08;
-    /* 0x0A */ s16 unk_0A;
-} unkStructSize0xC; //sizeof 0xC
 
 typedef struct unkStructSize0x20 {
     /* 0x00 */ s16 unk_00;
@@ -97,12 +90,6 @@ typedef struct unkStructSize0x5C {
     /* 0x5A */ s16 unk_5A;
 } unkStructSize0x5C; //sizeof 0x5C
 
-typedef struct unkStructSizeUnknown {
-    /* 0x00 */ unkStructSize0xC* unk_00;
-    /* 0x04 */ char unk_04[0xC];
-    /* 0x10 */ u16 unk_10;
-} unkStructSizeUnknown; //sizeof unknown
-
 void func_800F692C_BuriedTreasure(omObjData*);
 void func_800F6958_BuriedTreasure(void);
 void func_800F6D6C_BuriedTreasure(void);
@@ -155,21 +142,20 @@ void func_80067284(s16, s32, f32);
 s32 func_80067328(s16, s16);
 f64 func_8009B618(f64, f64);
 
-extern unkStructSize14 D_800C59AC[];
-extern unkStructSizeUnknown* D_800EC700[];
+extern unk65770Anim* D_800EC700[256];
 extern s16 ContBtn[];
 extern s8 ContStkY[];
 extern omObjData* D_800F3FB0[];
 extern s16 D_800FBA70_BuriedTreasure;
 extern s16 D_800FBA72_BuriedTreasure;
-extern s16 D_800FBA74_BuriedTreasure[];
-extern unkStructSize6 D_800FBA7C_BuriedTreasure[];
-extern f32 D_800FBA94_BuriedTreasure[];
-extern u16 D_800FBAB8_BuriedTreasure[];
-extern u8 D_800FBD00_BuriedTreasure[];
-extern u8 D_800FBE20_BuriedTreasure[];
-extern s8 D_800FBE24_BuriedTreasure[];
-extern unkStructSize4 D_800FBE30_BuriedTreasure[];
+extern s16 D_800FBA74_BuriedTreasure[4];
+extern unkStructSize6 D_800FBA7C_BuriedTreasure[4];
+extern f32 D_800FBA94_BuriedTreasure[4];
+extern u16 D_800FBAB8_BuriedTreasure[24 * 12];
+extern u8 D_800FBD00_BuriedTreasure[24 * 12];
+extern u8 D_800FBE20_BuriedTreasure[2];
+extern s8 D_800FBE24_BuriedTreasure[2];
+extern unkStructSize4 D_800FBE30_BuriedTreasure[9];
 extern u32 D_800FBE54_BuriedTreasure; //rng sub seed
 extern s16 D_800FBE58_BuriedTreasure;
 extern s16 D_800FC020_BuriedTreasure;
@@ -182,12 +168,11 @@ extern s16 D_800FC02C_BuriedTreasure;
 extern omObjData* D_800FC030_BuriedTreasure;
 extern s16 D_800FC034_BuriedTreasure;
 extern s16 D_800FC040_BuriedTreasure[1];
-extern unkStructSize4_2 D_800FC050_BuriedTreasure[];
+extern unkStructSize4_2 D_800FC050_BuriedTreasure[3]; // one per placed object (0x800FC050..5C)
 extern omObjData* D_800FC05C_BuriedTreasure;
 extern omObjData* D_800FC060_BuriedTreasure;
 extern unkStructSize0x28 D_800FC068_BuriedTreasure[2];
-extern u16 D_800FC0B8_BuriedTreasure[];
-extern s16 D_800FC0BE_BuriedTreasure;
+extern u16 D_800FC0B8_BuriedTreasure[4];
 extern Matrix4f D_800FC0C0_BuriedTreasure;
 extern s32 D_800FC100_BuriedTreasure[16];
 extern s16 D_800FC140_BuriedTreasure;

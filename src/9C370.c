@@ -45,4 +45,8 @@ void* func_8009B770(void* arg0, u8 arg1, u32 size) {
     return arg0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/9C370", func_8009B810);
+/* memset-style argument order (dst, size, value) over func_8009B770 (dst, value, size). */
+void* func_8009B810(void* dst, u32 size, s32 value) {
+    /* retail passes value unnarrowed: the original saw func_8009B770 with an int parameter */
+    return ((void* (*)(void*, s32, u32))func_8009B770)(dst, value, size);
+}

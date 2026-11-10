@@ -8,23 +8,14 @@
 #define PAD_COUNT (4)
 
 typedef struct {
-    /* 0x00 */ s16 unk0;
-    /* 0x02 */ s8 unk2;
-    /* 0x03 */ s8 unk3;
-    /* 0x04 */ u8 unk4;
-} pad_unk_substruct; /* sizeof = 0x05 */
-
-typedef struct {
-    /* 0x00 */ OSContPad pad;
-    /* 0x06 */ pad_unk_substruct unk6;
-    /* 0x0B */ u8 unkB[0xB];
-} pad_unk;
+    /* 0x00 */ OSContPad pad[PAD_COUNT]; /* one osContGetReadData result */
+} pad_unk; /* sizeof = 0x18 */
 
 extern pad_unk D_800D1170[8];
 extern s16 D_800D12B0;
 extern s16 D_800D12B2;
 extern s16 D_800D12B4;
-extern s16 D_800D12B6[];
+extern u8 D_800D12B6[]; /* per-pad auto-repeat countdown */
 extern u8 D_800D12BA[];
 extern s8 D_800D12BE;
 extern s8 D_800D12BF;

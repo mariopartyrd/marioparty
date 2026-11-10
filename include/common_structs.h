@@ -4,6 +4,7 @@
 #include "types.h"
 #include "engine/math.h"
 #include "PR/mbi.h"
+#include "PR/os.h"
 
 typedef struct Vec2f {
                f32 x;
@@ -100,7 +101,8 @@ typedef struct unkGlobalStruct_00 {
     /* 0x38 */ f32 unk_38;
     /* 0x3C */ f32 unk_3C;
     /* 0x40 */ f32 unk_40;
-    /* 0x44 */ char unk_44[8];
+    /* 0x44 */ char unk_44[4];
+    /* 0x48 */ f32 unk_48;
     /* 0x4C */ f32 unk_4C;
     /* 0x50 */ s16 unk_50;
     /* 0x52 */ s8 unk_52;
@@ -113,7 +115,7 @@ typedef struct unkGlobalStruct_00 {
     /* 0x5C */ s32 unk_5C;
     /* 0x60 */ f32 unk_60;
     /* 0x64 */ f32 unk_64;
-    /* 0x68 */ struct unkGlobalStruct_00* unk_68;
+    /* 0x68 */ u32 unk_68; /* MgWork's f32; a pointer here would move every later field on the host */
     /* 0x6C */ char unk_6C[0x14];
 
     /* 0x80 */ s32 unk80;
@@ -129,12 +131,13 @@ typedef struct unkGlobalStruct_00 {
     /* 0xB0 */ u16 unk_B0;
     /* 0xB2 */ char unk_B2[1];
     /* 0xB3 */ s8 unk_B3;
-    /* 0xB4 */ char unk_B4[0x08];
+    /* 0xB4 */ char unk_B4[0x04];
+    /* 0xB8 */ void* unk_B8; /* MgWork's held item (99E0.c): a pointer in every view of this work */
     /* 0xBC */ f32 unk_BC;
     /* 0xC0 */ u16 unk_C0;
     /* 0xC2 */ char unk_C2[0x16];
     /* 0xD8 */ void* unk_D8; // possibly unkGlobalStruct_00*
-    /* 0xDC */ s32 unk_DC;
+    /* 0xDC */ void* unk_DC; /* MgWork's collision callback */
     /* 0xE0 */ s32 unk_E0;
     /* 0xE4 */ unk_Struct01* unk_E4; // possibly void*
 } unkGlobalStruct_00; /* size = 0xE8 */
@@ -161,7 +164,7 @@ typedef struct omObjData {
 /* 0x08 */ s16 next;
 /* 0x0A */ s16 next_idx;
 /* 0x0C */ s16 group;
-/* 0x0E */ s16 group_idx;
+/* 0x0E */ u16 group_idx;
 /* 0x10 */ s32 unk_10;
 /* 0x14 */ void* func_ptr;
 /* 0x18 */ Vec trans;
@@ -205,6 +208,11 @@ typedef struct unkStructSize14 {
     /* 0x0C */ char unk_0C[8];
 } unkStructSize14; //sizeof 0x14
 
+/* D_800C59AC: objmain.c's objmainChr D_800C59A8[6] read from each entry's `chr` field (+4).
+   unk_00 is the big-endian word (chr, unk06) -- the character's file directory as chr << 16 --
+   unk_04 is file0 and unk_08 file1. The host has no such word: a view is built from the entries. */
+extern unkStructSize14 D_800C59AC[];
+
 typedef struct jump_buf
 {
     void *sp;
@@ -241,7 +249,7 @@ typedef struct ProcessHeader { //?
 } ProcessHeader;
 
 typedef struct unkProcessStruct {
-           s16 unk0;
+           u16 unk0;
            s16 unk2;
            Process* processInstance;
            void (*unk8)();
@@ -278,13 +286,17 @@ typedef struct unk_Struct00 {
     /* 0x178 */ char unk_178[0x380]; // more matrices?
 } unk_Struct00;
 
+/* A view of omObjData (rot is unk_24..unk_2C, the model list unk_40). Its pointer at 0x14 keeps the
+   host layout equal to omObjData's, whose pointers widen there. */
 typedef struct unk_Struct04 {
-    /* 0x00 */ Vec3f pos;
-    /* 0x0C */ char padC[0x18];
+    /* 0x00 */ char pad0[0x14];
+    /* 0x14 */ void* func_ptr;
+    /* 0x18 */ Vec3f pos;
     /* 0x24 */ f32 unk_24;
     /* 0x28 */ f32 unk28;
     /* 0x2C */ f32 unk_2C;
-    /* 0x30 */ char pad30[0x10];
+    /* 0x30 */ Vec3f scale;
+    /* 0x3C */ u16 mdlcnt;
     /* 0x40 */ s16* unk_40;
 } unk_Struct04; /* size = 0x44 */
 
@@ -310,7 +322,27 @@ typedef struct Object {
 /* 0x53 */ s8 unk_53;
 /* 0x54 */ char unk_54[0x38];
 /* 0x8C */ struct Object* unk_8C;
-} Object; // //sizeof 0xAC? (this and mpSource_object are the same struct)
+} Object; 
+/* Object with the s16 at 0x46 that the board player model uses (Object types 0x44 as f32) */
+typedef struct BoardPlayerObj {
+    /* 0x00 */ struct Object* prev;
+    /* 0x04 */ struct Object* next;
+    /* 0x08 */ s16 unk_08;
+    /* 0x0A */ u16 unk_0A;
+    /* 0x0C */ Vec3f coords;
+    /* 0x18 */ Vec3f unk_18;
+    /* 0x24 */ f32 xScale;
+    /* 0x28 */ f32 yScale;
+    /* 0x2C */ f32 zScale;
+    /* 0x30 */ f32 unk_30;
+    /* 0x34 */ f32 unk_34;
+    /* 0x38 */ f32 unk_38;
+    /* 0x3C */ unk_Struct04* unk_3C;
+    /* 0x40 */ unk_Struct04* unk_40;
+    /* 0x44 */ s16 unk_44;
+    /* 0x46 */ s16 unk_46;
+} BoardPlayerObj;
+// //sizeof 0xAC? (this and mpSource_object are the same struct)
 
 typedef struct GW_PLAYER {
 /* 0x00 */ u8 group;
@@ -515,22 +547,23 @@ typedef struct unkStructTest {
 /* 0x1E */ s16 unk_1C;
 } unkStructTest;
 
+/* A view of 53C80.c's UnkList53 (sprite group list node): the two list pointers are real
+   pointers so that unk_0C lands on UnkList53::data on a 64-bit host too. */
 typedef struct unk_Struct02 {
-    char unk_00[0x0A];
-    s16 unk_0A;
-    s16* unk_0C;
+    /* 0x00 */ void* unk_00;
+    /* 0x04 */ void* unk_04;
+    /* 0x08 */ s16 unk_08;
+    /* 0x0A */ s16 unk_0A;
+    /* 0x0C */ s16* unk_0C;
 } unk_Struct02;
 
 typedef struct unk2C0C0Struct20 {
     /* 0x00 */ u8 unk_00;
     /* 0x01 */ char unk_01[3];
-    /* 0x04 */ s16 unk_04[2]; // unknown array size
-    /* 0x08 */ char unk_08[4];
-    /* 0x0C */ f32 unk_0C[1]; // unknown array size
-    /* 0x10 */ char unk_10[0xC];
-    /* 0x1C */ f32 unk_1C[1]; // unknown array size
-    /* 0x20 */ char unk_20[0xC];
-    /* 0x2C */ u8 unk_2C[4]; // unknown array size
+    /* 0x04 */ s16 unk_04[4]; // vertex indices
+    /* 0x0C */ f32 unk_0C[4];
+    /* 0x1C */ f32 unk_1C[4];
+    /* 0x2C */ u8 unk_2C[4];
     /* 0x30 */ s16 unk_30;
     /* 0x32 */ s16 unk_32;
 } unk2C0C0Struct20; //sizeof 0x34
@@ -573,8 +606,8 @@ typedef struct unk2C0C0Struct40 {
     /* 0x20 */ Vec3f unk_20;
     /* 0x2C */ Vec3f unk_2C;
     /* 0x38 */ Vec3f unk_38;
-    /* 0x44 */ s8 unk_44;
-    /* 0x45 */ s8 unk_45;
+    /* 0x44 */ u8 unk_44;
+    /* 0x45 */ u8 unk_45;
     /* 0x46 */ char unk_46[2];
     /* 0x48 */ struct unk2C0C0StructC0* unk_48;
     /* 0x4C */ Matrix4f unk_4C;
@@ -591,20 +624,26 @@ typedef struct unk2C0C0Struct50 {
     /* 0x38 */ Vec3f unk_38;
     /* 0x44 */ Vec3f unk_44;
     /* 0x50 */ Vec3f unk_50;
-    /* 0x5C */ s8 unk_5C;
-    /* 0x5D */ s8 unk_5D;
-    /* 0x5E */ s8 unk_5E;
+    /* 0x5C */ u8 unk_5C;
+    /* 0x5D */ u8 unk_5D;
+    /* 0x5E */ u8 unk_5E;
     /* 0x5F */ char unk_5F;
     /* 0x60 */ struct unk2C0C0StructC0* unk_60;
     /* 0x64 */ Matrix4f unk_64;
 } unk2C0C0Struct50; //sizeof 0xA4
 
+/* A palette record: a view of 388E0.c's unk388E0Struct80, whose pointers at 0x20/0x24 it must keep
+   pointer-wide for the host layout. */
 typedef struct unk2C0C0Struct60 {
-    /* 0x00 */ char unk_00[0x1A];
+    /* 0x00 */ char unk_00[0x18];
+    /* 0x18 */ u8 unk_18;
+    /* 0x19 */ char unk_19;
     /* 0x1A */ s16 unk_1A;
-    /* 0x1C */ char unk_1C[8];
-    /* 0x2C */ s32 unk_24;
-} unk2C0C0Struct60; //sizeof unknown
+    /* 0x1C */ s16 unk_1C;
+    /* 0x1E */ char unk_1E[2];
+    /* 0x20 */ void* unk_20;
+    /* 0x24 */ s32 unk_24; /* the palette (u16*) */
+} unk2C0C0Struct60; //sizeof 0x28
 
 typedef struct unk2C0C0Struct70 {
     /* 0x00 */ char unk_00[0x18];
@@ -612,7 +651,8 @@ typedef struct unk2C0C0Struct70 {
     /* 0x1B */ u8 unk_19;
     /* 0x1A */ u8 unk_1A;
     /* 0x1B */ u8 unk_1B;
-    /* 0x1C */ char unk_1C[4];
+    /* 0x1C */ char unk_1C[2];
+    /* 0x1E */ s16 unk_1E;
     /* 0x20 */ u16 unk_20;
     /* 0x22 */ char unk_22[2];
     /* 0x24 */ u8* unk_24;
@@ -680,7 +720,7 @@ typedef struct unk2C0C0StructB8 {
     /* 0x02 */ s16 unk_02;
     /* 0x04 */ s16 unk_04;
     /* 0x06 */ char unk_06[2];
-    /* 0x08 */ s32 unk_08;
+    /* 0x08 */ f32 unk_08;
     /* 0x0C */ unk2C0C0StructB4 unk_0C[16]; // array size unknown
 } unk2C0C0StructB8; //sizeof 0x10C
 
@@ -737,10 +777,10 @@ typedef struct unk2C0C0StructC0 {
     /* 0xB4 */ s32 unk_B4;
     /* 0xB8 */ unk2C0C0StructB8* unk_B8;
     /* 0xBC */ unk2C0C0Struct70* unk_BC;
-    /* 0xC0 */ s32 unk_C0;
+    /* 0xC0 */ f32 unk_C0;
     /* 0xC4 */ s32 unk_C4;
     /* 0xC8 */ s32 unk_C8;
-    /* 0xCC */ s32 unk_CC;
+    /* 0xCC */ f32 unk_CC;
     /* 0xD0 */ unk2C0C0StructB0* unk_D0;
     /* 0xD4 */ char unk_D4[0xC];
 } unk2C0C0StructC0; //sizeof 0xE0
@@ -783,9 +823,9 @@ typedef struct unk_ovl_2D_struct { //actually global??
     /* 0x12 */ s16 unk_12;
     /* 0x14 */ s16 unk_14;
     /* 0x16 */ s16 unk_16;
-    /* 0x18 */ char unk_18[2];
+    /* 0x18 */ s16 unk_18;
     /* 0x1A */ s16 unk_1A;
-    /* 0x1C */ char unk_1C[4];
+    /* 0x1C */ f32 unk_1C;
     /* 0x20 */ s32 unk_20;
     /* 0x24 */ f32 unk_24;
     /* 0x28 */ f32 unk_28;
@@ -806,13 +846,15 @@ typedef struct unk_ovl_2D_struct { //actually global??
     /* 0x64 */ f32 unk_64;
     /* 0x68 */ f32 unk_68;
     /* 0x6C */ unk2C0C0StructC0* unk_6C;
-    /* 0x70 */ char pad70[0xC];
+    /* 0x70 */ struct unk2C0C0StructC0* unk_70;
+    /* 0x74 */ struct unk2C0C0StructC0* unk_74;
+    /* 0x78 */ void (*unk_78)(Gfx**, Mtx*, struct camera*);
     /* 0x7C */ Mat4 unk7C; // Transformation Matrix
-    /* 0xBC */ char padBC[0x4];
+    /* 0xBC */ void* unk_BC;
 } unk_ovl_2D_struct; //sizeof 0xC0
 
 typedef struct SubTextWindow {
-    s8 unk0;
+    u8 unk0;
     char unk_01;
     s16 unk2;
     s16 unk4;
@@ -834,7 +876,8 @@ typedef struct TextWindow {
 /* 0x08 */ u8 unk_08;
 /* 0x09 */ u8 unk_09;
 /* 0x0A */ u8 unk_0A;
-/* 0x0B */ char unk_0B[2];
+/* 0x0B */ u8 unk_0B;
+/* 0x0C */ u8 unk_0C;
 /* 0x0D */ u8 unk_0D;
 /* 0x0E */ u8 unk_0E;
 /* 0x0F */ u8 unk_0F;
@@ -842,11 +885,14 @@ typedef struct TextWindow {
 /* 0x11 */ char unk_11;
 /* 0x12 */ u8 unk_12;
 /* 0x13 */ u8 unk_13;
-/* 0x14 */ char unk_14[4];
+/* 0x14 */ s16 unk_14;
+/* 0x16 */ s16 unk_16;
 /* 0x18 */ s16 unk_18;
 /* 0x1A */ s16 unk_1A;
 /* 0x1C */ s16 unk_1C;
-/* 0x1E */ char unk_1E[6];
+/* 0x1E */ s16 unk_1E;
+/* 0x20 */ s16 unk_20;
+/* 0x22 */ s16 unk_22;
 /* 0x24 */ s16 unk_24;
 /* 0x26 */ s16 unk_26;
 /* 0x28 */ s16 unk_28;
@@ -856,32 +902,38 @@ typedef struct TextWindow {
 /* 0x30 */ s16 unk_30;
 /* 0x32 */ s16 unk_32;
 /* 0x34 */ s16 unk_34;
-/* 0x36 */ char unk_36[0x2];
+/* 0x36 */ s16 unk_36;
 /* 0x38 */ s16 unk_38;
-/* 0x3A */ char unk_3A[2];
-/* 0x3C */ f32 unk_3C;
-/* 0x40 */ char unk_40[2];
+/* 0x3A */ s16 unk_3A;
+/* 0x3C */ s16 unk_3C;
+/* 0x3E */ s16 unk_3E;
+/* 0x40 */ s16 unk_40;
 /* 0x42 */ s16 unk_42;
 /* 0x44 */ s16 unk_44;
 /* 0x46 */ s16 unk_46[20];
 /* 0x6E */ s16 unk_6E;
-/* 0x70 */ char unk_70[11];
-/* 0x7B */ s8 unk_7B[5]; //unknown array size
-/* 0x80 */ char unk_80[8];
-/* 0x88 */ void* unk_88[5]; //unknown array size
-/* 0x9C */ char unk_9C[0x14];
+/* 0x70 */ s16 unk_70;
+/* 0x72 */ s16 unk_72;
+/* 0x74 */ s16 unk_74;
+/* 0x76 */ s16 unk_76;
+/* 0x78 */ s16 unk_78;
+/* 0x7A */ s8 unk_7A;
+/* 0x7B */ s8 unk_7B[10];
+/* 0x85 */ char unk_85[3];
+/* 0x88 */ void* unk_88[10];
 /* 0xB0 */ u8* stringPtr;
 /* 0xB4 */ void* string;
 /* 0xB8 */ u8 usingStringIDBool;
-/* 0xB9 */ char unk_B9[7];
-/* 0xC0 */ void* unk_C0[10];
-/* 0xE8 */ unkGlobalStruct_00* unk_E8;
+/* 0xB9 */ char unk_B9[3];
+/* 0xBC */ u8* unk_BC;
+/* 0xC0 */ u8* unk_C0[10];
+/* 0xE8 */ u8* unk_E8;
 /* 0xEC */ f32 unk_EC;
 /* 0xF0 */ f32 unk_F0;
-/* 0xF4 */ SubTextWindow unk_F4[5]; //unknown size
-/* 0x144 */ char unk_144[0x130];
+/* 0xF4 */ SubTextWindow unk_F4[24];
 /* 0x274 */ s16 unk_274;
-/* 0x276 */ char unk_276[6];
+/* 0x276 */ s16 unk_276;
+/* 0x278 */ char unk_278[4];
 } TextWindow; //sizeof 0x27C
 
 typedef struct DecisionTreeNonLeafNode {
@@ -939,6 +991,32 @@ typedef struct unk2C0C0Struct10 {
     /* 0x10 */ char unk_10[0x30];
     /* 0x40 */ LookAt unk_40;
 } unk2C0C0Struct10; //sizeof 0x60
+
+/* Motion keyframe record and motion (34D80.c). D_800ED554 is an array of unk34D80Struct80, which
+   24740.c, 1EA70.c and ovl_23 index too: they must use this type for the host stride. */
+typedef struct unk34D80Struct60 {
+    /* 0x00 */ u8 unk_00;
+    /* 0x01 */ u8 unk_01;
+    /* 0x02 */ u8 unk_02;
+    /* 0x03 */ u8 unk_03;
+    /* 0x04 */ s16 unk_04;
+    /* 0x06 */ s16 unk_06;
+    /* 0x08 */ s16 unk_08;
+    /* 0x0A */ s16 unk_0A;
+    /* 0x0C */ s16 unk_0C;
+    /* 0x0E */ s16 unk_0E;
+} unk34D80Struct60; //sizeof 0x10
+
+typedef struct unk34D80Struct80 {
+    /* 0x00 */ u8 unk_00;
+    /* 0x01 */ char unk_01;
+    /* 0x02 */ s16 unk_02;
+    /* 0x04 */ unk34D80Struct60** unk_04;
+    /* 0x08 */ u8* unk_08;
+    /* 0x0C */ s16* unk_0C;
+    /* 0x10 */ f32* unk_10;
+    /* 0x14 */ char unk_14[4];
+} unk34D80Struct80; //sizeof 0x18
 
 typedef struct unk2C0C0StructD0 {
     /* 0x00 */ s16 unk_00;
@@ -1007,13 +1085,27 @@ typedef struct unk_ProcessUserData08 {
 
 typedef struct unk_8003B8D4Struct {
     /* 0x00 */ s16 unk00;
-    /* 0x02 */ s16 unk02;
-    /* 0x04 */ struct unk_ProcessUserData08* unk04;
+    /* 0x02 */ s16 unk02; // number of choices
+    /* 0x04 */ struct unk_ProcessUserData08** unk04; // choice arrows
     /* 0x08 */ Process* unk08;
-    /* 0x0C */ s16 unk0C;
-    /* 0x0E */ s16 unk0E;
-    /* 0x10 */ char unk_10[0x58];
-    /* 0x68 */ s32 unk68;
+    /* 0x0C */ s16 unk0C; // current choice
+    /* 0x0E */ s16 unk0E; // controller port
+    /* 0x10 */ OSMesgQueue unk10;
+    /* 0x28 */ OSMesg unk28[16];
+    /* 0x68 */ struct GW_PLAYER* unk68;
 } unk_8003B8D4Struct;
+
+// Light setup (D_800EE9A0, 23C40.c)
+typedef struct LightDef {
+    /* 0x00 */ u8 col[3];
+    /* 0x03 */ u8 flags; // bit 0: dir is in world space, transformed by the view matrix
+    /* 0x04 */ s8 dir[3];
+} LightDef; // size = 0x7
+
+typedef struct LightState {
+    /* 0x00 */ s16 count; // directional lights; the ambient light follows them
+    /* 0x02 */ LightDef def[8];
+    /* 0x40 */ Light lights[2][8][8]; // [frame][set][light]
+} LightState;
 
 #endif

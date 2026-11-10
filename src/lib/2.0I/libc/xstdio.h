@@ -1,8 +1,8 @@
 #ifndef _XSTDIO_H
 #define _XSTDIO_H
 #include <ultratypes.h>
-#include <stdlib.h>
-#include <stdarg.h>
+#include <libc/stdlib.h>
+#include <libc/stdarg.h>
 
 typedef struct
 {

@@ -13,12 +13,14 @@ void func_8004DBD4(s32, u8);
 void func_800F6948_ChangeCannonTargetWarioBoard(void);
 
 extern u8 D_800F6C50_ChangeCannonTargetWarioBoard;
-extern Vec3f D_800F6C24_ChangeCannonTargetWarioBoard[];
-extern s32 D_800F6C3C_ChangeCannonTargetWarioBoard[];
-extern s32 D_800F6C44_ChangeCannonTargetWarioBoard[];
-extern u8 D_800F6C50_ChangeCannonTargetWarioBoard;
-extern void* D_800F6C54_ChangeCannonTargetWarioBoard;
-extern void* D_800F6C58_ChangeCannonTargetWarioBoard;
+extern Object* D_800F6C54_ChangeCannonTargetWarioBoard;
+extern Object* D_800F6C58_ChangeCannonTargetWarioBoard;
+
+Vec3f D_800F6C00_ChangeCannonTargetWarioBoard = {0.0f, 0.0f, 1310.0f};
+Vec3f D_800F6C0C_ChangeCannonTargetWarioBoard[2] = {{200.0f, 0.0f, 1050.0f}, {-200.0f, 0.0f, 1050.0f}};
+Vec3f D_800F6C24_ChangeCannonTargetWarioBoard[2] = {{0.0f, 0.0f, 800.0f}, {0.0f, 0.0f, 1300.0f}};
+/* [target][cannon]; row 1 was splat's D_800F6C44 */
+s32 D_800F6C3C_ChangeCannonTargetWarioBoard[2][2] = {{0, 1}, {1, 0}};
 
 void func_800F65E0_ChangeCannonTargetWarioBoard(void) {
     D_800F6C50_ChangeCannonTargetWarioBoard = GwSystem.curPlayerIndex;
@@ -53,7 +55,7 @@ void func_800F66B4_ChangeCannonTargetWarioBoard(void) {
     func_8004DBD4(windowID, D_800F6C50_ChangeCannonTargetWarioBoard);
     HideTextWindow(windowID);
     PlaySound(0xC4);
-    func_8004EE14(0, &D_800F6C24_ChangeCannonTargetWarioBoard[D_800F6C44_ChangeCannonTargetWarioBoard[GwCommon.boardWork[15]]], 0x1E, D_800F6C58_ChangeCannonTargetWarioBoard);
+    func_8004EE14(0, &D_800F6C24_ChangeCannonTargetWarioBoard[D_800F6C3C_ChangeCannonTargetWarioBoard[1][GwCommon.boardWork[15]]], 0x1E, D_800F6C58_ChangeCannonTargetWarioBoard);
     
     for (i = 0; i < 3; i++) {
         for (j = 0; j < 4; j++) {
@@ -79,7 +81,7 @@ void func_800F66B4_ChangeCannonTargetWarioBoard(void) {
     func_8004DBD4(windowID, D_800F6C50_ChangeCannonTargetWarioBoard);
     HideTextWindow(windowID);
     PlaySound(0xC4);
-    func_8004EE14(0, &D_800F6C24_ChangeCannonTargetWarioBoard[D_800F6C3C_ChangeCannonTargetWarioBoard[GwCommon.boardWork[15]]], 30, D_800F6C58_ChangeCannonTargetWarioBoard);
+    func_8004EE14(0, &D_800F6C24_ChangeCannonTargetWarioBoard[D_800F6C3C_ChangeCannonTargetWarioBoard[0][GwCommon.boardWork[15]]], 30, D_800F6C58_ChangeCannonTargetWarioBoard);
     
     for (i = 0; i < 3; i++) {
         for (j = 0; j < 4; j++) {
@@ -113,7 +115,21 @@ void func_800F6994_ChangeCannonTargetWarioBoard(omObjData* arg0) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/overlays/ovl_51_ChangeCannonTargetWarioBoard/28E630", func_800F69D8_ChangeCannonTargetWarioBoard); //https://decomp.me/scratch/XixHe
+void func_800F69D8_ChangeCannonTargetWarioBoard(s32 arg0) {
+    s32 sp10[2] = { 0xE, 0xF };
+
+    MBModelInit();
+    D_800F6C58_ChangeCannonTargetWarioBoard = MBModelCreate(0x2E, NULL);
+    D_800F6C58_ChangeCannonTargetWarioBoard->coords.x = D_800F6C0C_ChangeCannonTargetWarioBoard[arg0].x;
+    D_800F6C58_ChangeCannonTargetWarioBoard->coords.y = D_800F6C0C_ChangeCannonTargetWarioBoard[arg0].y;
+    D_800F6C58_ChangeCannonTargetWarioBoard->coords.z = D_800F6C0C_ChangeCannonTargetWarioBoard[arg0].z;
+    D_800F6C54_ChangeCannonTargetWarioBoard = MBModelCreate(sp10[arg0], NULL);
+    D_800F6C54_ChangeCannonTargetWarioBoard->coords.x = D_800F6C00_ChangeCannonTargetWarioBoard.x;
+    D_800F6C54_ChangeCannonTargetWarioBoard->coords.y = D_800F6C00_ChangeCannonTargetWarioBoard.y;
+    D_800F6C54_ChangeCannonTargetWarioBoard->coords.z = D_800F6C00_ChangeCannonTargetWarioBoard.z;
+    func_8004CCD0(&D_800F6C54_ChangeCannonTargetWarioBoard->coords, &D_800F32A0->coords, &D_800F6C54_ChangeCannonTargetWarioBoard->unk_18);
+    func_8004CCD0(&D_800F6C58_ChangeCannonTargetWarioBoard->coords, &D_800F6C24_ChangeCannonTargetWarioBoard[D_800F6C3C_ChangeCannonTargetWarioBoard[arg0][(GwCommon.boardWork[15] + 1) & 1]], &D_800F6C58_ChangeCannonTargetWarioBoard->unk_18);
+}
 
 void func_800F6B04_ChangeCannonTargetWarioBoard(void) {
     MBModelKill(D_800F6C54_ChangeCannonTargetWarioBoard);

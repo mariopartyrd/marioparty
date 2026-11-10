@@ -2,10 +2,14 @@
 #include "engine/math.h"
 #include "PR/gu.h"
 
+f32 D_800C3290 = 0.01745329238474369f;
+f32 D_800C3294 = 0.01745329238474369f;
+f32 D_800C3298 = 0.01745329238474369f;
 
-extern f32 D_800C3290;
-extern f32 D_800C3294;
-extern f32 D_800C3298;
+
+
+
+
 
 /* Translate Matrix. */
 void MtxTranslate(Mat4 mtx, f32 x, f32 y, f32 z) {
@@ -224,5 +228,72 @@ void MtxRotateZ(Mat4 mtx, f32 angle) {
 }
 
 /* Unrelated? Animation Code? */
-// https://decomp.me/scratch/OGGnF ~ 80%
+// FPR allocation in the found/else branches (masked 0)
+#ifdef NON_MATCHING
+// Piecewise-quadratic interpolation through four keys (y[], x[]) at time t.
+f32 func_80022D9C(f32* y, f32* x, f32 t) {
+    f32 slope[2];
+    s32 i;
+    f32 mid;
+    f32 ds;
+    f32 cross;
+    s32 found;
+    f32 u;
+    f32 w;
+    f32 b;
+    f32 r;
+    f32 midVal;
+    f32 midSlope;
+    f32 x0;
+    f32 x1;
+    f32 y0;
+    f32 y1;
+    f32 s0;
+    f32 s1;
+
+    if (y[0] == y[1] && y[0] == y[2] && y[0] == y[3]) {
+        return y[0];
+    }
+    for (i = 1; i < 3; i++) {
+        slope[i - 1] = ((y[i] - y[i - 1]) / (x[i] - x[i - 1]) + (y[i + 1] - y[i]) / (x[i + 1] - x[i])) * 0.5f;
+    }
+    mid = (x[2] + x[1]) * 0.5f;
+    found = 0;
+    if (slope[1] - slope[0] != 0.0f) {
+        cross = ((slope[1] * x[2] - slope[0] * x[1]) - (y[2] - y[1])) / (slope[1] - slope[0]);
+        if (x[1] <= cross && cross <= x[2]) {
+            found = 1;
+        }
+    }
+    if (found == 1) {
+        u = mid - x[1];
+        b = (y[2] - y[1]) / (x[2] - x[1]) - (slope[1] - slope[0]) / 2.0f;
+        midVal = (slope[1] - slope[0]) / ((x[2] - x[1]) + (x[2] - x[1])) * u * u + b * u + y[1];
+        midSlope = (slope[1] - slope[0]) / (x[2] - x[1]) * u + b;
+    } else {
+        u = mid - x[1];
+        midVal = (y[2] + y[1]) * (r = u / (x[2] - x[1]));
+        midSlope = ((y[2] - y[1]) + (y[2] - y[1])) / (x[2] - x[1]) - (slope[1] + slope[0]) * r;
+    }
+    if (t < mid) {
+        x0 = x[1];
+        y0 = y[1];
+        s0 = slope[0];
+        x1 = mid;
+        y1 = midVal;
+        s1 = midSlope;
+    } else {
+        x0 = mid;
+        y0 = midVal;
+        s0 = midSlope;
+        x1 = x[2];
+        y1 = y[2];
+        s1 = slope[1];
+    }
+    ds = s1 - s0;
+    w = x1 - x0;
+    return ds / (w + w) * (t - x0) * (t - x0) + ((y1 - y0) / w - ds / 2.0f) * (t - x0) + y0;
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/engine/math", func_80022D9C);
+#endif

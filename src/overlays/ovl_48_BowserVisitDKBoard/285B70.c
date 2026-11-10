@@ -20,14 +20,14 @@ s32* D_800F7148_BowserVisitDKBoard[] = {
 };
 
 //bss
-extern u8 D_800F7170_ovl48;
-extern Object* D_800F7174_ovl48;
-extern Object* D_800F7178_ovl48;
-extern Object* D_800F717C_ovl48;
-extern omObjData* D_800F7180_ovl48;
+extern u8 D_800F7170_BowserVisitDKBoard;
+extern Object* D_800F7174_BowserVisitDKBoard;
+extern Object* D_800F7178_BowserVisitDKBoard;
+extern Object* D_800F717C_BowserVisitDKBoard;
+extern omObjData* D_800F7180_BowserVisitDKBoard;
 
 void func_800F65E0_BowserVisitDKBoard(void) {
-    D_800F7170_ovl48 = GwSystem.curPlayerIndex;
+    D_800F7170_BowserVisitDKBoard = GwSystem.curPlayerIndex;
     omInitObjMan(50, 10);
     func_800F6FF8_BowserVisitDKBoard();
     func_800F6E1C_BowserVisitDKBoard();
@@ -50,90 +50,90 @@ void func_800F66BC_BowserVisitDKBoard(void) {
     HuPrcSleep(0x10);
     PlaySound(0x46A);
     HuPrcSleep(0xA);
-    if (GwPlayer[D_800F7170_ovl48].coins == 0) {
+    if (GwPlayer[D_800F7170_BowserVisitDKBoard].coins == 0) {
         temp_s1 = CreateTextWindow(0x28, 0x28, 0x10, 2);
         LoadStringIntoWindow(temp_s1, (void* )0x192, -1, -1);
         func_8006E070(temp_s1, 0);
         ShowTextWindow(temp_s1);
-        func_8004DBD4(temp_s1, D_800F7170_ovl48);
+        func_8004DBD4(temp_s1, D_800F7170_BowserVisitDKBoard);
         HideTextWindow(temp_s1);
         temp_s1 = CreateTextWindow(0x28, 0x28, 0x13, 3);
         LoadStringIntoWindow(temp_s1, (void* )0x193, -1, -1);
         func_8006E070(temp_s1, 0);
         ShowTextWindow(temp_s1);
         PlaySound(0x46A);
-        func_8004DBD4(temp_s1, D_800F7170_ovl48);
+        func_8004DBD4(temp_s1, D_800F7170_BowserVisitDKBoard);
         HideTextWindow(temp_s1);
-    } else if (!(GwPlayer[D_800F7170_ovl48].coins >= 0xA)) {
+    } else if (!(GwPlayer[D_800F7170_BowserVisitDKBoard].coins >= 0xA)) {
         temp_s1 = CreateTextWindow(0x28, 0x28, 0x10, 2);
         LoadStringIntoWindow(temp_s1, (void* )0x18F, -1, -1);
         func_8006E070(temp_s1, 0);
         ShowTextWindow(temp_s1);
-        func_8004DBD4(temp_s1, D_800F7170_ovl48);
+        func_8004DBD4(temp_s1, D_800F7170_BowserVisitDKBoard);
         HideTextWindow(temp_s1);
         temp_s1 = CreateTextWindow(0x28, 0x28, 0x12, 3);
         LoadStringIntoWindow(temp_s1, (void* )0x190, -1, -1);
         func_8006E070(temp_s1, 0);
         ShowTextWindow( temp_s1);
-        func_8004DBD4(temp_s1, D_800F7170_ovl48);
+        func_8004DBD4(temp_s1, D_800F7170_BowserVisitDKBoard);
         HideTextWindow(temp_s1);
-        MBMotionSet(D_800F7174_ovl48, 1, 0);
-        func_8004F40C(D_800F7174_ovl48, 0, 2);
-        MBMotionSet(D_800F717C_ovl48, 1, 0);
-        func_80055960(D_800F7170_ovl48, -GwPlayer[D_800F7170_ovl48].coins);
-        func_800503B0(D_800F7170_ovl48, 5);
-        func_80060618(0x44A, D_800F7170_ovl48);
+        MBMotionSet(D_800F7174_BowserVisitDKBoard, 1, 0);
+        func_8004F40C(D_800F7174_BowserVisitDKBoard, 0, 2);
+        MBMotionSet(D_800F717C_BowserVisitDKBoard, 1, 0);
+        func_80055960(D_800F7170_BowserVisitDKBoard, -GwPlayer[D_800F7170_BowserVisitDKBoard].coins);
+        func_800503B0(D_800F7170_BowserVisitDKBoard, 5);
+        func_80060618(0x44A, D_800F7170_BowserVisitDKBoard);
         HuPrcSleep(0x1E);
         temp_s1 = CreateTextWindow(0x28, 0x28, 0x10, 2);
         LoadStringIntoWindow(temp_s1, (void* )0x191, -1, -1);
         func_8006E070(temp_s1, 0);
         ShowTextWindow(temp_s1);
         PlaySound(0x469);
-        func_8004DBD4(temp_s1, D_800F7170_ovl48);
+        func_8004DBD4(temp_s1, D_800F7170_BowserVisitDKBoard);
         HideTextWindow(temp_s1);
     } else {
         temp_s1 = CreateTextWindow(0x37, 0x28, 0x10, 2);
         LoadStringIntoWindow(temp_s1, (void* )0x18C, -1, -1);
         func_8006E070(temp_s1, 0);
         ShowTextWindow(temp_s1);
-        func_8004DBD4(temp_s1, D_800F7170_ovl48);
+        func_8004DBD4(temp_s1, D_800F7170_BowserVisitDKBoard);
         HideTextWindow(temp_s1);
-        func_8004F4D4(D_800F7174_ovl48, 2, 0);
-        func_8004F40C(D_800F7174_ovl48, 0, 2);
+        func_8004F4D4(D_800F7174_BowserVisitDKBoard, 2, 0);
+        func_8004F40C(D_800F7174_BowserVisitDKBoard, 0, 2);
         HuPrcSleep(0x14);
         var_f20 = D_800F70CC_BowserVisitDKBoard[0].y;
 
         while (D_800F70CC_BowserVisitDKBoard[1].y <= var_f20) {
-            D_800F7178_ovl48->unk_30 = var_f20;
+            D_800F7178_BowserVisitDKBoard->unk_30 = var_f20;
             HuPrcVSleep();
             var_f20 -= 2.0f;
         }
 
-        D_800F7178_ovl48->unk_30 = D_800F70CC_BowserVisitDKBoard[1].y;
-        D_800F7180_ovl48->work[0] = 1;
+        D_800F7178_BowserVisitDKBoard->unk_30 = D_800F70CC_BowserVisitDKBoard[1].y;
+        D_800F7180_BowserVisitDKBoard->work[0] = 1;
         HuPrcVSleep();
-        MBMotionSet(D_800F7174_ovl48, 1, 0);
-        func_8004F40C(D_800F7174_ovl48, 0, 2);
+        MBMotionSet(D_800F7174_BowserVisitDKBoard, 1, 0);
+        func_8004F40C(D_800F7174_BowserVisitDKBoard, 0, 2);
         HuPrcSleep(0x28);
         temp_s1 = CreateTextWindow(0x28, 0x28, 0x12, 3);
         LoadStringIntoWindow(temp_s1, (void* )0x18D, -1, -1);
         func_8006E070(temp_s1, 0);
         ShowTextWindow(temp_s1);
-        func_8004DBD4(temp_s1, D_800F7170_ovl48);
+        func_8004DBD4(temp_s1, D_800F7170_BowserVisitDKBoard);
         HideTextWindow(temp_s1);
-        MBMotionSet(D_800F7174_ovl48, 1, 0);
-        func_8004F40C(D_800F7174_ovl48, 0, 2);
-        MBMotionSet(D_800F717C_ovl48, 0, 0);
-        func_80055960(D_800F7170_ovl48, -0xA);
-        func_800503B0(D_800F7170_ovl48, 5);
-        func_80060618(0x44A, D_800F7170_ovl48);
+        MBMotionSet(D_800F7174_BowserVisitDKBoard, 1, 0);
+        func_8004F40C(D_800F7174_BowserVisitDKBoard, 0, 2);
+        MBMotionSet(D_800F717C_BowserVisitDKBoard, 0, 0);
+        func_80055960(D_800F7170_BowserVisitDKBoard, -0xA);
+        func_800503B0(D_800F7170_BowserVisitDKBoard, 5);
+        func_80060618(0x44A, D_800F7170_BowserVisitDKBoard);
         HuPrcSleep(0x1E);
         temp_s1 = CreateTextWindow(0x50, 0x28, 0xF, 3);
         LoadStringIntoWindow(temp_s1, (void* )0x18E, -1, -1);
         func_8006E070(temp_s1, 0);
         ShowTextWindow(temp_s1);
         PlaySound(0x469);
-        func_8004DBD4(temp_s1, D_800F7170_ovl48);
+        func_8004DBD4(temp_s1, D_800F7170_BowserVisitDKBoard);
         HideTextWindow(temp_s1);
     }
 
@@ -148,9 +148,9 @@ void func_800F6C14_BowserVisitDKBoard(omObjData* arg0) {
     Object* temp_s0_2;
     Object* temp_s0_3;
 
-    temp_s0 = D_800F7178_ovl48;
+    temp_s0 = D_800F7178_BowserVisitDKBoard;
     temp_s0->unk_18.x = sinf(arg0->rot.x * (M_PI/180));
-    temp_s0_2 = D_800F7178_ovl48;
+    temp_s0_2 = D_800F7178_BowserVisitDKBoard;
     temp_s0_2->unk_18.z = cosf(arg0->rot.x * (M_PI/180));
     if ((arg0->work[0] == 0) || !(arg0->rot.x < -310.0f)) {
         arg0->rot.x = arg0->rot.x - 5.0f;
@@ -158,7 +158,7 @@ void func_800F6C14_BowserVisitDKBoard(omObjData* arg0) {
             arg0->rot.x = arg0->rot.x + 360.0f;
         }
     } else {
-        temp_s0_3 = D_800F7178_ovl48;
+        temp_s0_3 = D_800F7178_BowserVisitDKBoard;
         temp_s0_3->unk_30 = ((sinf(arg0->rot.y * (M_PI/180))) * 4.0f) + D_800F70CC_BowserVisitDKBoard[1].y;
         arg0->rot.y = arg0->rot.y + 5.0f;
         if (arg0->rot.y >= 360.0f) {
@@ -188,35 +188,35 @@ void func_800F6DD0_BowserVisitDKBoard(omObjData* arg0) {
 void func_800F6E1C_BowserVisitDKBoard(void) {
     MBModelInit();
     func_8004F2AC();
-    D_800F7174_ovl48 = MBModelCreate(6, D_800F70F0_BowserVisitDKBoard);
-    D_800F7174_ovl48->coords.x = D_800F70C0_BowserVisitDKBoard.x;
-    D_800F7174_ovl48->coords.y = D_800F70C0_BowserVisitDKBoard.y;
-    D_800F7174_ovl48->coords.z = D_800F70C0_BowserVisitDKBoard.z;
-    D_800F7174_ovl48->zScale = 1.5f;
-    D_800F7174_ovl48->yScale = 1.5f;
-    D_800F7174_ovl48->xScale = 1.5f;
-    D_800F7178_ovl48 = MBModelCreate(0x28, NULL);
-    D_800F7178_ovl48->coords.x = D_800F70CC_BowserVisitDKBoard[0].x;
-    D_800F7178_ovl48->coords.y = 0.0f;
-    D_800F7178_ovl48->unk_30 = D_800F70CC_BowserVisitDKBoard[0].y;
-    D_800F7178_ovl48->coords.z = D_800F70CC_BowserVisitDKBoard[0].z;
-    D_800F7180_ovl48 = omAddObj(0x1000, 0, 0, -1, &func_800F6C14_BowserVisitDKBoard);
-    D_800F7180_ovl48->rot.x = -12.0f;
-    D_800F7180_ovl48->rot.y = 0.0f;
-    D_800F7180_ovl48->work[0] = 0;
-    D_800F717C_ovl48 = MBModelCreate(func_80052F04(D_800F7170_ovl48), D_800F7148_BowserVisitDKBoard[GwPlayer[D_800F7170_ovl48].character]);
-    D_800F717C_ovl48->coords.x = D_800F70E4_BowserVisitDKBoard.x;
-    D_800F717C_ovl48->coords.y = D_800F70E4_BowserVisitDKBoard.y;
-    D_800F717C_ovl48->coords.z = D_800F70E4_BowserVisitDKBoard.z;
-    func_8004CCD0(&D_800F717C_ovl48->coords, &D_800F7174_ovl48->coords, &D_800F717C_ovl48->unk_18);
-    func_8004CCD0(&D_800F7174_ovl48->coords, &D_800F717C_ovl48->coords, &D_800F7174_ovl48->unk_18);
+    D_800F7174_BowserVisitDKBoard = MBModelCreate(6, D_800F70F0_BowserVisitDKBoard);
+    D_800F7174_BowserVisitDKBoard->coords.x = D_800F70C0_BowserVisitDKBoard.x;
+    D_800F7174_BowserVisitDKBoard->coords.y = D_800F70C0_BowserVisitDKBoard.y;
+    D_800F7174_BowserVisitDKBoard->coords.z = D_800F70C0_BowserVisitDKBoard.z;
+    D_800F7174_BowserVisitDKBoard->zScale = 1.5f;
+    D_800F7174_BowserVisitDKBoard->yScale = 1.5f;
+    D_800F7174_BowserVisitDKBoard->xScale = 1.5f;
+    D_800F7178_BowserVisitDKBoard = MBModelCreate(0x28, NULL);
+    D_800F7178_BowserVisitDKBoard->coords.x = D_800F70CC_BowserVisitDKBoard[0].x;
+    D_800F7178_BowserVisitDKBoard->coords.y = 0.0f;
+    D_800F7178_BowserVisitDKBoard->unk_30 = D_800F70CC_BowserVisitDKBoard[0].y;
+    D_800F7178_BowserVisitDKBoard->coords.z = D_800F70CC_BowserVisitDKBoard[0].z;
+    D_800F7180_BowserVisitDKBoard = omAddObj(0x1000, 0, 0, -1, &func_800F6C14_BowserVisitDKBoard);
+    D_800F7180_BowserVisitDKBoard->rot.x = -12.0f;
+    D_800F7180_BowserVisitDKBoard->rot.y = 0.0f;
+    D_800F7180_BowserVisitDKBoard->work[0] = 0;
+    D_800F717C_BowserVisitDKBoard = MBModelCreate(func_80052F04(D_800F7170_BowserVisitDKBoard), D_800F7148_BowserVisitDKBoard[GwPlayer[D_800F7170_BowserVisitDKBoard].character]);
+    D_800F717C_BowserVisitDKBoard->coords.x = D_800F70E4_BowserVisitDKBoard.x;
+    D_800F717C_BowserVisitDKBoard->coords.y = D_800F70E4_BowserVisitDKBoard.y;
+    D_800F717C_BowserVisitDKBoard->coords.z = D_800F70E4_BowserVisitDKBoard.z;
+    func_8004CCD0(&D_800F717C_BowserVisitDKBoard->coords, &D_800F7174_BowserVisitDKBoard->coords, &D_800F717C_BowserVisitDKBoard->unk_18);
+    func_8004CCD0(&D_800F7174_BowserVisitDKBoard->coords, &D_800F717C_BowserVisitDKBoard->coords, &D_800F7174_BowserVisitDKBoard->unk_18);
 }
 
 void func_800F6FAC_BowserVisitDKBoard(void) {
-    omDelObj(D_800F7180_ovl48);
-    MBModelKill(D_800F717C_ovl48);
-    MBModelKill(D_800F7174_ovl48);
-    MBModelKill(D_800F7178_ovl48);
+    omDelObj(D_800F7180_BowserVisitDKBoard);
+    MBModelKill(D_800F717C_BowserVisitDKBoard);
+    MBModelKill(D_800F7174_BowserVisitDKBoard);
+    MBModelKill(D_800F7178_BowserVisitDKBoard);
     func_8004F2EC();
 }
 

@@ -1,3 +1,10 @@
-#include "common.h"
+#include "lib/2.0I/io/piint.h"
 
-INCLUDE_ASM("asm/nonmatchings/99F50", __osEPiRawReadIo);
+s32 __osEPiRawReadIo(OSPiHandle* pihandle, u32 devAddr, u32* data) {
+    register u32 stat;
+    register u32 domain;
+
+    EPI_SYNC(pihandle, stat, domain);
+    *data = IO_READ(pihandle->baseAddress | devAddr);
+    return 0;
+}

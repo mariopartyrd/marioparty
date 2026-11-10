@@ -1,7 +1,7 @@
 #include "PR/os_internal.h"
 #include "PR/rcp.h"
 #include "../os/osint.h"
-#include "assert.h"
+#include "libc/assert.h"
 
 
 s32 __osSpRawStartDma(s32 direction, u32 devAddr, void *dramAddr, u32 size) {

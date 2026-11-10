@@ -1,4 +1,4 @@
-#include "stdarg.h"
+#include "libc/stdarg.h"
 #include "PR/os.h"
 
 // void __osSyncVPrintf(const char *fmt, va_list args) {

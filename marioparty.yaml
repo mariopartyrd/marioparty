@@ -121,7 +121,7 @@ segments:
       - [0x54120, c]
       - [0x57330, c]
       - [0x59510, c]
-      #- [0x59710, c]
+      - [0x59710, c]
       - [0x59E80, c]
       - [0x5C460, c]
       - [0x5CDB0, c]
@@ -152,6 +152,7 @@ segments:
       - [0x83260, c]
       - [0x833C0, c]
       - [0x83490, c]
+      - [0x83960, c] # libleo, after LeoBootGame's encrypted __LeoBootGame2 (0x835CC-0x83960)
       - [0x861B0, hasm, lib/2.0I/gu/sqrtf]
       - [0x861C0, c, lib/2.0I/gu/cosf]
       - [0x86310, c, lib/2.0I/gu/lookat]
@@ -476,54 +477,52 @@ segments:
       - [0xB2340, c] # sqrtd
       - [0xB2350, c] # sqrtf
       - [0xB2360, data]
-      - [0xB9550, data, 1130]
+      - [0xB9550, .data, 1130]
       - [0xB9670, data, font0]
-      - [0xC1670, data, unk1]
-      - [0xC2470, data, B980]
-      - [0xC2500, data, 99E0]
-      - [0xC2870, data, engine/ovlman]
-      - [0xC3CB0, data, 19E70]
-      - [0xC3CC0, data, engine/graphics]
-      - [0xC3D10, data, 1DE40]
-      - [0xC3DE0, data, 1EA70]
-      - [0xC3E90, data, engine/math]
-      - [0xC3EA0, data, engine/mallocblock]
-      - [0xC3EB0, data]
-      - [0xC3FB0, .data, 24740]
-      - [0xC40B0, data, 2C0C0]
-      #- [0xC4D90, data, 34D80]
-      - [0xC4DD0, data, 388E0]
-      - [0xC4E00, data, 3AC60]
-      - [0xC4E50, data, 3BF30]
-      - [0xC4EC0, data, 3CED0]
-      - [0xC4F50, data, 3E560]
-      - [0xC5830, data, 3F5B0]
-      - [0xC5870, data, 42E40]
-      - [0xC59C0, data, 43760]
-      - [0xC5A60, data, 467E0]
-      - [0xC5AD0, data, 47320]
-      - [0xC5B10, data, 48D90]
-      - [0xC5DC0, data, 4D770]
-      - [0xC5E10, data, 4E530]
-      - [0xC5ED0, data, 51200]
-      - [0xC5FE0, data, 53680]
-      - [0xC60C0, data, 53C80]
-      - [0xC60D0, data]
-      - [0xC62D0, data]
-      #- [0xC60D0, data, 54120]
-      #- [0xC62D0, data, 57330]
-      #- [0xC6300, data, 59710]
-      # - [0xC6330, data, 59E80]
-      # - [0xC6420, data, 5C460]
-      # - [0xC6210, data, 54120]
-      # - [0xC62D0, data, 57330]
-      # - [0xC6300, data, 59710]
-      - [0xC64C0, data, objmain]
-      - [0xC6650, data, 62140]
-      - [0xC6740, data, 65770]
-      - [0xC6750, data, 69010]
-      - [0xC69F0, data, 6D4E0]
-      - [0xC6D00, data, 72D90]
+      - [0xC1670, .data, unk1]
+      - [0xC2470, .data, B980]
+      - [0xC2500, .data, 99E0]
+      - [0xC2510, .data, 156F0]
+      - [0xC25A0, data] # unreferenced table of 178 main-code function pointers (sprintf, gu*, Hudson math...); stays asm
+      - [0xC2870, .data, engine/ovlman]
+      - [0xC3CB0, .data, eeprom]
+      - [0xC3CC0, .data, engine/graphics]
+      - [0xC3D10, .data, 1DE40]
+      - [0xC3DE0, .data, 1EA70]
+      - [0xC3E90, .data, engine/math]
+      - [0xC3EA0, .data, engine/mallocblock]
+      - [0xC3EB0, .data, 24740]
+      - [0xC40B0, .data, 2C0C0]
+      - [0xC4D90, .data, 34D80]
+      - [0xC4DD0, .data, 388E0]
+      - [0xC4E00, .data, 3AC60]
+      - [0xC4E50, .data, 3BF30]
+      - [0xC4EC0, .data, 3CED0]
+      - [0xC4F50, .data, 3E560]
+      - [0xC5830, .data, 3F5B0]
+      - [0xC5870, .data, 42E40]
+      - [0xC58D0, .data, 43760]
+      - [0xC5A60, .data, 467E0]
+      - [0xC5AD0, .data, 47320]
+      - [0xC5B10, .data, 48D90]
+      - [0xC5BD0, .data, engine/spaces]
+      - [0xC5DC0, .data, 4D770]
+      - [0xC5E10, .data, 4E530]
+      - [0xC5ED0, .data, 51200]
+      - [0xC5FE0, .data, 53680]
+      - [0xC60C0, .data, 53C80]
+      - [0xC60D0, .data, 54120]
+      - [0xC62D0, .data, 57330]
+      - [0xC6300, .data, 59710]
+      - [0xC6320, .data, 59E80]
+      - [0xC6420, .data, 5C460]
+      - [0xC64C0, .data, 5CDB0]
+      - [0xC64E0, .data, objmain]
+      - [0xC6670, .data, 62140]
+      - [0xC6740, .data, 65770]
+      - [0xC6750, .data, 69010]
+      - [0xC69F0, .data, 6D4E0]
+      - [0xC6D00, .data, 72D90]
       - [0xC6FC0, data, 80770]
       - [0xC6FD0, data, 828C0]
       - [0xC6FE0, data, 83260]
@@ -538,7 +537,7 @@ segments:
       - [0xC7110, .data, lib/2.0I/io/cartrominit]
       - [0xC7120, data, lib/2.0I/io/pimgr]
       - [0xC7150, data, lib/2.0I/io/vimgr]
-      - [0xC7170, data, engine/nnsched]
+      - [0xC7170, .data, engine/nnsched]
       - [0xC82F0, data]
       - [0xC83C0, data, 95E50]
       - [0xC83D0, data, 95CE0]
@@ -554,9 +553,8 @@ segments:
       - [0xC8A90, data, B0BA0]
       - [0xC8AB0, data, B1DC0]
       - [0xC8AC0, data, B1FD0]
-      - [0xC8AD0, rodata] #is this rodata or data?
-      - [0xC8AE0, rodata]
-      - [0xC8DC0, rodata]
+      - [0xC8AD0, .rodata, C8AD0]
+      - [0xC93E0, rodata] # RSP microcode data (F3DEX2 family), kept as asm
       - [0xCA030, rodata]
       - [0xCA7B0, rodata]
       - [0xCAA70, .rodata, 1130]
@@ -577,9 +575,7 @@ segments:
       - [0xCB6B0, .rodata, 3DEB0]
       - [0xCB6C0, .rodata, 3F5B0]
       - [0xCB920, .rodata, 43760]
-      - [0xCBA90, rodata]
-      - [0xCBAC0, rodata]
-      - [0xCBAE0, rodata]
+      - [0xCBA60, .rodata, 467E0]
       - [0xCBB90, .rodata, 47320]
       - [0xCBC40, .rodata, 48D90]
       - [0xCBC60, .rodata, 4D770]
@@ -589,16 +585,14 @@ segments:
       - [0xCBEB0, .rodata, 57330]
       - [0xCBFB0, .rodata, 59510]
       - [0xCBFC8, .rodata, 59E80]
-      - [0xCC130, .rodata, objmain]
+      - [0xCC138, .rodata, objmain]
       - [0xCC1D0, .rodata, 64FD0]
       - [0xCC220, .rodata, 65770]
       - [0xCC280, .rodata, 69010]
       - [0xCC2C0, .rodata, 6D4E0]
-      - [0xCC3E0, rodata]
-      - [0xCC470, rodata]
-      - [0xCC500, rodata]
       - [0xCC590, .rodata, 72D90]
       - [0xCC700, .rodata, 80BE0]
+      - [0xCC998, .rodata, 83960] # libleo tables and jump tables of 83960.c
       - [0xCCED0, .rodata, lib/2.0I/gu/cosf]
       - [0xCCF30, .rodata, lib/2.0I/gu/lookat]
       - [0xCCF50, .rodata, lib/2.0I/gu/lookatref]
@@ -650,8 +644,8 @@ segments:
     subsegments:
       - [0xCDA50, c]
       - [0xD27D0, c]
-      - [0xD4C50, data, CDA50]
-      - [0xD4D30, data, D27D0]
+      - [0xD4C50, .data, CDA50]
+      - [0xD4D30, .data, D27D0]
       - [0xD4D70, .rodata, CDA50]
       - [0xD5090, .rodata, D27D0]
       - {0xD51E0, type: bss, vram: 0x800FDD70, name: ovl_00_bss}
@@ -671,8 +665,13 @@ segments:
       - [0xDD760, c]
       - [0xDE2D0, c]
       - [0xDE6A0, c]
-      - [0xDFDF0, data, D51E0] #801011F0
+      - [0xDFDF0, .data, D51E0] #801011F0
+      - [0xDFEB0, .data, DAF90] #801012B0
+      - [0xDFF20, .data, DD760] #80101320
+      - [0xDFF60, .data, DE2D0] #80101360
+      - [0xDFF70, .data, DE6A0] #80101370
       - [0xDFF80, .rodata, D51E0]
+      - [0xE01D0, .rodata, DAF90] #801015D0
       - [0xE0230, .rodata, DD760]
       - [0xE02B0, .rodata, DE6A0]
       - { start: 0xE02F0, type: bss, vram: 0x801016F0, name: ovl_01_bss }
@@ -690,7 +689,9 @@ segments:
       - [0xE02F0, c]
       - [0xE13F0, c]
       - [0xE5DA0, c]
-      - [0xE7E10, data]
+      - [0xE7E10, .data, E02F0]
+      - [0xE7E40, .data, E13F0]
+      - [0xE89E0, .data, E5DA0]
       - [0xE8AF0, .rodata, E02F0]
       - [0xE8B30, .rodata, E13F0]
       - [0xE8E10, .rodata, E5DA0]
@@ -707,7 +708,8 @@ segments:
     subsegments:
       - [0xE8F60, c]
       - [0xEB0E0, c]
-      - [0xEE3F0, data, E8F60] #800FBA70
+      - [0xEE3F0, .data, E8F60] #800FBA70
+      - [0xEE430, .data, EB0E0] #800FBAB0
       - [0xEE7E0, .rodata, E8F60]
       - [0xEE8B0, .rodata, EB0E0] #800FBF30
       - { start: 0xEE9A0, type: bss, vram: 0x800FC020, name: ovl_03_bss }
@@ -724,7 +726,7 @@ segments:
       - [0xEE9A0, c]
       - [0xF2800, c]
       - [0xF4420, c]
-      - [0xF6750, data, EE9A0]
+      - [0xF6750, .data, EE9A0]
       - [0xF6830, .rodata, EE9A0]
       - [0xF6A40, .rodata, F2800]
       - [0xF6A90, .rodata, F4420]
@@ -742,8 +744,9 @@ segments:
     subsegments:
       - [0xF6AB0, c]
       - [0xFD460, c]
-      - [0xFF0E0, data, F6AB0]
-      - [0xFF180, .rodata, F6AB0]
+      - [0xFF0E0, .data, F6AB0]
+      - [0xFF110, .data, FD460]
+      - [0xFF130, .rodata, F6AB0]
       - [0xFF490, .rodata, FD460]
       - {0xFF570, type: bss, vram: 0x800FF0A0, name: ovl_05_bss}
   - type: code
@@ -759,8 +762,10 @@ segments:
       - [0xFF570, c]
       - [0x103D80, c]
       - [0x105EA0, c]
-      - [0x10BA80, data, FF570]
-      - [0x10C720, .rodata, FF570]
+      - [0x10BA80, .data, FF570]
+      - [0x10BB90, .data, 103D80]
+      - [0x10BCB0, .data, 105EA0]
+      - [0x10C710, .rodata, FF570]
       - [0x10CA20, .rodata, 103D80]
       - [0x10CAF0, .rodata, 105EA0]
       - {0x10CD10, type: bss, vram: 0x80103D80, name: ovl_06_bss}
@@ -777,7 +782,9 @@ segments:
       - [0x10CD10, c]
       - [0x10CF70, c]
       - [0x10F6D0, c]
-      - [0x110460, data, 10CD10]
+      - [0x110460, .data, 10CD10]
+      - [0x110470, .data, 10CF70]
+      - [0x110AF0, .data, 10F6D0]
       - [0x110D00, .rodata, 10CD10]
       - [0x110D40, .rodata, 10CF70]
       - [0x110E70, .rodata, 10F6D0]
@@ -791,18 +798,20 @@ segments:
     exclusive_ram_id: minigame
     symbol_name_format: $VRAM_$SEG
     bss_size: 0xA0
+    # 1127C0.c's .rodata starts 4 bytes past an 8-byte boundary (0x113CF4): retail was not SUBALIGN(8)
+    subalign: 4
     subsegments:
       - [0x110F90, c]
       - [0x111890, c]
       - [0x1127C0, c]
       - [0x113730, c]
-      - [0x113B20, data, 110F90]
-      - [0x113B30, data, 111890]
-      - [0x113BE0, data, 1127C0]
-      - [0x113C50, data, 113730]
+      - [0x113B20, .data, 110F90]
+      - [0x113B30, .data, 111890]
+      - [0x113BE0, .data, 1127C0]
+      - [0x113C50, .data, 113730]
       - [0x113C60, .rodata, 110F90]
       - [0x113C90, .rodata, 111890]
-      - [0x113D50, .rodata, 1127C0]
+      - [0x113CF4, .rodata, 1127C0]
       - [0x113DA0, .rodata, 113730]
       - {0x113DC0, type: bss, vram: 0x800F9410, name: ovl_08_bss}
   - type: code
@@ -816,7 +825,7 @@ segments:
     bss_size: 0x160
     subsegments:
       - [0x113DC0, c]
-      - [0x1170E0, data, 113DC0]
+      - [0x1170E0, .data, 113DC0]
       - [0x1171E0, .rodata, 113DC0]
       - {0x117210, type: bss, vram: 0x800F9A30, name: ovl_09_bss}
   - type: code
@@ -831,7 +840,7 @@ segments:
     subsegments:
       - [0x117210, c]
       - [0x11BFE0, c]
-      - [0x11C2A0, data, 117210]
+      - [0x11C2A0, .data, 117210]
       - [0x11C340, .rodata, 117210]
       - {0x11C810, type: bss, vram: 0x800FBBE0, name: ovl_0A_bss}
   - type: code
@@ -846,7 +855,7 @@ segments:
     subsegments:
       - [0x11C810, c]
       - [0x11F890, c]
-      - [0x1216F0, data, 11C810]
+      - [0x1216F0, .data, 11C810]
       - [0x121750, .rodata, 11C810]
       - [0x1217B0, .rodata, 11F890]
       - {0x1217D0, type: bss, vram: 0x800FB5A0, name: ovl_0B_bss}
@@ -863,8 +872,9 @@ segments:
       - [0x1217D0, c]
       - [0x122BA0, c]
       - [0x1240D0, c]
-      - [0x124FD0, data, 1217D0]
-      #- [0x125010, data, 122BA0] #800F9E20
+      - [0x124FD0, .data, 1217D0]
+      - [0x125010, .data, 122BA0] #800F9E20
+      - [0x125040, .data, 1240D0] #800F9E50
       - [0x125050, .rodata, 1217D0] #800F9E60
       - [0x125080, .rodata, 122BA0]
       - {0x1250D0, type: bss, vram: 0x800F9EE0, name: ovl_0C_bss}
@@ -880,7 +890,7 @@ segments:
     subsegments:
       - [0x1250D0, c]
       - [0x12AFE0, c]
-      - [0x12B7E0, data, 1250D0]
+      - [0x12B7E0, .data, 1250D0]
       - [0x12BB00, .rodata, 1250D0]
       - {0x12BC20, type: bss, vram: 0x800FD130, name: ovl_0D_bss}
   - type: code
@@ -894,7 +904,7 @@ segments:
     bss_size: 0xE0
     subsegments:
       - [0x12BC20, c]
-      - [0x131A10, data, 12BC20]
+      - [0x131A10, .data, 12BC20]
       - [0x131F00, .rodata, 12BC20]
       - {0x131FA0, type: bss, vram: 0x800FC960, name: ovl_0E_bss}
   - type: code
@@ -909,7 +919,7 @@ segments:
     subsegments:
       - [0x131FA0, c]
       - [0x136C10, c]
-      - [0x136F40, data, 131FA0]
+      - [0x136F40, .data, 131FA0]
       - [0x136FF0, .rodata, 131FA0]
       - {0x137050, type: bss, vram: 0x800FB690, name: ovl_0F_bss}
   - type: code
@@ -923,7 +933,7 @@ segments:
     bss_size: 0x220
     subsegments:
       - [0x137050, c]
-      - [0x13EE10, data, 137050]
+      - [0x13EE10, .data, 137050]
       - [0x13EEC0, .rodata, 137050]
       - {0x13EFB0, type: bss, vram: 0x800FE540, name: ovl_10_bss}
   - type: code
@@ -938,8 +948,8 @@ segments:
     subsegments:
       - [0x13EFB0, c]
       - [0x142EA0, c]
-      - [0x145CA0, data, 13EFB0]
-      - [0x145DB0, data, 142EA0]
+      - [0x145CA0, .data, 13EFB0]
+      - [0x145DB0, .data, 142EA0]
       - [0x1460E0, .rodata, 13EFB0]
       - [0x146190, .rodata, 142EA0]
       - {0x146200, type: bss, vram: 0x800FD830, name: ovl_11_bss}
@@ -956,9 +966,9 @@ segments:
       - [0x146200, c]
       - [0x146B60, c]
       - [0x148840, c]
-      - [0x149C40, data, 146200]
-      - [0x149C50, data, 146B60]
-      - [0x149DE0, data, 148840]
+      - [0x149C40, .data, 146200]
+      - [0x149C50, .data, 146B60]
+      - [0x149DE0, .data, 148840]
       - [0x149E00, .rodata, 146200]
       - [0x149E50, .rodata, 146B60]
       - [0x149E60, .rodata, 148840]
@@ -974,7 +984,7 @@ segments:
     bss_size: 0x1320
     subsegments:
       - [0x149E80, c]
-      - [0x14E540, data, 149E80]
+      - [0x14E540, .data, 149E80]
       - [0x14E840, .rodata, 149E80]
       - {0x14E940, type: bss, vram: 0x800FB0A0, name: ovl_13_bss}
   - type: code
@@ -989,8 +999,8 @@ segments:
     subsegments:
       - [0x14E940, c]
       - [0x150E30, c]
-      - [0x152B20, data, 14E940]
-      - [0x152BD0, .rodata, 150E30]
+      - [0x152B20, .data, 14E940]
+      - [0x152BC0, .rodata, 150E30]
       - {0x152BE0, type: bss, vram: 0x800FA880, name: ovl_14_bss}
   - type: code
     start: 0x152BE0
@@ -1004,8 +1014,8 @@ segments:
     subsegments:
       - [0x152BE0, c]
       - [0x15AC50, c]
-      - [0x15E120, data, 152BE0]
-      - [0x15E200, data, 15AC50]
+      - [0x15E120, .data, 152BE0]
+      - [0x15E200, .data, 15AC50]
       - [0x15E2B0, .rodata, 152BE0]
       - [0x15E980, .rodata, 15AC50]
       - {0x15EAF0, type: bss, vram: 0x801024F0, name: ovl_15_bss}
@@ -1020,7 +1030,7 @@ segments:
     bss_size: 0x20
     subsegments:
       - [0x15EAF0, c]
-      - [0x165F10, data, 15EAF0]
+      - [0x165F10, .data, 15EAF0]
       - [0x1660D0, .rodata, 15EAF0]
       - {0x166220, type: bss, vram: 0x800FDD10, name: ovl_16_bss}
   - type: code
@@ -1036,9 +1046,9 @@ segments:
       - [0x166220, c]
       - [0x166D50, c]
       - [0x168CA0, c]
-      - [0x16BC00, data, 166220]
-      - [0x16BC10, data, 166D50]
-      - [0x16BC20, data, 168CA0]
+      - [0x16BC00, .data, 166220]
+      - [0x16BC10, .data, 166D50]
+      - [0x16BC20, .data, 168CA0]
       - [0x16BCD0, .rodata, 166220]
       - [0x16BD00, .rodata, 166D50]
       - {0x16BD20, type: bss, vram: 0x800FC0E0, name: ovl_17_bss}
@@ -1056,10 +1066,10 @@ segments:
       - [0x16C6A0, c]
       - [0x170470, c]
       - [0x172490, c]
-      - [0x1724D0, data, 16BD20]
-      - [0x1724E0, data, 16C6A0]
-      - [0x173480, data, 170470]
-      - [0x173690, data, 172490]
+      - [0x1724D0, .data, 16BD20]
+      - [0x1724E0, .data, 16C6A0]
+      - [0x173480, .data, 170470]
+      - [0x173690, .data, 172490]
       - [0x1736A0, .rodata, 16BD20]
       - [0x173710, .rodata, 16C6A0]
       - [0x173800, .rodata, 170470]
@@ -1076,8 +1086,8 @@ segments:
     subsegments:
       - [0x1738E0, c]
       - [0x176130, c]
-      - [0x177C30, data, 1738E0]
-      - [0x1780D0, data, 176130]
+      - [0x177C30, .data, 1738E0]
+      - [0x1780D0, .data, 176130]
       - [0x1782E0, .rodata, 1738E0]
       - {0x1784E0, type: bss, vram: 0x800FB1E0, name: ovl_19_bss}
   - type: code
@@ -1092,8 +1102,8 @@ segments:
     subsegments:
       - [0x1784E0, c]
       - [0x17BDC0, c]
-      - [0x17E600, data, 1784E0]
-      - [0x17E620, data, 17BDC0]
+      - [0x17E600, .data, 1784E0]
+      - [0x17E620, .data, 17BDC0]
       - {0x17E710, type: bss, vram: 0x800FC810, name: ovl_1A_bss}
   - type: code
     start: 0x17E710
@@ -1106,7 +1116,8 @@ segments:
     bss_size: 0x310
     subsegments:
       - [0x17E710, c]
-      - [0x1836C0, data, 17E710]
+      - [0x1836C0, .data, 17E710_data]
+      - [0x183750, .data, 17E710_tail]
       - {0x1837D0, type: bss, vram: 0x800FB6A0, name: ovl_1B_bss}
   - type: code
     start: 0x1837D0
@@ -1121,9 +1132,9 @@ segments:
       - [0x1837D0, c]
       - [0x184450, c]
       - [0x184870, c]
-      - [0x188280, data, 1837D0]
-      - [0x1882B0, data, 184450]
-      - [0x1882C0, data, 184870]
+      - [0x188280, .data, 1837D0]
+      - [0x1882B0, .data, 184450]
+      - [0x1882C0, .data, 184870]
       - [0x188320, .rodata, 184870]
       - {0x188410, type: bss, vram: 0x800FB220, name: ovl_1C_bss}
   - type: code
@@ -1137,7 +1148,7 @@ segments:
     bss_size: 0x230
     subsegments:
       - [0x188410, c]
-      - [0x1910D0, data, 188410]
+      - [0x1910D0, .data, 188410]
       - [0x191670, .rodata, 188410]
       - {0x191700, type: bss, vram: 0x800FF8D0, name: ovl_1D_bss}
   - type: code
@@ -1152,8 +1163,8 @@ segments:
     subsegments:
       - [0x191700, c]
       - [0x196300, c]
-      - [0x197C50, data, 191700]
-      - [0x197CE0, data, 196300]
+      - [0x197C50, .data, 191700]
+      - [0x197CE0, .data, 196300]
       - [0x197D00, .rodata, 191700]
       - [0x197DF0, .rodata, 196300]
       - {0x197E20, type: bss, vram: 0x800FCD00, name: ovl_1E_bss}
@@ -1171,9 +1182,9 @@ segments:
       - [0x19A360, c]
       - [0x19ACC0, c]
       - [0x19D510, c]
-      - [0x19FAF0, data, 197E20]
-      - [0x19FB40, data, 19A360]
-      - [0x19FB90, data, 19ACC0]
+      - [0x19FAF0, .data, 197E20]
+      - [0x19FB40, .data, 19A360]
+      - [0x19FB90, .data, 19ACC0]
       - [0x19FD40, .rodata, 197E20]
       - [0x19FD70, .rodata, 19ACC0]
       - [0x19FEB0, .rodata, 19D510]
@@ -1191,9 +1202,9 @@ segments:
       - [0x19FEE0, c]
       - [0x1A2E40, c]
       - [0x1A42B0, c]
-      - [0x1A4E00, data, 19FEE0]
-      - [0x1A4E10, data, 1A2E40]
-      - [0x1A4E40, data, 1A42B0]
+      - [0x1A4E00, .data, 19FEE0]
+      - [0x1A4E10, .data, 1A2E40]
+      - [0x1A4E40, .data, 1A42B0]
       - [0x1A4E50, .rodata, 19FEE0]
       - [0x1A4EA0, .rodata, 1A2E40]
       - {0x1A4EB0, type: bss, vram: 0x800FB5B0, name: ovl_20_bss}
@@ -1208,7 +1219,7 @@ segments:
     bss_size: 0x160
     subsegments:
       - [0x1A4EB0, c]
-      - [0x1AA080, data, 1A4EB0]
+      - [0x1AA080, .data, 1A4EB0]
       - [0x1AA290, .rodata, 1A4EB0]
       - {0x1AA2A0, type: bss, vram: 0x800FB9D0, name: ovl_21_bss}
   - type: code
@@ -1224,8 +1235,8 @@ segments:
       - [0x1AA2A0, c]
       - [0x1AF980, c]
       - [0x1B02A0, c]
-      - [0x1B3730, data, 1AA2A0]
-      - [0x1B3780, data, 1B02A0]
+      - [0x1B3730, .data, 1AA2A0]
+      - [0x1B3780, .data, 1B02A0]
       - [0x1B3800, .rodata, 1AA2A0]
       - [0x1B3C00, .rodata, 1AF980]
       - [0x1B3C70, .rodata, 1B02A0]
@@ -1243,7 +1254,9 @@ segments:
       - [0x1B3E00, c]
       - [0x1B9050, c]
       - [0x1BAA60, c]
-      - [0x1BCD20, data, 1B3E00]
+      - [0x1BCD20, .data, 1B3E00]
+      - [0x1BCD80, .data, 1B9050]
+      - [0x1BD100, .data, 1BAA60]
       - [0x1BD160, .rodata, 1B3E00]
       - [0x1BD500, .rodata, 1B9050]
       - [0x1BD570, .rodata, 1BAA60]
@@ -1259,7 +1272,7 @@ segments:
     bss_size: 0x20
     subsegments:
       - [0x1BD640, c]
-      - [0x1C1D90, data, 1BD640]
+      - [0x1C1D90, .data, 1BD640]
       - [0x1C1E30, .rodata, 1BD640]
       - {0x1C1EB0, type: bss, vram: 0x800FAE50, name: ovl_24_bss}
   - type: code
@@ -1273,7 +1286,7 @@ segments:
     bss_size: 0x10A0
     subsegments:
       - [0x1C1EB0, c]
-      - [0x1CBB80, data, 1C1EB0]
+      - [0x1CBB80, .data, 1C1EB0]
       - [0x1CC860, .rodata, 1C1EB0]
       - {0x1CCCF0, type: bss, vram: 0x80101420, name: ovl_25_bss}
   - type: code
@@ -1289,9 +1302,9 @@ segments:
       - [0x1CCCF0, c]
       - [0x1CD680, c]
       - [0x1D3040, c]
-      - [0x1D3300, data, 1CCCF0]
-      - [0x1D3310, data, 1CD680]
-      - [0x1D38A0, data, 1D3040]
+      - [0x1D3300, .data, 1CCCF0]
+      - [0x1D3310, .data, 1CD680]
+      - [0x1D38A0, .data, 1D3040]
       - [0x1D38B0, .rodata, 1CCCF0]
       - [0x1D3900, .rodata, 1CD680]
       - {0x1D3990, type: bss, vram: 0x800FD280, name: ovl_26_bss}
@@ -1307,8 +1320,8 @@ segments:
     subsegments:
       - [0x1D3990, c]
       - [0x1D6E30, c]
-      - [0x1D93B0, data, 1D3990]
-      - [0x1D93E0, data, 1D6E30]
+      - [0x1D93B0, .data, 1D3990]
+      - [0x1D93E0, .data, 1D6E30]
       - [0x1D9400, .rodata, 1D3990]
       - [0x1D95F0, .rodata, 1D6E30]
       - {0x1D9690, type: bss, vram: 0x800FC2E0, name: ovl_27_bss}
@@ -1323,7 +1336,7 @@ segments:
     bss_size: 0x3A0
     subsegments:
       - [0x1D9690, c]
-      - [0x1E0670, data, 1D9690]
+      - [0x1E0670, .data, 1D9690]
       - [0x1E06A0, .rodata, 1D9690]
       - {0x1E0A30, type: bss, vram: 0x800FD980, name: ovl_28_bss}
   - type: code
@@ -1338,7 +1351,7 @@ segments:
     subsegments:
       - [0x1E0A30, c]
       - [0x1E4480, c]
-      - [0x1E8DD0, data, 1E0A30]
+      - [0x1E8DD0, .data, 1E0A30]
       - [0x1E8F10, .rodata, 1E0A30]
       - [0x1E9250, .rodata, 1E4480]
       - {0x1E9440, type: bss, vram: 0x800FEFF0, name: ovl_29_bss}
@@ -1367,8 +1380,8 @@ segments:
     subsegments:
       - [0x1F0DA0, c]
       - [0x1F5700, c]
-      - [0x1F60F0, data, 1F0DA0]
-      - [0x1F61F0, data, 1F5700]
+      - [0x1F60F0, .data, 1F0DA0]
+      - [0x1F61F0, .data, 1F5700]
       - [0x1F6250, .rodata, 1F0DA0]
       - {0x1F62C0, type: bss, vram: 0x800FBB00, name: ovl_2B_bss}
   - type: code
@@ -1383,7 +1396,7 @@ segments:
     subsegments:
       - [0x1F62C0, c]
       - [0x1FDF10, c]
-      - [0x1FEF50, data, 1F62C0]
+      - [0x1FEF50, .data, 1F62C0]
       - [0x1FF090, .rodata, 1F62C0]
       - [0x1FF1D0, .rodata, 1FDF10]
       - {0x1FF1E0, type: bss, vram: 0x800FF500, name: ovl_2C_bss}
@@ -1399,7 +1412,7 @@ segments:
     subsegments:
       - [0x1FF1E0, c]
       - [0x206C90, c]
-      - [0x206E40, data, 1FF1E0]
+      - [0x206E40, .data, 1FF1E0]
       - [0x206FD0, .rodata, 1FF1E0]
       - {0x207040, type: bss, vram: 0x800FE440, name: ovl_2D_bss}
   - type: code
@@ -1413,7 +1426,7 @@ segments:
     bss_size: 0x1D50
     subsegments:
       - [0x207040, c]
-      - [0x20EEB0, data, 207040]
+      - [0x20EEB0, .data, 207040]
       - [0x20EF60, .rodata, 207040]
       - {0x20F570, type: bss, vram: 0x800FEB10, name: ovl_2E_bss}
   - type: code
@@ -1428,7 +1441,7 @@ segments:
     subsegments:
       - [0x20F570, c]
       - [0x216140, c]
-      - [0x218330, data, 20F570]
+      - [0x218330, .data, 20F570]
       - [0x2183E0, .rodata, 20F570]
       - [0x218500, .rodata, 216140]
       - {0x218510, type: bss, vram: 0x800FF580, name: ovl_2F_bss}
@@ -1443,7 +1456,7 @@ segments:
     bss_size: 0x17F0
     subsegments:
       - [0x218510, c]
-      - [0x221890, data, 218510]
+      - [0x221890, .data, 218510]
       - [0x221DB0, .rodata, 218510]
       - {0x222320, type: bss, vram: 0x801003F0, name: ovl_30_bss}
   - type: code
@@ -1458,7 +1471,8 @@ segments:
     subsegments:
       - [0x222320, c]
       - [0x225DF0, c]
-      - [0x22BF30, data, 222320]
+      - [0x22BF30, .data, 222320]
+      - [0x22BFA0, .data, 225DF0]
       - [0x22C150, .rodata, 222320]
       - [0x22C480, .rodata, 225DF0]
       - {0x22C9E0, type: bss, vram: 0x80100CA0, name: ovl_31_bss}
@@ -1476,10 +1490,10 @@ segments:
       - [0x22D5F0, c]
       - [0x231180, c]
       - [0x231D40, c]
-      - [0x233EE0, data, 22C9E0]
-      - [0x233F00, data, 22D5F0]
-      - [0x233FD0, data, 231180]
-      - [0x233FE0, data, 231D40]
+      - [0x233EE0, .data, 22C9E0]
+      - [0x233F00, .data, 22D5F0]
+      - [0x233FD0, .data, 231180]
+      - [0x233FE0, .data, 231D40]
       - [0x234030, .rodata, 22C9E0]
       - [0x234050, .rodata, 22D5F0]
       - [0x234190, .rodata, 231180]
@@ -1497,7 +1511,8 @@ segments:
     subsegments:
       - [0x2341E0, c]
       - [0x234F80, c]
-      - [0x23BDF0, data, 2341E0]
+      - [0x23BDF0, .data, 2341E0]
+      - [0x23BE10, .data, 234F80]
       - [0x23C9B0, .rodata, 2341E0]
       - [0x23CA40, .rodata, 234F80]
       - {0x23CF40, type: bss, vram: 0x800FF340, name: ovl_33_bss}
@@ -1513,7 +1528,7 @@ segments:
     subsegments:
       - [0x23CF40, c]
       - [0x240010, c]
-      - [0x241460, data, 23CF40]
+      - [0x241460, .data, 23CF40]
       - [0x241640, .rodata, 23CF40]
       - [0x241720, .rodata, 240010]
       - {0x241740, type: bss, vram: 0x800FADE0, name: ovl_34_bss}
@@ -1542,7 +1557,7 @@ segments:
       - [0x2418A0, c]
       - [0x2418D0, c]
       - [0x244B50, .data, 2418A0]
-      - [0x244B80, data, 2418D0]
+      - [0x244B80, .data, 2418D0]
       - [0x245500, .rodata, 2418D0]
       - {0x2455C0, type: bss, vram: 0x800FA300, name: ovl_36_bss}
   - type: code
@@ -1558,7 +1573,7 @@ segments:
       - [0x2455C0, c]
       - [0x2455F0, c]
       - [0x246A60, .data, 2455C0]
-      - [0x246A90, data, 2455F0]
+      - [0x246A90, .data, 2455F0]
       - [0x246D10, .rodata, 2455F0]
       - {0x246DF0, type: bss, vram: 0x800F7E10, name: ovl_37_bss}
   - type: code
@@ -1573,8 +1588,9 @@ segments:
     subsegments:
       - [0x246DF0, c]
       - [0x246E20, c]
-      - [0x248820, data, 246DF0]
-      - [0x248850, data, 246E20]
+      - [0x248820, .data, 246DF0]
+      - [0x248850, .data, 246E20]
+      - [0x248EF0, .rodata, 246E20]
       - {0x248F00, type: bss, vram: 0x800F86F0, name: ovl_38_bss}
   - type: code
     start: 0x248F00
@@ -1588,8 +1604,8 @@ segments:
     subsegments:
       - [0x248F00, c]
       - [0x248F30, c]
-      - [0x24C0D0, data, 248F00]
-      - [0x24C100, data, 248F30]
+      - [0x24C0D0, .data, 248F00]
+      - [0x24C100, .data, 248F30]
       - {0x24C390, type: bss, vram: 0x800F9A70, name: ovl_39_bss}
   - type: code
     start: 0x24C390
@@ -1603,8 +1619,8 @@ segments:
     subsegments:
       - [0x24C390, c]
       - [0x24C3C0, c]
-      - [0x24F280, data, 24C390]
-      - [0x24F2B0, data, 24C3C0]
+      - [0x24F280, .data, 24C390]
+      - [0x24F2B0, .data, 24C3C0]
       - [0x24FA70, .rodata, 24C3C0]
       - {0x24FA80, type: bss, vram: 0x800F9CD0, name: ovl_3A_bss}
   - type: code
@@ -1620,7 +1636,7 @@ segments:
       - [0x24FA80, c]
       - [0x24FAB0, c]
       - [0x251400, .data, 24FA80]
-      - [0x251430, data, 24FAB0]
+      - [0x251430, .data, 24FAB0]
       - {0x2518D0, type: bss, vram: 0x800F8430, name: ovl_3B_bss}
   - type: code
     start: 0x2518D0
@@ -1635,7 +1651,7 @@ segments:
       - [0x2518D0, c]
       - [0x251900, c]
       - [0x253A50, .data, 2518D0]
-      - [0x253A80, data, 251900]
+      - [0x253A80, .data, 251900]
       - {0x254450, type: bss, vram: 0x800F9160, name: ovl_3C_bss}
   - type: code
     start: 0x254450
@@ -1665,7 +1681,7 @@ segments:
       - [0x256FF0, c]
       - [0x257020, c]
       - [0x259140, .data, 256FF0]
-      - [0x259160, data, 257020]
+      - [0x259160, .data, 257020]
       - [0x259220, .rodata, 257020]
       - {0x2592A0, type: bss, vram: 0x800F8890, name: ovl_3E_bss}
   - type: code
@@ -1679,7 +1695,7 @@ segments:
     bss_size: 0x10
     subsegments:
       - [0x2592A0, c]
-      - [0x259DD0, data, 2592A0]
+      - [0x259DD0, .data, 2592A0]
       - [0x259E90, .rodata, 2592A0]
       - {0x259EB0, type: bss, vram: 0x800F71F0, name: ovl_3F_bss}
   - type: code
@@ -1693,7 +1709,7 @@ segments:
     bss_size: 0x800
     subsegments:
       - [0x259EB0, c]
-      - [0x25F920, data, 259EB0] #800FC050
+      - [0x25F920, .data, 259EB0] #800FC050
       - [0x25FBE0, .rodata, 259EB0]
       - {0x25FC70, type: bss, vram: 0x800FC3A0, name: ovl_40_bss}
   - type: code
@@ -1715,7 +1731,42 @@ segments:
       - [0x26E620, c]
       - [0x2721F0, c]
       - [0x275330, c]
-      - [0x277320, data, 25FC70] #TODO: fill in
+      - [0x277320, .data, 25FC70]
+      # -
+      - [0x277470, .data, 2603D0]
+      # -
+      - [0x277720, .data, 262590]
+      # -
+      - [0x277940, .data, 2643A0]
+      # -
+      - [0x277AF0, .data, 266C80]
+      # -
+      - [0x277F80, .data, 26BA10]
+      # -
+      - [0x2780A0, .data, 26E620]
+      # -
+      - [0x278210, .data, 2721F0]
+      # -
+      - [0x278390, .data, 275330]
+      # -
+      - [0x278500, .rodata, 25FC70]
+      # -
+      - [0x278520, .rodata, 2603D0]
+      # -
+      - [0x278580, .rodata, 262590]
+      # -
+      - [0x2785E0, .rodata, 2643A0]
+      # -
+      - [0x2787D8, .rodata, 266C80]
+      # -
+      - [0x278950, .rodata, 26BA10]
+      # -
+      - [0x278A30, .rodata, 26E620]
+      # -
+      - [0x278C40, .rodata, 2721F0]
+      # -
+      - [0x278E00, .rodata, 275330]
+      # -
       - {0x278ED0, type: bss, vram: 0x8010F840, name: ovl_41_bss}
   - type: code
     start: 0x278ED0
@@ -1728,7 +1779,7 @@ segments:
     bss_size: 0x40
     subsegments:
       - [0x278ED0, c]
-      - [0x27C7C0, data, 278ED0]
+      - [0x27C7C0, .data, 278ED0]
       - [0x27CA80, .rodata, 278ED0]
       - {0x27CB30, type: bss, vram: 0x800FA240, name: ovl_42_bss}
   - type: code
@@ -1742,7 +1793,7 @@ segments:
     bss_size: 0xB0
     subsegments:
       - [0x27CB30, c]
-      - [0x2809F0, data, 27CB30]
+      - [0x2809F0, .data, 27CB30]
       - [0x280BB0, .rodata, 27CB30]
       - {0x280C80, type: bss, vram: 0x800FA730, name: ovl_43_bss}
   - type: code
@@ -1756,7 +1807,7 @@ segments:
     bss_size: 0x10
     subsegments:
       - [0x280C80, c]
-      - [0x281BA0, data, 280C80]
+      - [0x281BA0, .data, 280C80]
       - [0x281D00, .rodata, 280C80]
       - {0x281D40, type: bss, vram: 0x800F76A0, name: ovl_44_bss}
   - type: code
@@ -1770,7 +1821,7 @@ segments:
     bss_size: 0x10
     subsegments:
       - [0x281D40, c]
-      - [0x2826F0, data, 281D40]
+      - [0x2826F0, .data, 281D40]
       - [0x2827F0, .rodata, 281D40]
       - {0x282820, type: bss, vram: 0x800F70C0, name: ovl_45_bss}
   - type: code
@@ -1798,7 +1849,8 @@ segments:
     bss_size: 0x10
     subsegments:
       - [0x285230, c]
-      - [0x285B30, data, 285230]
+      - [0x285B30, .data, 285230]
+      - [0x285B60, .rodata, 285230]
       - {0x285B70, type: bss, vram: 0x800F6F20, name: ovl_47_bss}
   - type: code
     start: 0x285B70
@@ -1839,7 +1891,7 @@ segments:
     bss_size: 0x30
     subsegments:
       - [0x2872A0, c]
-      - [0x2887A0, data, 2872A0]
+      - [0x2887A0, .data, 2872A0]
       - [0x288890, .rodata, 2872A0]
       - {0x2888A0, type: bss, vram: 0x800F7BE0, name: ovl_4A_bss}
   - type: code
@@ -1853,7 +1905,7 @@ segments:
     bss_size: 0x30
     subsegments:
       - [0x2888A0, c]
-      - [0x289A80, data, 2888A0]
+      - [0x289A80, .data, 2888A0]
       - [0x289B80, .rodata, 2888A0]
       - {0x289BA0, type: bss, vram: 0x800F78E0, name: ovl_4B_bss}
   - type: code
@@ -1881,7 +1933,7 @@ segments:
     bss_size: 0x10
     subsegments:
       - [0x28ABA0, c]
-      - [0x28BBE0, data, 28ABA0]
+      - [0x28BBE0, .data, 28ABA0]
       - [0x28BC50, .rodata, 28ABA0]
       - {0x28BC70, type: bss, vram: 0x800F76B0, name: ovl_4D_bss}
   - type: code
@@ -1908,7 +1960,7 @@ segments:
     bss_size: 0x20
     subsegments:
       - [0x28CFF0, c]
-      - [0x28DF40, data, 28CFF0]
+      - [0x28DF40, .data, 28CFF0]
       - [0x28E010, .rodata, 28CFF0]
       - {0x28E030, type: bss, vram: 0x800F7620, name: ovl_4F_bss}
   - type: code
@@ -1935,7 +1987,7 @@ segments:
     bss_size: 0x10
     subsegments:
       - [0x28E630, c]
-      - [0x28EC50, data, 28E630]
+      - [0x28EC50, .data, 28E630]
       - {0x28ECA0, type: bss, vram: 0x800F6C50, name: ovl_51_bss}
   - type: code
     start: 0x28ECA0
@@ -1948,7 +2000,7 @@ segments:
     bss_size: 0x40
     subsegments:
       - [0x28ECA0, c]
-      - [0x290730, data, 28ECA0]
+      - [0x290730, .data, 28ECA0]
       - [0x2907E0, .rodata, 28ECA0]
       - {0x2908F0, type: bss, vram: 0x800F8230, name: ovl_52_bss}
   - type: code
@@ -1962,7 +2014,7 @@ segments:
     bss_size: 0x10
     subsegments:
       - [0x2908F0, c]
-      - [0x291280, data, 2908F0]
+      - [0x291280, .data, 2908F0]
       - {0x291360, type: bss, vram: 0x800F7050, name: ovl_53_bss}
   - type: code
     start: 0x291360
@@ -1975,7 +2027,8 @@ segments:
     bss_size: 0x10
     subsegments:
       - [0x291360, c]
-      - [0x291F10, data, 291360]
+      - [0x291F10, .data, 291360]
+      - [0x292010, .rodata, 291360]
       - {0x292020, type: bss, vram: 0x800F72A0, name: ovl_54_bss}
   - type: code
     start: 0x292020
@@ -1988,7 +2041,8 @@ segments:
     bss_size: 0x10
     subsegments:
       - [0x292020, c]
-      - [0x293160, data, 292020]
+      - [0x293160, .data, 292020]
+      - [0x293210, .rodata, 292020]
       - {0x293260, type: bss, vram: 0x800F7820, name: ovl_55_bss}
   - type: code
     start: 0x293260
@@ -2015,7 +2069,8 @@ segments:
     bss_size: 0x20
     subsegments:
       - [0x293A70, c]
-      - [0x295350, .rodata, 293A70]
+      - [0x295350, .data, 293A70]
+      - [0x295420, .rodata, 293A70]
       - {0x295450, type: bss, vram: 0x800F7FC0, name: ovl_57_bss}
   - type: code
     start: 0x295450
@@ -2028,7 +2083,7 @@ segments:
     bss_size: 0x10
     subsegments:
       - [0x295450, c]
-      - [0x295D40, data, 295450]
+      - [0x295D40, .data, 295450]
       - {0x295E40, type: bss, vram: 0x800F6FD0, name: ovl_59_bss}
   - type: code
     start: 0x295E40
@@ -2136,7 +2191,7 @@ segments:
     bss_size: 0xD0
     subsegments:
     - [0x29B410, c]
-    - [0x2A1D30, data, 29B410]
+    - [0x2A1D30, .data, 29B410]
     - [0x2A2300, .rodata, 29B410]
     - {0x2A2500, type: bss, vram: 0x800FD6D0, name: ovl_61_bss}
   - type: code
@@ -2158,14 +2213,14 @@ segments:
       - [0x2A6EA0, c]
       - [0x2A74F0, c]
       - [0x2A76E0, c]
-      - [0x2A8C50, data, 2A2500]
-      - [0x2A9580, data, 2A51E0]
-      - [0x2A95B0, data, 2A5420]
-      - [0x2A95D0, data, 2A5840]
-      - [0x2A9640, data, 2A5E50]
-      - [0x2A9670, data, 2A6500]
-      - [0x2A96F0, data, 2A6EA0]
-      - [0x2A9770, data, 2A76E0]
+      - [0x2A8C50, .data, 2A2500]
+      - [0x2A9580, .data, 2A51E0]
+      - [0x2A95B0, .data, 2A5420]
+      - [0x2A95D0, .data, 2A5840]
+      - [0x2A9640, .data, 2A5E50]
+      - [0x2A9670, .data, 2A6500]
+      - [0x2A96F0, .data, 2A6EA0]
+      - [0x2A9770, .data, 2A76E0]
       - [0x2A98B0, .rodata, 2A2500]
       - [0x2A9920, .rodata, 2A5840]
       - [0x2A9930, .rodata, 2A6EA0]
@@ -2183,7 +2238,7 @@ segments:
     subsegments:
       - [0x2A9970, c]
       - [0x2A9CA0, c]
-      - [0x2B0670, data, 2A9970]
+      - [0x2B0670, .data, 2A9CA0]
       - [0x2B1540, .rodata, 2A9CA0]
       - {0x2B1670, type: bss, vram: 0x800FE2E0, name: ovl_63_bss}
   - type: code
@@ -2197,7 +2252,7 @@ segments:
     bss_size: 0x800
     subsegments:
       - [0x2B1670, c]
-      - [0x2B7150, data, 2B1670]
+      - [0x2B7150, .data, 2B1670]
       - [0x2B7410, .rodata, 2B1670]
       - {0x2B74A0, type: bss, vram: 0x800FC410, name: ovl_64_bss}
   - type: code
@@ -2211,8 +2266,8 @@ segments:
     bss_size: 0x40
     subsegments:
       - [0x2B74A0, c]
-      - [0x2BA290, data, 2B74A0]
-      - [0x2BA460, .rodata, 2B74A0]
+      - [0x2BA290, .data, 2B74A0]
+      - [0x2BA450, .rodata, 2B74A0]
       - {0x2BA4C0, type: bss, vram: 0x800F9600, name: ovl_65_bss}
   - type: code
     start: 0x2BA4C0
@@ -2270,7 +2325,7 @@ segments:
       - [0x2BB5C0, c]
       - [0x2BB5F0, c]
       - [0x2BE910, .data, 2BB5C0]
-      - [0x2BE920, data, 2BB5F0]
+      - [0x2BE920, .data, 2BB5F0]
       - [0x2BF150, .rodata, 2BB5F0]
       - {0x2BF1A0, type: bss, vram: 0x800FA1C0, name: ovl_69_bss}
   - type: code
@@ -2285,8 +2340,8 @@ segments:
     subsegments:
       - [0x2BF1A0, c]
       - [0x2BF1D0, c]
-      - [0x2CA400, data, 2BF1A0]
-      - [0x2CA430, data, 2BF1D0]
+      - [0x2CA400, .data, 2BF1A0]
+      - [0x2CA430, .data, 2BF1D0]
       - [0x2CA6B0, .rodata, 2BF1D0]
       - {0x2CAA00, type: bss, vram: 0x80101E40, name: ovl_6A_bss}
   - type: code
@@ -2300,7 +2355,7 @@ segments:
     bss_size: 0x2F0
     subsegments:
       - [0x2CAA00, c]
-      - [0x2D42E0, data, 2CAA00]
+      - [0x2D42E0, .data, 2CAA00]
       - [0x2D46A0, .rodata, 2CAA00]
       - {0x2D4830, type: bss, vram: 0x80100410, name: ovl_6B_bss}
   - type: code
@@ -2314,8 +2369,8 @@ segments:
     bss_size: 0x100
     subsegments:
       - [0x2D4830, c]
-      - [0x2D6BF0, data, 2D4830]
-      - [0x2D6F60, .rodata, 2D4830] #actual start could be 0x2D6FB0, hard to say
+      - [0x2D6BF0, .data, 2D4830]
+      - [0x2D6F60, .rodata, 2D4830]
       - {0x2D6FC0, type: bss, vram: 0x800F8D70, name: ovl_6C_bss}
   - type: code
     start: 0x2D6FC0
@@ -2328,7 +2383,7 @@ segments:
     bss_size: 0x20
     subsegments:
       - [0x2D6FC0, c]
-      - [0x2D92A0, data, 2D6FC0]
+      - [0x2D92A0, .data, 2D6FC0]
       - [0x2D9520, .rodata, 2D6FC0]
       - {0x2D9570, type: bss, vram: 0x800F8B90, name: ovl_6D_bss}
   - type: code
@@ -2342,7 +2397,7 @@ segments:
     bss_size: 0x20
     subsegments:
       - [0x2D9570, c]
-      - [0x2DAE30, data, 2D9570]
+      - [0x2DAE30, .data, 2D9570]
       - [0x2DB270, .rodata, 2D9570]
       - {0x2DB2A0, type: bss, vram: 0x800F8310, name: ovl_6E_bss}
   - type: code
@@ -2360,9 +2415,9 @@ segments:
       - [0x2DF200, c]
       - [0x2E8220, c]
       - [0x2F3190, .data, 2DB2A0]
-      - [0x2F31B0, data, 2DB2D0]
-      - [0x2F3620, data, 2DF200]
-      - [0x2F3BA0, data, 2E8220]
+      - [0x2F31B0, .data, 2DB2D0]
+      - [0x2F3620, .data, 2DF200]
+      - [0x2F3BA0, .data, 2E8220]
       - [0x2F3D10, .rodata, 2DB2D0]
       - [0x2F3E40, .rodata, 2DF200]
       - [0x2F4020, .rodata, 2E8220]
@@ -2378,7 +2433,7 @@ segments:
     bss_size: 0x10
     subsegments:
       - [0x2F40C0, c]
-      - [0x2F6F70, data, 2F40C0]
+      - [0x2F6F70, .data, 2F40C0]
       - [0x2F6F90, .rodata, 2F40C0]
       - {0x2F6FB0, type: bss, vram: 0x800F94D0, name: ovl_70_bss}
   - type: code
@@ -2405,8 +2460,8 @@ segments:
     subsegments:
       - [0x2F7080, c]
       - [0x2F70B0, c]
-      - [0x2F8B50, data, 2F7080]
-      - [0x2F8B90, data, 2F70B0]
+      - [0x2F8B50, .data, 2F7080]
+      - [0x2F8B90, .data, 2F70B0]
       - {0x2F9040, type: bss, vram: 0x800F85A0, name: ovl_72_bss}
   - type: code
     start: 0x2F9040
@@ -2420,8 +2475,8 @@ segments:
     subsegments:
       - [0x2F9040, c]
       - [0x2F9070, c]
-      - [0x2F95F0, data, 2F9040]
-      - [0x2F9610, data, 2F9070]
+      - [0x2F95F0, .data, 2F9040]
+      - [0x2F9610, .data, 2F9070]
       - {0x2F96E0, type: bss, vram: 0x800F6C80, name: ovl_73_bss}
   - type: code
     start: 0x2F96E0
@@ -2436,7 +2491,7 @@ segments:
       - [0x2F96E0, c]
       - [0x2F9710, c]
       - [0x2F9FE0, .data, 2F96E0]
-      - [0x2FA000, data, 2F9710]
+      - [0x2FA000, .data, 2F9710]
       - {0x2FA120, type: bss, vram: 0x800F7020, name: ovl_74_bss}
   - type: code
     start: 0x2FA120
@@ -2451,7 +2506,7 @@ segments:
       - [0x2FA120, c]
       - [0x2FA150, c]
       - [0x2FA760, .data, 2FA120]
-      - [0x2FA780, data, 2FA150]
+      - [0x2FA780, .data, 2FA150]
       - {0x2FA8A0, type: bss, vram: 0x800F6D60, name: ovl_75_bss}
   - type: code
     start: 0x2FA8A0
@@ -2465,7 +2520,7 @@ segments:
       - [0x2FA8A0, c]
       - [0x2FA8D0, c]
       - [0x2FAC80, .data, 2FA8A0]
-      - [0x2FACA0, data, 2FA8D0]
+      - [0x2FACA0, .data, 2FA8D0]
   - type: code
     start: 0x2FADB0
     vram: 0x800F65E0
@@ -2477,7 +2532,8 @@ segments:
     bss_size: 0xA0
     subsegments:
       - [0x2FADB0, c]
-      - [0x2FD7E0, data, 2FADB0]
+      - [0x2FD7E0, .data, 2FADB0]
+      - [0x2FD920, .rodata, 2FADB0]
       - {0x2FD940, type: bss, vram: 0x800F9170, name: ovl_77_bss}
   - type: code
     start: 0x2FD940
@@ -2490,7 +2546,8 @@ segments:
     bss_size: 0xE0
     subsegments:
       - [0x2FD940, c]
-      - [0x300430, data, 2FD940]
+      - [0x300430, .data, 2FD940]
+      - [0x300570, .rodata, 2FD940]
       - {0x3005B0, type: bss, vram: 0x800F9250, name: ovl_78_bss}
   - type: code
     start: 0x3005B0
@@ -2503,7 +2560,7 @@ segments:
     bss_size: 0x20
     subsegments:
       - [0x3005B0, c]
-      - [0x301410, data, 3005B0]
+      - [0x301410, .data, 3005B0]
       - [0x3014B0, .rodata, 3005B0]
       - {0x3014C0, type: bss, vram: 0x800F74F0, name: ovl_79_bss}
   - type: code
@@ -2517,7 +2574,7 @@ segments:
     bss_size: 0x2B0
     subsegments:
       - [0x3014C0, c]
-      - [0x302C90, data, 3014C0]
+      - [0x302C90, .data, 3014C0]
       - [0x303810, .rodata, 3014C0]
       - {0x303E70, type: bss, vram: 0x800F8F90, name: ovl_7A_bss}
   - type: code
@@ -2533,7 +2590,9 @@ segments:
       - [0x303E70, c]
       - [0x306290, c]
       - [0x306BA0, c]
-      - [0x308890, data, 303E70]
+      - [0x308890, .data, 303E70]
+      - [0x308960, .data, 306290]
+      - [0x308970, .data, 306BA0]
       - [0x3089A0, .rodata, 303E70]
       - {0x308A50, type: bss, vram: 0x800FB1C0, name: ovl_7B_bss}
   - type: code
@@ -2547,7 +2606,7 @@ segments:
     bss_size: 0x4C0
     subsegments:
       - [0x308A50, c]
-      - [0x30C440, data, 308A50]
+      - [0x30C440, .data, 308A50]
       - [0x30C510, .rodata, 308A50]
       - {0x30C540, type: bss, vram: 0x800FA0D0, name: ovl_7C_bss}
   - type: code
@@ -2561,7 +2620,7 @@ segments:
     bss_size: 0x70
     subsegments:
       - [0x30C540, c]
-      - [0x30F080, data, 30C540]
+      - [0x30F080, .data, 30C540]
       - [0x30F180, .rodata, 30C540]
       - {0x30F1B0, type: bss, vram: 0x800F9250, name: ovl_7D_bss}
   - type: code
@@ -2575,7 +2634,7 @@ segments:
     bss_size: 0x320
     subsegments:
       - [0x30F1B0, c]
-      - [0x310CA0, data, 30F1B0]
+      - [0x310CA0, .data, 30F1B0]
       - [0x311820, .rodata, 30F1B0]
       - {0x311E90, type: bss, vram: 0x800F92C0, name: ovl_7E_bss}
   - type: code
@@ -2591,7 +2650,7 @@ segments:
       - [0x311E90, c]
       - [0x311EC0, c]
       - [0x3127C0, .data, 311E90]
-      - [0x3127F0, data, 311EC0]
+      - [0x3127F0, .data, 311EC0]
       - [0x3127F0, .rodata, 311EC0]
       - {0x312850, type: bss, vram: 0x800F6FA0, name: ovl_7F_bss}
   - type: code
@@ -2605,7 +2664,7 @@ segments:
     bss_size: 0x80
     subsegments:
       - [0x312850, c]
-      - [0x314730, data, 312850]
+      - [0x314730, .data, 312850]
       - [0x3148C0, .rodata, 312850]
       - {0x314950, type: bss, vram: 0x800F86E0, name: ovl_80_bss}
   - type: code
@@ -2619,7 +2678,7 @@ segments:
     bss_size: 0x110
     subsegments:
       - [0x314950, c]
-      - [0x316350, data, 314950]
+      - [0x316350, .data, 314950]
       - [0x316430, .rodata, 314950]
       - {0x316440, type: bss, vram: 0x800F80D0, name: ovl_81_bss}
   - type: code
@@ -2632,7 +2691,7 @@ segments:
     symbol_name_format: $VRAM_$SEG
     subsegments:
       - [0x316440, c]
-      - [0x3177A0, data, 316440]
+      - [0x3177A0, .data, 316440]
       - [0x317960, .rodata, 316440]
   - type: bin
     start: 0x317980
@@ -2647,7 +2706,7 @@ segments:
     bss_size: 0x1E0
     subsegments:
       - [0x317980, c]
-      - [0x31AC50, data, 317980]
+      - [0x31AC50, .data, 317980]
       - [0x31B860, .rodata, 317980]
       - {0x31BFE0, type: bss, vram: 0x800FAC40, name: ovl_83_bss}
   - [0x31BFE0, bin]

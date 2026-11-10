@@ -1,3 +1,12 @@
-#include "common.h"
+#include "PR/os_internal.h"
+#include "PR/rcp.h"
 
-INCLUDE_ASM("asm/nonmatchings/9AD00", func_8009A100);
+int __osSiDeviceBusy(void) {
+    register u32 stat = IO_READ(SI_STATUS_REG);
+
+    if (stat & (SI_STATUS_DMA_BUSY | SI_STATUS_RD_BUSY)) {
+        return TRUE;
+    } else {
+        return FALSE;
+    }
+}

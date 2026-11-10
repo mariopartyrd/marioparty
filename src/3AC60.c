@@ -1,4 +1,9 @@
 #include "common.h"
+u32 D_800C4200[] = { 0, 1, 2, 4 };
+u32 D_800C4210[] = { 0, 1, 2, 2 };
+s32 D_800C4220[] = { 2, 2, 2, 3 };
+u32 D_800C4230[] = { 3, 1, 0, 0 };
+u32 D_800C4240[] = { 2, 1, 0, 0 };
 
 void func_8003A060(Gfx** arg0, s32 timg, s32 fmt, s32 siz, s32 width, s32 height, s32 uls, s32 ult, s32 lrs, s32 lrt, s32 pal, s32 cms, s32 cmt, s32 masks, s32 maskt, s32 shifts, s32 shiftt) {
     Gfx* gfx = *arg0;

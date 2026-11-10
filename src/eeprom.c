@@ -27,7 +27,7 @@ s32 _InitEeprom(s8** arg0);
 
 extern u8 D_800D1B20[];
 extern OSMesgQueue D_800EE960;
-extern u8 D_800C30B0[];
+u8 D_800C30B0[8] = "HUDSON"; /* EEPROM header */
 
 s32 _InitEeprom(s8** arg0) {
     s32 eepromProbeResult;

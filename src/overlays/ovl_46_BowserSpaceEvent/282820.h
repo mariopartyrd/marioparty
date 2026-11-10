@@ -9,7 +9,7 @@ void func_80049478(void);
 void func_800499CC(u8);
 void func_80049E60(void);
 void func_80055994(u8, s32);
-void func_80060618(s32, u8);
+s16 func_80060618(s16, s16);
 
 extern char* D_800C5218[];
 

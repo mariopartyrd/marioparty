@@ -86,7 +86,7 @@ typedef struct UnknownBlock8 {
 } UnknownBlock8;
 
 typedef struct UnknownBlock36 {
-    /* 0x00 */ char unk_00[36];
+    /* 0x00 */ u16 unk_00[18];
 } UnknownBlock36;
 
 typedef struct UnknownBlockCombo48 {
@@ -102,7 +102,7 @@ extern u8 D_800F64F8;
 extern unkStruct_ShyGuySays_05* D_800FDC64_ShyGuySays;
 extern unkStruct_ShyGuySays_01 D_800FD9CE_ShyGuySays[];
 extern u16 D_800F5144;
-extern u16 D_800FD5CC_ShyGuySays;
+extern s16 D_800FD5CC_ShyGuySays;
 extern s16 D_800FD5CE_ShyGuySays;
 extern unkStructShyGuySays_03 D_800FDCE8_ShyGuySays[];
 extern unkStruct_ShyGuySays_01 D_800FD9C0_ShyGuySays[];
@@ -135,19 +135,26 @@ extern f64 D_800FD638_ShyGuySays;
 extern f64 D_800FD640_ShyGuySays;
 extern f64 D_800FD648_ShyGuySays;
 extern f64 D_800FD650_ShyGuySays;
-extern UnknownBlock24 D_800FD6C8_ShyGuySays;
+typedef struct ShyGuyMotPair {
+    /* 0x00 */ u16 unk_00;
+    /* 0x02 */ u16 unk_02;
+} ShyGuyMotPair;
+
+typedef struct ShyGuyMotTbl {
+    /* 0x00 */ ShyGuyMotPair unk_00[6];
+} ShyGuyMotTbl; /* sizeof 0x18 */
+
+extern const ShyGuyMotTbl D_800FD6C8_ShyGuySays;
 extern Vec3f D_800FD980_ShyGuySays;
 extern Vec3f D_800FD98C_ShyGuySays;
 extern omObjData* D_800FDC20_ShyGuySays;
-extern s32 D_800FDC30_ShyGuySays;
-extern s16 D_800FDC50_ShyGuySays;
-extern s16 D_800FDC52_ShyGuySays;
+extern s16 D_800FDC50_ShyGuySays[2];
 extern u16 D_800FD5DC_ShyGuySays[2];
 extern f64 D_800FD818_ShyGuySays; //BSS
 extern f64 D_800FD820_ShyGuySays; //BSS
-extern UnknownBlock8 D_800FD850_ShyGuySays;
-extern UnknownBlock8 D_800FD858_ShyGuySays;
-extern UnknownBlock36 D_800FD860_ShyGuySays;
+extern const UnknownBlock8 D_800FD850_ShyGuySays;
+extern const UnknownBlock8 D_800FD858_ShyGuySays;
+extern const UnknownBlock36 D_800FD860_ShyGuySays;
 extern f64 func_800FD658_ShyGuySays; //BSS
 
 void func_800FB424_ShyGuySays(void);
@@ -156,7 +163,7 @@ extern u16 D_800FD5C4_ShyGuySays;
 void func_800607C4(s16, s16);
 f64 func_8009B618(f64, f64);
 void func_800F69F8_ShyGuySays(void);
-void func_800F6A38_ShyGuySays(void*);
+void func_800F6A38_ShyGuySays(omObjData*);
 void func_800F6E50_ShyGuySays(omObjData*);
 void func_800F6F98_ShyGuySays(omObjData*);
 void func_800F72A4_ShyGuySays(void);
@@ -167,7 +174,7 @@ void func_800F8D58_ShyGuySays(omObjData*);
 void func_800F69F8_ShyGuySays(void);
 void func_80060268(s16);
 void func_800F73EC_ShyGuySays(void);
-void func_800FA308_ShyGuySays(omObjData*, s16*, s16);
+void func_800FA308_ShyGuySays(omObjData*, s16*, u16);
 void func_800FA8D4_ShyGuySays(void);
 void func_800F9118_ShyGuySays(omObjData*, s16);
 void func_800F94A8_ShyGuySays(void);
@@ -183,10 +190,10 @@ f32 func_800FD1D0_ShyGuySays(void);
 s16 func_800FD200_ShyGuySays(void);
 u16 func_800F740C_ShyGuySays(u16 arg0);
 void func_800F6930_ShyGuySays(omObjData*);
-void func_800FA77C_ShyGuySays(void);
-void func_800FB6E0_ShyGuySays(void);
-void func_800FBAE4_ShyGuySays(void);
-void func_800FCA8C_ShyGuySays(void*, u16);
+void func_800FA77C_ShyGuySays(omObjData*);
+void func_800FB6E0_ShyGuySays(omObjData*);
+void func_800FBAE4_ShyGuySays(omObjData*);
+void func_800FCA8C_ShyGuySays(omObjData*, u16);
 s16 func_800FD124_ShyGuySays(omObjData*);
 void func_800FD274_ShyGuySays(s16, s16, f32, u16*, u16*);
 void func_800F71F4_ShyGuySays(void);

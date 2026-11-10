@@ -1,6 +1,67 @@
 #include "engine/process.h"
 #include "FirstMap.h"
 
+void func_800F694C_FirstMap(void);
+void func_800F6970_FirstMap(void);
+void func_800F6994_FirstMap(void);
+void func_800F6A04_FirstMap(void);
+s32 func_800415E8(s32);
+void func_8004D6FC(s16, f32);
+void func_8004068C(s32);
+s32 ExecuteEventForSpace(s16, s16);
+void func_80055544(s32);
+void func_800550C4(void);
+void func_80055228(void);
+void func_800559BC(void);
+void func_80043544(void);
+Process* func_800448A0(); /* retail calls it without an argument (it ignores its s32) */
+
+s16 D_800F8750_FirstMap[] = { 3, 0, 1, 2 };
+
+EventListEntry D_800F8758_FirstMap[] = {
+    { 1, 1, func_800F694C_FirstMap },
+    { 0, 0, NULL },
+};
+
+EventListEntry D_800F8768_FirstMap[] = {
+    { 1, 1, func_800F6970_FirstMap },
+    { 0, 0, NULL },
+};
+
+EventListEntry D_800F8778_FirstMap[] = {
+    { 1, 1, func_800F6994_FirstMap },
+    { 0, 0, NULL },
+};
+
+/* Space list for the direction prompt: chain spaces 13 and 14. */
+s16 D_800F8788_FirstMap[] = { 13, 14, -1, 0 };
+
+/* CPU cursor moves per prompt (indexed by boardWork[0]). */
+s16 D_800F8790_FirstMap[] = { 2, 1, 2, 2 };
+
+EventListEntry D_800F8798_FirstMap[] = {
+    { 1, 2, func_800F6A04_FirstMap },
+    { 0, 0, NULL },
+};
+
+EventTableEntry D_800F87A8_FirstMap[] = {
+    { 0x1E, D_800F8758_FirstMap },
+    { 0x08, D_800F8768_FirstMap },
+    { 0x11, D_800F8768_FirstMap },
+    { 0x17, D_800F8798_FirstMap },
+    { 0x1F, D_800F8778_FirstMap },
+    { -1, NULL },
+};
+
+s32 D_800F87D8_FirstMap[] = {
+    0xA0028, 0xA0029, 0xA002A, 0xA002B, 0xA002C, 0xA002D, 0xA002E, 0xA002F,
+};
+
+/* Host model's motion list for func_80048224/MBModelCreate: a count word, then file ids. */
+s32 D_800F87F8_FirstMap[] = { 3, 0x70003, 0xA0079, 0xA007A };
+
+s16 D_800F8808_FirstMap = -1;
+
 void func_800F6610_FirstMap(void) {
     GwSystem.curBoardIndex = 8;
     omInitObjMan(0xA, 0);
@@ -120,12 +181,13 @@ void func_800F69FC_FirstMap(void) {
 }
 
 void func_800F6A04_FirstMap(void) {
-    s32 temp_s0, temp_s1, temp_s2, temp_a0;
+    s32 temp_s0, temp_s1, temp_a0;
+    unk_8003B8D4Struct* temp_s2;
     s32 i;
 
     SetPlayerAnimation(-1, -1, 2);
     func_800F69B8_FirstMap();
-    temp_s2 = func_8003C218(-1, &D_800F8788_FirstMap);
+    temp_s2 = func_8003C218(-1, D_800F8788_FirstMap);
     func_8003C060(temp_s2, -1, 0);
     if (PlayerIsCPU(-1) != 0) {
         temp_a0 = GwCommon.boardWork[0]++;
@@ -310,8 +372,105 @@ void func_800F70F0_FirstMap(s16 arg0) {
     HuPrcChildWatch();
 }
 
-INCLUDE_ASM("asm/nonmatchings/overlays/ovl_3E_FirstMap/257020", func_800F714C_FirstMap); //has rodata jump table
+// retail loads the first curPlayerIndex through %hi(GwSystem + 0x1C), the rest through the
+// &GwSystem register: GCC CSEs the first one too (one instruction, masked 0 otherwise); tried gs assigned after the call, no gs local
+#ifdef NON_MATCHING
+void func_800F714C_FirstMap(void) {
+    GW_SYSTEM* gs = &GwSystem;
+    GW_PLAYER* player = GetPlayerStruct(-1);
+    s16 spaceIdx = 0;
+    BoardSpace* space;
+    s16 steps;
 
+    steps = func_800415E8(GwSystem.curPlayerIndex);
+    SetPlayerAnimation(-1, 0, 2);
+    if (steps == 0) {
+        goto end;
+    }
+loop:
+    {
+        BoardSpaceGet(GetAbsSpaceIndexFromChainSpaceIndex(player->next_chain, player->next_space));
+        if (((BoardPlayerObj*)player->player_obj)->unk_46 != 0) {
+            SetPlayerAnimation(-1, 0, 2);
+        }
+        func_8004D6FC(gs->curPlayerIndex, 19.0f);
+        player->cur_chain = player->next_chain;
+        player->cur_space = player->next_space;
+        player->next_space++;
+        spaceIdx = GetAbsSpaceIndexFromChainSpaceIndex(player->cur_chain, player->cur_space);
+        space = BoardSpaceGet(spaceIdx);
+        SetCurrentSpaceIndex(spaceIdx);
+        switch (space->spaceType) {
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+            case 6:
+            case 8:
+            case 9:
+                func_8004068C(gs->curPlayerIndex);
+                steps--;
+                SetSpaceStepAnim(spaceIdx);
+                break;
+        }
+        if (steps != 0) {
+            switch (space->spaceType) {
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                case 6:
+                case 8:
+                case 9:
+                    PlaySound(0x2F);
+                    break;
+                case 5:
+                    PlaySound(0x5B);
+                    break;
+            }
+        } else {
+            switch (space->spaceType) {
+                case 4:
+                case 6:
+                    PlaySound(0x4E);
+                    break;
+                case 1:
+                    PlaySound(0x30);
+                    break;
+                case 2:
+                    PlaySound(0x31);
+                    break;
+                case 9:
+                    PlaySound(0x61);
+                    break;
+                case 3:
+                case 8:
+                    PlaySound(0x60);
+                    break;
+                case 5:
+                    PlaySound(0x5B);
+                    break;
+            }
+        }
+        ExecuteEventForSpace(spaceIdx, 1);
+        if (steps != 0) {
+            goto loop;
+        }
+    }
+end:
+    SetPlayerAnimation(-1, -1, 2);
+    ExecuteEventForSpace(spaceIdx, 3);
+    {
+        Vec3f sp10;
+
+        func_8004CD84(&sp10);
+        func_8004D1EC(&player->player_obj->unk_18, &sp10, &player->player_obj->unk_18, 8);
+    }
+    func_80055544(gs->curPlayerIndex);
+}
+#else
+INCLUDE_ASM("asm/nonmatchings/overlays/ovl_3E_FirstMap/257020", func_800F714C_FirstMap);
+#endif
 void func_800F73A0_FirstMap(void) {
     GW_SYSTEM* gameStatus = &GwSystem;
     GW_PLAYER* player = GetPlayerStruct(CURRENT_PLAYER);
@@ -427,8 +586,257 @@ void func_800F77A8_FirstMap(s32 arg0) {
     D_800F8808_FirstMap = arg0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/overlays/ovl_3E_FirstMap/257020", func_800F77B4_FirstMap);
+void func_800F77B4_FirstMap(void) {
+    Process* process;
+    void* tips;
 
+    process = HuPrcCurrentGet();
+    GwCommon.boardWork[0] = 0;
+    func_800F6B0C_FirstMap();
+    D_800F88A4_FirstMap = func_80048224(D_800F87F8_FirstMap);
+    func_8003E174(D_800F88A4_FirstMap->unk0);
+    func_800484C4((Object*)D_800F88A4_FirstMap, 0x4A);
+    omAddPrcObj(func_800F7714_FirstMap, 0x4800, 0, 0)->user_data = D_800F88A4_FirstMap;
+    func_8006DA1C(D_800F88A4_FirstMap->unk8, 0x40, 0x40);
+    func_800F6F38_FirstMap();
+    func_800F6F80_FirstMap();
+    HuPrcSleep(3);
+    while (func_80072718() != 0) {
+        HuPrcVSleep();
+    }
+    HuPrcSleep(3);
+    func_800F7560_FirstMap(&D_800F88A4_FirstMap->unk0);
+    func_800F7500_FirstMap((Object*)D_800F88A4_FirstMap, (void*)0x214);
+    func_800F70AC_FirstMap();
+    func_800F70F0_FirstMap(1);
+    func_800F7500_FirstMap((Object*)D_800F88A4_FirstMap, (void*)0x215);
+    func_800F714C_FirstMap();
+    func_800F77A8_FirstMap(1);
+    HuPrcVSleep();
+    tips = func_800F6BC8_FirstMap(0, 0x64, 0x64);
+    func_800F7500_FirstMap((Object*)D_800F88A4_FirstMap, (void*)0x216);
+    func_800F6DD8_FirstMap(tips);
+    func_800F73A0_FirstMap();
+    func_800F6B50_FirstMap();
+    func_800F6FC4_FirstMap();
+    func_800F7090_FirstMap(NULL);
+    func_800F6B8C_FirstMap();
+    func_800F6F80_FirstMap();
+    func_800F70AC_FirstMap();
+    func_800F70F0_FirstMap(4);
+    func_800F714C_FirstMap();
+    func_800F77A8_FirstMap(1);
+    HuPrcVSleep();
+    tips = func_800F6BC8_FirstMap(1, 0x64, 0x64);
+    func_800F7500_FirstMap((Object*)D_800F88A4_FirstMap, (void*)0x217);
+    func_800F6DD8_FirstMap(tips);
+    func_800F73A0_FirstMap();
+    func_800F6B50_FirstMap();
+    func_800F6FC4_FirstMap();
+    func_800F7090_FirstMap(NULL);
+    func_800F6B8C_FirstMap();
+    func_800F6F80_FirstMap();
+    func_800F70AC_FirstMap();
+    func_800F70F0_FirstMap(6);
+    func_800F714C_FirstMap();
+    func_800F77A8_FirstMap(1);
+    HuPrcVSleep();
+    tips = func_800F6BC8_FirstMap(2, 0x64, 0x64);
+    func_800F7500_FirstMap((Object*)D_800F88A4_FirstMap, (void*)0x218);
+    func_800F6DD8_FirstMap(tips);
+    func_800F73A0_FirstMap();
+    func_800F6B50_FirstMap();
+    func_800F6FC4_FirstMap();
+    func_800F7090_FirstMap(NULL);
+    func_800F6B8C_FirstMap();
+    func_800F6F80_FirstMap();
+    func_800F70AC_FirstMap();
+    func_800F70F0_FirstMap(9);
+    func_800F714C_FirstMap();
+    func_800F77A8_FirstMap(1);
+    HuPrcVSleep();
+    tips = func_800F6BC8_FirstMap(3, 0x64, 0x64);
+    func_800F7500_FirstMap((Object*)D_800F88A4_FirstMap, (void*)0x219);
+    func_800F6DD8_FirstMap(tips);
+    func_800F73A0_FirstMap();
+    HuPrcSleep(0x1E);
+    func_800F7500_FirstMap((Object*)D_800F88A4_FirstMap, (void*)0x21A);
+    func_800F6B50_FirstMap();
+    func_800F6FC4_FirstMap();
+    func_800F7090_FirstMap(NULL);
+    func_800F6B8C_FirstMap();
+    func_800F6F38_FirstMap();
+    func_800F6F80_FirstMap();
+    func_800F70AC_FirstMap();
+    func_800F70F0_FirstMap(7);
+    func_800F714C_FirstMap();
+    func_800F77A8_FirstMap(1);
+    HuPrcVSleep();
+    tips = func_800F6BC8_FirstMap(4, 0x64, 0x64);
+    func_800F7500_FirstMap((Object*)D_800F88A4_FirstMap, (void*)0x21C);
+    func_800F6DD8_FirstMap(tips);
+    func_800F73A0_FirstMap();
+    func_800F6B50_FirstMap();
+    func_800F6FC4_FirstMap();
+    func_800F7090_FirstMap(NULL);
+    func_800F6B8C_FirstMap();
+    func_800F6F80_FirstMap();
+    func_800F70AC_FirstMap();
+    func_800F70F0_FirstMap(6);
+    func_800F714C_FirstMap();
+    func_800F77A8_FirstMap(1);
+    HuPrcVSleep();
+    tips = func_800F6BC8_FirstMap(7, 0x64, 0x64);
+    func_800F7500_FirstMap((Object*)D_800F88A4_FirstMap, (void*)0x21D);
+    func_800F6DD8_FirstMap(tips);
+    func_800F73A0_FirstMap();
+    func_800F6B50_FirstMap();
+    func_800F6FC4_FirstMap();
+    func_800F7090_FirstMap(NULL);
+    func_800F6B8C_FirstMap();
+    func_800F6F80_FirstMap();
+    func_800F70AC_FirstMap();
+    func_800F70F0_FirstMap(8);
+    func_800F714C_FirstMap();
+    func_800F77A8_FirstMap(1);
+    HuPrcVSleep();
+    tips = func_800F6BC8_FirstMap(6, 0x64, 0x64);
+    func_800F7500_FirstMap((Object*)D_800F88A4_FirstMap, (void*)0x21E);
+    func_800F6DD8_FirstMap(tips);
+    func_800F73A0_FirstMap();
+    func_800F7484_FirstMap(4);
+    func_800F7500_FirstMap((Object*)D_800F88A4_FirstMap, (void*)0x220);
+    func_800F74E0_FirstMap();
+    func_800F7484_FirstMap(3);
+    func_800F7500_FirstMap((Object*)D_800F88A4_FirstMap, (void*)0x221);
+    func_800F74E0_FirstMap();
+    func_800F6B50_FirstMap();
+    func_800F6FC4_FirstMap();
+    func_800F7090_FirstMap(NULL);
+    func_800F6B8C_FirstMap();
+    func_800F6F80_FirstMap();
+    func_800F7560_FirstMap(&D_800F88A4_FirstMap->unk0);
+    func_800F7500_FirstMap((Object*)D_800F88A4_FirstMap, (void*)0x222);
+    func_800F70AC_FirstMap();
+    func_800F70F0_FirstMap(6);
+    func_800F714C_FirstMap();
+    func_800F73A0_FirstMap();
+    func_80054868(4);
+    func_800F75F0_FirstMap((Object*)D_800F88A4_FirstMap, -0x28);
+    while (func_80054FA8() != 0) {
+        HuPrcVSleep();
+    }
+    func_800F77A8_FirstMap(2);
+    func_800F7500_FirstMap((Object*)D_800F88A4_FirstMap, (void*)0x223);
+    HuPrcChildLink(process, func_800448A0());
+    HuPrcChildWatch();
+    func_800F7500_FirstMap((Object*)D_800F88A4_FirstMap, (void*)0x224);
+    func_800546B4(0, 1);
+    func_800546B4(1, 1);
+    func_800546B4(2, 1);
+    func_800546B4(3, 1);
+    func_80054868(2);
+    func_800550C4();
+    while (func_80054FA8() != 0) {
+        HuPrcVSleep();
+    }
+    func_800F77A8_FirstMap(2);
+    func_800F7500_FirstMap((Object*)D_800F88A4_FirstMap, (void*)0x225);
+    func_80055228();
+    func_800546B4(0, 2);
+    func_800546B4(1, 1);
+    func_800546B4(2, 2);
+    func_800546B4(3, 1);
+    func_80054868(2);
+    func_800550C4();
+    while (func_80054FA8() != 0) {
+        HuPrcVSleep();
+    }
+    func_800F7500_FirstMap((Object*)D_800F88A4_FirstMap, (void*)0x226);
+    func_800F7500_FirstMap((Object*)D_800F88A4_FirstMap, (void*)0x227);
+    func_80055228();
+    func_800546B4(0, 1);
+    func_800546B4(1, 2);
+    func_800546B4(2, 2);
+    func_800546B4(3, 2);
+    func_80054868(2);
+    func_800550C4();
+    while (func_80054FA8() != 0) {
+        HuPrcVSleep();
+    }
+    func_800F77A8_FirstMap(2);
+    func_800F7500_FirstMap((Object*)D_800F88A4_FirstMap, (void*)0x228);
+    func_800546B4(0, 1);
+    func_800546B4(1, 1);
+    func_800546B4(2, 1);
+    func_800546B4(3, 2);
+    func_80054868(2);
+    func_800550C4();
+    while (func_80054FA8() != 0) {
+        HuPrcVSleep();
+    }
+    func_800F77A8_FirstMap(2);
+    func_800F7500_FirstMap((Object*)D_800F88A4_FirstMap, (void*)0x229);
+    HuPrcSleep(0xF);
+    func_800F7560_FirstMap(&D_800F88A4_FirstMap->unk0);
+    func_800F7500_FirstMap((Object*)D_800F88A4_FirstMap, (void*)0x22A);
+    func_80055228();
+    HuPrcSleep(1);
+    GwSystem.unk_1E = -1;
+    func_8004388C(-1);
+    func_80043D68();
+    func_80054868(5);
+    while (GwSystem.unk_1E == -1) {
+        HuPrcVSleep();
+    }
+    func_800F7500_FirstMap((Object*)D_800F88A4_FirstMap, (void*)0x22B);
+    func_80043544();
+    func_800559BC();
+    func_800F75F0_FirstMap((Object*)D_800F88A4_FirstMap, 0x69);
+    func_800F7560_FirstMap(&D_800F88A4_FirstMap->unk0);
+    func_800F7500_FirstMap((Object*)D_800F88A4_FirstMap, (void*)0x22C);
+    func_800F7500_FirstMap((Object*)D_800F88A4_FirstMap, (void*)0x22D);
+    func_800F6EF0_FirstMap(0x1C);
+    func_800F6EFC_FirstMap();
+    func_800F77A8_FirstMap(1);
+    func_800F7500_FirstMap((Object*)D_800F88A4_FirstMap, (void*)0x22E);
+    PlaySound(0x466);
+    func_800F7500_FirstMap((Object*)D_800F88A4_FirstMap, (void*)0x22F);
+    func_800F6EF0_FirstMap(0x1B);
+    func_800F6EFC_FirstMap();
+    func_800F77A8_FirstMap(1);
+    func_800F7500_FirstMap((Object*)D_800F88A4_FirstMap, (void*)0x232);
+    PlaySound(0x90);
+    func_800F7500_FirstMap((Object*)D_800F88A4_FirstMap, (void*)0x233);
+    func_800F6EF0_FirstMap(0x19);
+    func_800F6EFC_FirstMap();
+    func_800F77A8_FirstMap(1);
+    func_800F7500_FirstMap((Object*)D_800F88A4_FirstMap, (void*)0x230);
+    PlaySound(0x432);
+    func_800F7500_FirstMap((Object*)D_800F88A4_FirstMap, (void*)0x231);
+    func_800F6EF0_FirstMap(0x1A);
+    func_800F6EFC_FirstMap();
+    func_800F77A8_FirstMap(1);
+    func_800F7500_FirstMap((Object*)D_800F88A4_FirstMap, (void*)0x234);
+    PlaySound(0xA0);
+    func_800F7500_FirstMap((Object*)D_800F88A4_FirstMap, (void*)0x235);
+    func_800F7560_FirstMap(&D_800F88A4_FirstMap->unk0);
+    func_800F7500_FirstMap((Object*)D_800F88A4_FirstMap, (void*)0x236);
+    func_800F7500_FirstMap((Object*)D_800F88A4_FirstMap, (void*)0x237);
+    HuPrcSleep(0x1E);
+    func_800F7560_FirstMap(&D_800F88A4_FirstMap->unk0);
+    func_800F7500_FirstMap((Object*)D_800F88A4_FirstMap, (void*)0x238);
+    func_800601D4(0x3C);
+    func_800726AC(2, 0x10);
+    func_80072724(0xFF, 0xFF, 0xFF);
+    HuPrcSleep(0x10);
+    func_8004847C(D_800F88A4_FirstMap);
+    func_80056AF4();
+    func_80056984();
+    omOvlReturnEx(1);
+    omOvlKill();
+    HuPrcVSleep();
+}
 s16 func_800F81F8_FirstMap(s32 arg0) {
     s16 temp_s1;
     s16 temp_s1_2;
@@ -540,7 +948,7 @@ void func_800F852C_FirstMap(void) {
     func_800F67F4_FirstMap();
     func_800F68A4_FirstMap();
     func_800F692C_FirstMap();
-    EventTableHydrate(&D_800F87A8_FirstMap);
+    EventTableHydrate(D_800F87A8_FirstMap);
     
     for (i = 0; i < 4; i++) {
         player = GetPlayerStruct(i);

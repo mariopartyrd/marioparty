@@ -1,6 +1,20 @@
 #include "PR/gu.h"
 #include "engine/graphics.h"
 
+u8 D_800C30C0 = 0;
+u8 D_800C30C1 = 0;
+u8 D_800C30C2 = 0;
+Gfx D_800C30C8[] = {
+    gsDPPipeSync(),
+    gsDPSetCycleType(G_CYC_1CYCLE),
+    gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, TEXEL0, PRIMITIVE, TEXEL0, TEXEL0, 0, SHADE, 0, 0, TEXEL0, PRIMITIVE, TEXEL0),
+    gsDPSetRenderMode(G_RM_AA_OPA_SURF, G_RM_AA_OPA_SURF2),
+    gsDPSetAlphaCompare(G_AC_THRESHOLD),
+    gsDPSetTexturePersp(G_TP_NONE),
+    gsDPSetTextureFilter(G_TF_POINT),
+    gsSPEndDisplayList(),
+};
+
 typedef struct {
     s32 unk00;
     u16 unk04;
@@ -147,7 +161,7 @@ void func_8001A7DC(void* arg0) {
             osRecvMesg(&gSwapChainMesgQueue, (OSMesg) &recvdMesg, 1);
             gSPSegment(dl++, frameBufferSegmentID, pAvailableFrameBuffer);
             gSPBranchList(dl++, recvdMesg->unk00);
-            pSwapChain->mesgQueue.fullqueue = (void *) recvdMesg->unk08;
+            pSwapChain->mesgQueue.fullqueue = (void *) (recvdMesg->unk08);
             pTask->t.dram_stack = gThread3Stack;
             pTask->t.output_buff = gThreadOutStack;
             pTask->t.output_buff_size = gThreadOutStackSize;
@@ -163,7 +177,7 @@ void func_8001A7DC(void* arg0) {
             osSetIntMask(intMask);
 
             if (recvdMesg->unk0C != NULL) {
-                osSendMesg(recvdMesg->unk0C, (OSMesg) recvdMesg->unk10, 1);
+                osSendMesg(recvdMesg->unk0C, (OSMesg) (recvdMesg->unk10), 1);
             }
         } while (!((s32) recvdMesg->unk08 & 1)); } while (FALSE);
     

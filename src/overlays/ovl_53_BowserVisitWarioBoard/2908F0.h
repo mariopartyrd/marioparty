@@ -7,4 +7,4 @@ void func_800F6E6C_BowserVisitWarioBoard(void);
 void func_800F6F40_BowserVisitWarioBoard(void);
 void func_800F6C9C_BowserVisitWarioBoard(omObjData*);
 void func_800F6C50_BowserVisitWarioBoard(void);
-s32 func_8004DBD4(s32, u8);
+void func_8004DBD4(s32, u8);

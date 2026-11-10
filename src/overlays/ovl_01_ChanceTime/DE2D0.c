@@ -1,5 +1,8 @@
 #include "ChanceTime.h"
 
+/* .data (0x80101360) */
+s8 D_80101360_ChanceTime = 0;
+
 void func_800FF6D0_ChanceTime(omObjData* arg0) {
     if (D_80101360_ChanceTime == 0) {
         if ((arg0->trans.x > -180.0f) && (arg0->trans.x < 180.0f) && (D_801011F8_ChanceTime == 1)) {

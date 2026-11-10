@@ -19,8 +19,71 @@ void func_8005B860(s32);
 void func_8005BD10(s32);
 void func_8005B860(s32);
 void func_8005B860(s32);
-extern EventTableEntry D_800F6A9C_name_76;
-extern testStruct2 D_800F69E0_name_76[];
+void func_800F67B8_name_76(void);
+void func_800F67DC_name_76(void);
+void func_800F6854_name_76(void);
+void func_800F687C_name_76(void);
+void func_800F6898_name_76(void);
+void func_800F68B4_name_76(void);
+void func_800F68D0_name_76(void);
+void func_800F68EC_name_76(void);
+void func_800F6908_name_76(void);
+void func_800F6924_name_76(void);
+void func_800F6948_name_76(void);
+
+testStruct2 D_800F69E0_name_76[] = {
+    { 1, 0x2D }, { 2, 0x2E }, { 3, 0x2F }, { 4, 0x30 }, { 5, 0x31 }, { 6, 0x32 }, { -1, 0xFFFF },
+};
+EventListEntry D_800F69FC_name_76[] = {
+    { 1, 1, func_800F67B8_name_76 },
+    { 3, 2, func_800F67DC_name_76 },
+    { 0, 0, NULL },
+};
+EventListEntry D_800F6A14_name_76[] = {
+    { 1, 1, func_800F6854_name_76 },
+    { 0, 0, NULL },
+};
+EventListEntry D_800F6A24_name_76[] = {
+    { 1, 1, func_800F687C_name_76 },
+    { 0, 0, NULL },
+};
+EventListEntry D_800F6A34_name_76[] = {
+    { 1, 1, func_800F6898_name_76 },
+    { 0, 0, NULL },
+};
+EventListEntry D_800F6A44_name_76[] = {
+    { 1, 1, func_800F68B4_name_76 },
+    { 0, 0, NULL },
+};
+EventListEntry D_800F6A54_name_76[] = {
+    { 1, 1, func_800F68D0_name_76 },
+    { 0, 0, NULL },
+};
+EventListEntry D_800F6A64_name_76[] = {
+    { 1, 1, func_800F68EC_name_76 },
+    { 0, 0, NULL },
+};
+EventListEntry D_800F6A74_name_76[] = {
+    { 1, 1, func_800F6908_name_76 },
+    { 0, 0, NULL },
+};
+EventListEntry D_800F6A84_name_76[] = {
+    { 1, 1, func_800F6924_name_76 },
+    { 3, 2, func_800F6948_name_76 },
+    { 0, 0, NULL },
+};
+EventTableEntry D_800F6A9C_name_76[] = {
+    { 7, D_800F69FC_name_76 },
+    { 0, D_800F6A14_name_76 },
+    { 1, D_800F6A24_name_76 },
+    { 2, D_800F6A34_name_76 },
+    { 3, D_800F6A44_name_76 },
+    { 4, D_800F6A54_name_76 },
+    { 5, D_800F6A64_name_76 },
+    { 6, D_800F6A74_name_76 },
+    { 8, D_800F6A84_name_76 },
+    { -1, NULL },
+};
 
 void func_800F6610_name_76(void) {
     testStruct2* temp = D_800F69E0_name_76;
@@ -47,7 +110,7 @@ void func_800F666C_name_76(void) {
     player = GetPlayerStruct(0);
     func_8003E174(player->player_obj);
     player->player_obj->unk_0A |= 2;
-    EventTableHydrate(&D_800F6A9C_name_76);
+    EventTableHydrate(D_800F6A9C_name_76);
     func_800F6610_name_76();
     func_8005CC3C();
     func_80060128(0x47);

@@ -27,7 +27,9 @@ DecisionTreeNonLeafNode D_800F8D00_EternalStar[4] = { { 0x05000000, {(void*) 0x0
 DecisionTreeNonLeafNode D_800F8D30_EternalStar[4] = { { 0x05000000, {(void*) 0x00000001}, {0x0000141E} }, { 0x05000000, {(void*) 0x00000002}, {0x00000A1E} }, {0x05000000, { (void*) 0x00000004}, {0x00000514} }, { 0x00000000, {0x00000000}, {0x0000000A} } };
 DecisionTreeNonLeafNode D_800F8D60_EternalStar[1] = { { 0x00000000, {0x00000000}, {0x00003232} } };
 s16 (*D_800F8D6C_EternalStar[16])() = {func_800F753C_EternalStar, func_800F7564_EternalStar, func_800F758C_EternalStar, func_800F75B4_EternalStar, func_800F75DC_EternalStar, func_800F753C_EternalStar, func_800F7608_EternalStar, func_800F7630_EternalStar, func_800F7658_EternalStar, func_800F7684_EternalStar, func_800F753C_EternalStar, func_800F76B0_EternalStar, func_800F76D8_EternalStar, func_800F7704_EternalStar, func_800F7730_EternalStar, func_800F753C_EternalStar};
-s32 D_800F8DAC_EternalStar[] = {0x05000000, 0x00000001, 0x00015541, 0x05000000, 0x00000002, 0x00015A46, 0x05000000, 0x00000004, 0x00015F4B, 0x00000000, 0x00000000, 0x00016450};
+/* Was a flat s32[]; it is walked as decision-tree nodes (RunDecisionTree), which are wider on
+   the host. Same bytes on the N64. */
+DecisionTreeNonLeafNode D_800F8DAC_EternalStar[4] = { { 0x05000000, {(void*) 0x00000001}, {0x00015541} }, { 0x05000000, {(void*) 0x00000002}, {0x00015A46} }, { 0x05000000, {(void*) 0x00000004}, {0x00015F4B} }, { 0x00000000, {0x00000000}, {0x00016450} } };
 DecisionTreeNonLeafNode D_800F8DDC_EternalStar[2] = { { 0x06000000, {func_800F7B6C_EternalStar}, {0x00016464} },               { 0x00000000, {0x00000000},           {0x00006464} } };
 DecisionTreeNonLeafNode D_800F8DF4_EternalStar[3] = { { 0x02000000, {(void*) 0x00000004},   {(u32) D_800F8DAC_EternalStar} },  { 0x06000000, {func_800F7BA0_EternalStar}, {0x00016464} }, { 0x00000000, {0x00000000}, {0x00006464} } };
 DecisionTreeNonLeafNode D_800F8E18_EternalStar[2] = { { 0x06000000, {func_800F7BD4_EternalStar}, {0x00016464} },               { 0x00000000, {0x00000000},           {0x00006464} } };
@@ -333,7 +335,7 @@ void func_800F6BD8_EternalStar(void) {
         var_a1 = 0x4F0;
     }
 
-    LoadStringIntoWindow(temp_s0->unk_08, (void*)var_a1, -1, -1);
+    LoadStringIntoWindow(temp_s0->unk_08, (void*)(s32)var_a1, -1, -1);
     func_80071C8C(temp_s0->unk_08, 1);
     PlaySound(0xF0);
     WaitForTextConfirmation(temp_s0->unk_08);
@@ -346,7 +348,7 @@ void func_800F6BD8_EternalStar(void) {
         var_a1_2 = 0x4F1;
     }
 
-    LoadStringIntoWindow(temp_s0->unk_08, (void*)var_a1_2, -1, -1);
+    LoadStringIntoWindow(temp_s0->unk_08, (void*)(s32)var_a1_2, -1, -1);
     func_80071C8C(temp_s0->unk_08, 1);
     WaitForTextConfirmation(temp_s0->unk_08);
     func_80071E80(temp_s0->unk_08, 1);
@@ -1080,7 +1082,7 @@ void func_800F8588_EternalStar(void) {
 
 void func_800F87E4_EternalStar(EventTableUnkStruct* arg0) {
     s32 directionResult;
-    s32 temp_s2;
+    unk_8003B8D4Struct* temp_s2;
     s32 i;
     s32 tempVar;
 

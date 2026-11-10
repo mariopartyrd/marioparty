@@ -134,7 +134,7 @@ void func_80064234(void* arg0) {
 
     while (TRUE) {
         osRecvMesg(&D_800F3370, (OSMesg*) &msgWrapper.unkMsg, OS_MESG_BLOCK);       
-        switch ((s32) msgWrapper.unkMsg) {
+        switch ((s32) (msgWrapper.unkMsg)) {
             case 1:
                 func_800641C0((s16) 0);
                 break;

@@ -53,7 +53,7 @@ s32 func_80013974(s32 arg0) {
         osContStartReadData(&D_800EE960);
         osRecvMesg(&D_800EE960, 0, 1);
 
-        osContGetReadData(&D_800D1170[D_800D12B4].pad);
+        osContGetReadData(D_800D1170[D_800D12B4].pad);
 
         osRecvMesg(&D_800D12D0, 0, 1);
 
@@ -81,127 +81,132 @@ void func_80013AEC(s8 arg0, s8 arg1) {
     D_800D12BF = arg1;
 }
 
-#ifdef NON_MATCHING
-s16 func_80013B00(void) {
-    s16 var_a3;
-    pad_unk_substruct* temp_v1_2;
+s16 func_80013B00(void);
 
-    osRecvMesg(&D_800D12D0, NULL, 1);
-    if (D_800D12B0 != 0) {
-        D_800D12B0--;
-
-        D_800D12B2++;
-        if (D_800D12B2 >= 8) {
-            D_800D12B2 = 0;
-        }
-
-        for (var_a3 = 0; var_a3 < PAD_COUNT; var_a3++) {
-            temp_v1_2 = &D_800D1170[D_800D12B2].unk6;
-            D_800D12BA[var_a3] = temp_v1_2->unk4 != 8;
-            ContBtn[var_a3] = temp_v1_2->unk0;
-            ContStkX[var_a3] = temp_v1_2->unk2;
-            D_800F2CE2[var_a3] = temp_v1_2->unk2;
-            ContStkY[var_a3] = temp_v1_2->unk3;
-            D_800F33CC[var_a3] = temp_v1_2->unk3;
-            ContBtnTrg[var_a3] = temp_v1_2->unk0 & (temp_v1_2->unk0 ^ D_800ECE08[var_a3]);
-            if (D_800ECE08[var_a3] != temp_v1_2->unk0) {
-                D_800F338C[var_a3] = ContBtnTrg[var_a3];
-                D_800D12B6[var_a3] = 0x1E;
-            }
-            else {
-                D_800D12B6[var_a3] -= 1;
-                if (!(D_800D12B6[var_a3] & 0xFF)) {
-                    D_800F338C[var_a3] = temp_v1_2->unk0;
-                    D_800D12B6[var_a3] = 0xA;
-                }
-                else {
-                    D_800F338C[var_a3] = 0;
-                }
-            }
-            if (((ContStkX[var_a3] + 9) & 0xFF) < 0x13U) {
-                ContStkX[var_a3] = 0;
-            }
-            else if (D_800D12BE < ContStkX[var_a3]) {
-                ContStkX[var_a3] = D_800D12BE;
-            }
-            else if (ContStkX[var_a3] < -D_800D12BE) {
-                ContStkX[var_a3] = -D_800D12BE;
-            }
-            if (((ContStkY[var_a3] + 9) & 0xFF) < 0x13U) {
-                ContStkY[var_a3] = 0;
-            }
-            else if (D_800D12BF < ContStkY[var_a3]) {
-                ContStkY[var_a3] = D_800D12BF;
-            }
-            else {
-                if (ContStkY[var_a3] < -D_800D12BF) {
-                    ContStkY[var_a3] = -D_800D12BF;
-                }
-            }
-            D_800ECE08[var_a3] = temp_v1_2->unk0;
-        }
+// Logic rewritten from the asm 2026-10-03 (upstream C read the wrong slot and pad), then matched.
+// Consumes the oldest queued read: updates held/triggered/repeat buttons and the dead-zoned,
+// clamped sticks for every pad. Returns the queue count before this read (0 = nothing read).
+// decomp-permuter
+s16 func_80013B00(void)
+{
+  s16 count;
+  s16 i;
+  OSContPad *slot;
+  u16 btn;
+  osRecvMesg(&D_800D12D0, 0, 1);
+  count = D_800D12B0;
+  if (count != 0)
+  {
+    D_800D12B0 = count - 1;
+    slot = D_800D1170[D_800D12B2].pad;
+    if ((++D_800D12B2) >= 8)
+    {
+      D_800D12B2 = 0;
     }
-    osSendMesg(&D_800D12D0, NULL, 1);
-    return D_800D12B0;
-}
-#else
-INCLUDE_ASM("asm/nonmatchings/engine/pad", func_80013B00);
-#endif
+    for (i = 0; i < 4; i++)
+    {
+      D_800D12BA[i] = slot[i].errno != 0x8;
+      btn = (ContBtn[i] = slot[i].button);
+      ContStkX[i] = slot[i].stick_x;
+      D_800F2CE2[i] = ContStkX[i];
+      ContStkY[i] = slot[i].stick_y;
+      D_800F33CC[i] = ContStkY[i];
+      ContBtnTrg[i] = btn & (btn ^ D_800ECE08[i]);
+      if (D_800ECE08[i] == btn)
+      {
+        if ((--D_800D12B6[i]) == 0)
+        {
+          D_800F338C[i] = btn;
+          D_800D12B6[i] = 10;
+        }
+        else
+        {
+          D_800F338C[i] = 0;
+        }
+      }
+      else
+      {
+        D_800F338C[i] = ContBtnTrg[i];
+        D_800D12B6[i] = 30;
+      }
+      if (((u8) (ContStkX[i] + 9)) < 19)
+      {
+        ContStkX[i] = 0;
+      }
+      else
+        if (ContStkX[i] > D_800D12BE)
+      {
+        ContStkX[i] = D_800D12BE;
+      }
+      else
+        if (ContStkX[i] < (-D_800D12BE))
+      {
+        ContStkX[i] = -D_800D12BE;
+      }
+      if (((u8) (ContStkY[i] + 9)) < 19)
+      {
+        ContStkY[i] = 0;
+      }
+      else
+        if (ContStkY[i] > D_800D12BF)
+      {
+        ContStkY[i] = D_800D12BF;
+      }
+      else
+        if (ContStkY[i] < (-D_800D12BF))
+      {
+        ContStkY[i] = -D_800D12BF;
+      }
+      D_800ECE08[i] = btn;
+    }
 
-#ifdef NON_MATCHING
+  }
+  osSendMesg(&D_800D12D0, 0, 1);
+  return count;
+}
+
+extern s8 D_800F0A40[PAD_COUNT][8];   /* per-pad stick X history, one entry per queued read */
+extern s8 D_800F5258[PAD_COUNT][8];   /* per-pad stick Y history */
+extern s16 D_800F5440;                /* reads consumed by the last func_80013E84 */
+
+/* Drains every queued controller read: ORs the trigger/repeat bits together, sums the sticks
+ * into D_800F2CE2/D_800F33CC and records each read's stick values. At most 8 reads are queued
+ * (D_800D12B0 < 8), so the history index stays in bounds. */
 s16 func_80013E84(void) {
-    s16 var_a3;
-    s16 var_s0;
-    s16* temp_a1_2;
-    s32 temp_a0_2;
-    s32 temp_a0_5;
-    u16* temp_a0;
-    u16* temp_a0_3;
-    u16* temp_a0_4;
-    void* temp_a0_6;
+    u16 trg[PAD_COUNT];
+    u16 rep[PAD_COUNT];
+    s16 i;
+    s16 n = 0;
 
-    var_s0 = 0;
-    if ((func_80013B00()) > 0) {
-        for (var_a3 = 0; var_a3 < PAD_COUNT; var_a3++) {
-            temp_a0 = &(&sp10[0])[var_a3];
-            temp_a0->unk0 = ContBtnTrg[var_a3];
-            temp_a0->unk8 = D_800F338C[var_a3];
-            D_800F2CE2[var_a3] = ContStkX[var_a3];
-            D_800F33CC[var_a3] = ContStkY[var_a3];
-            temp_a0_2 = var_a3 * 8;
-            *(temp_a0_2 + D_800F0A40) = ContStkX[var_a3];
-            *(temp_a0_2 + D_800F5258) = ContStkY[var_a3];
+    if (func_80013B00() > 0) {
+        for (i = 0; i < PAD_COUNT; i++) {
+            trg[i] = ContBtnTrg[i];
+            rep[i] = D_800F338C[i];
+            D_800F2CE2[i] = ContStkX[i];
+            D_800F33CC[i] = ContStkY[i];
+            D_800F0A40[i][n] = ContStkX[i];
+            D_800F5258[i][n] = ContStkY[i];
         }
-        var_s0 = 1;
-        while ((func_80013B00()) != 0) {
-            for (var_a3 = 0; var_a3 < PAD_COUNT; var_a3++) {
-                temp_a0_3 = &(&sp10[0])[var_a3];
-                temp_a0_3->unk0 |= ContBtnTrg[var_a3];
-                temp_a0_3->unk8 = (u16) (temp_a0_3->unk8 | D_800F338C[var_a3]);
-                temp_a0_4 = &D_800F2CE2[var_a3];
-                *temp_a0_4 += (s8) (u8) ContStkX[var_a3];
-                temp_a1_2 = &D_800F33CC[var_a3];
-                *temp_a1_2 = (s8) (u8) ContStkY[var_a3] + (u16) *temp_a1_2;
-                temp_a0_5 = var_a3 * 8;
-                *(temp_a0_5 + D_800F0A40 + var_s0) = (u8) ContStkX[var_a3];
-                *(temp_a0_5 + D_800F5258 + var_s0) = (u8) ContStkY[var_a3];
-                var_a3++;
+        n++;
+        while (func_80013B00() != 0) {
+            for (i = 0; i < PAD_COUNT; i++) {
+                trg[i] |= ContBtnTrg[i];
+                rep[i] |= D_800F338C[i];
+                D_800F2CE2[i] += ContStkX[i];
+                D_800F33CC[i] += ContStkY[i];
+                D_800F0A40[i][n] = ContStkX[i];
+                D_800F5258[i][n] = ContStkY[i];
             }
-            var_s0 += 1;
+            n++;
         }
-        do {
-            temp_a0_6 = var_a3 + &sp10[0];
-            *(var_a3 + ContBtnTrg) = temp_a0_6->unk0;
-            *(var_a3 + D_800F338C) = temp_a0_6->unk8;
-            var_a3++;
-        } while (var_a3 < PAD_COUNT);
+        for (i = 0; i < PAD_COUNT; i++) {
+            ContBtnTrg[i] = trg[i];
+            D_800F338C[i] = rep[i];
+        }
     }
-    D_800F5440 = var_s0;
-    return var_s0;
+    D_800F5440 = n;
+    return n;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/engine/pad", func_80013E84);
-#endif
 
 void func_80014158(void) {
     func_80013974(0);

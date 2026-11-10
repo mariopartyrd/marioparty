@@ -1,3 +1,7 @@
 #include "common.h"
 
-INCLUDE_ASM("asm/nonmatchings/A1570", func_800A0970);
+s32 func_800A0890(f32 x, f32 eps);
+
+s32 func_800A0970(f32 a, f32 b, f32 eps) {
+    return func_800A0890(a - b, eps);
+}

@@ -1,7 +1,7 @@
 #ifndef INCLUDE_ASM_H
 #define INCLUDE_ASM_H
 
-#if !defined(SPLAT) && !defined(M2CTX) && !defined(PERMUTER)
+#if   !defined(SPLAT) && !defined(M2CTX) && !defined(PERMUTER)
 #ifndef INCLUDE_ASM
 #define INCLUDE_ASM(FOLDER, NAME) \
     __asm__( \

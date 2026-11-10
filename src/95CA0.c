@@ -1,3 +1,12 @@
-#include "common.h"
+#include "PR/os_internal.h"
+#include "PR/rcp.h"
 
-INCLUDE_ASM("asm/nonmatchings/95CA0", __osAiDeviceBusy);
+s32 __osAiDeviceBusy(void) {
+    register s32 status = IO_READ(AI_STATUS_REG);
+
+    if (status & AI_STATUS_FIFO_FULL) {
+        return TRUE;
+    } else {
+        return FALSE;
+    }
+}

@@ -1,5 +1,11 @@
 #include "common.h"
 
+unk_Struct00* D_800C3110 = NULL;
+/* Per-camera defaults for 1-4 views (InitCameras passes element 0 to every camera). */
+Vec3f D_800C3114[5] = { { 640.0f, 480.0f, 511.0f }, { 320.0f, 240.0f, 511.0f }, { 320.0f, 240.0f, 511.0f }, { 320.0f, 240.0f, 511.0f }, { 320.0f, 240.0f, 511.0f } };
+Vec3f D_800C3150[5] = { { 640.0f, 480.0f, 511.0f }, { 320.0f, 240.0f, 511.0f }, { 960.0f, 240.0f, 511.0f }, { 320.0f, 720.0f, 511.0f }, { 960.0f, 720.0f, 511.0f } };
+Vec4f D_800C318C[5] = { { 0.0f, 0.0f, 320.0f, 240.0f }, { 0.0f, 0.0f, 160.0f, 120.0f }, { 160.0f, 0.0f, 320.0f, 120.0f }, { 0.0f, 120.0f, 160.0f, 240.0f }, { 160.0f, 120.0f, 320.0f, 240.0f } };
+
 void InitCameras(s16 count) {
     s16 j;
     s16 i;
@@ -9,14 +15,14 @@ void InitCameras(s16 count) {
     if (D_800C3110 != NULL) {
         func_80023728(D_800C3110);
     }
-    D_800C3110 = func_80023668(0x1DD0);
+    D_800C3110 = func_80023668(6 * sizeof(*D_800C3110));
     for (i = 0; i < 6; i++) {
         D_800C3110[i].unk_40 = 45.0f;
         D_800C3110[i].unk_44 = 80.0f;
         D_800C3110[i].unk_48 = 8000.0f;
         D_800C3110[i].unk4E = 0;
-        func_8001D520(i, &D_800C3114, &D_800C3150);
-        func_8001D4D4(i, &D_800C318C);
+        func_8001D520(i, &D_800C3114[0], &D_800C3150[0]);
+        func_8001D4D4(i, &D_800C318C[0]);
         D_800C3110[i].unkE8 = 0;
         D_800C3110[i].unkF0 = 0;
         D_800C3110[i].unkF4 = 0;

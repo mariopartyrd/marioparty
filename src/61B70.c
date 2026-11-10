@@ -1,6 +1,25 @@
 #include "common.h"
 #include "PR/os.h"
 
+extern u8 D_800B1760[];
+extern u8 D_800B1830[];
+extern OSMesg D_800D8C78[];
+extern s32 D_800D8C8C;
+extern void* D_800D8C90;
+extern s32 D_800D8C94;
+extern s32 D_800D8C98;
+extern s32 D_800D8C9C;
+extern s32 D_800D8CA0;
+extern s32 D_800D8CA4;
+extern s32 D_800D8CAC;
+extern Gfx* D_800D8CB8;
+extern s32 D_800D8CBC;
+extern s32 D_800D8CC4;
+extern OSMesgQueue* D_800D8CC8;
+extern s32 D_800D8CCC;
+extern s32* D_800F317C;
+
+
 typedef struct unk_Struct_func_800611A4 {
     OSTime unk_00;
     s16 unk_08;
@@ -32,8 +51,27 @@ extern unk_Struct_func_800611A4 D_800D8B80;
 extern unk_Struct_func_800611A4 D_800D8C58;
 extern OSMesgQueue D_800D8C60;
 
-INCLUDE_ASM("asm/nonmatchings/61B70", func_80060F70);
-
+void func_80060F70(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u16 arg4) {
+    D_800D8AA8.unk_0A.x = arg1;
+    D_800D8AA8.unk_0A.y = arg2;
+    D_800D8B80.unk_0A.x = arg3;
+    D_800D8B80.unk_0A.y = arg4;
+    D_800D8CC8 = &D_800D8C60;
+    D_800D8CCC = 0;
+    D_800D8C88 = (OSMesg)1;
+    D_800D8C8C = 2;
+    D_800D8C90 = D_800B1760;
+    D_800D8C94 = D_800B1830 - D_800B1760;
+    D_800D8C9C = 0x1000;
+    D_800D8CA4 = 0x800;
+    D_800D8CAC = 0x400;
+    D_800D8CB8 = &D_800D8CD0;
+    D_800D8CBC = 0;
+    D_800D8CC4 = 0xC00;
+    D_800D8C98 = D_800F317C[arg0 * 2];
+    D_800D8CA0 = D_800F317C[(arg0 * 2) | 1];
+    osCreateMesgQueue(&D_800D8C60, D_800D8C78, 3);
+}
 void func_80061094(void) {
     D_800D8C58.unk_00 = osGetTime();
     while (!osRecvMesg(&D_800D8C60, NULL, 0)) {

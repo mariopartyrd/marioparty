@@ -12,7 +12,7 @@ void func_8001A7DC(void*); // Swap Chain Loop
 
 // TODO: Move to respective header files
 typedef struct {
-    s32 unk00;
+    void* unk00; /* the nnsched client's next */
     OSMesgQueue *unk04;
     s32 unk08;
 } unkSchedStruct;

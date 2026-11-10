@@ -19,7 +19,7 @@
  *====================================================================*/
 
 #include "synthInternals.h"
-#include <assert.h>
+#include <libc/assert.h>
 
 // TODO: this comes from a header
 #ident "$Revision: 1.17 $"

@@ -23,7 +23,8 @@ typedef struct {
 } unkMesg;
 
 typedef struct {
-    s32 unk0[4];
+    s32 unk0[4]; /* the nnsched client (next, msgQ, mask): 24 bytes on the host, so this must be
+                         pointer-wide or unkMsg (the SI thread's receive slot) overlaps its mask */
     unkMesg* unkMsg;
 } unkMesgWrapper;
 

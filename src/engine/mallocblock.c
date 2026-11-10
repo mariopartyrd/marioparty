@@ -1,6 +1,8 @@
 #include "common.h"
 #include "engine/mallocblock.h"
 
+s16 D_800C32A0 = 0;
+
 void func_800235F0(void* (*arg0)(s32), void (*arg1)(void*)) {
     unkMallocBlockStruct* temp_v0;
 

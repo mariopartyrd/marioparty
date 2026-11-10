@@ -1,6 +1,71 @@
 #include "common.h"
 #include "BuriedTreasure.h"
 
+/* Unreferenced: the bytes splat put between this unit's data objects (an f32 -2^63, then zero). */
+u32 D_800FBAB0_BuriedTreasure[2] = { 0xDF000000, 0 };
+/* Per-pixel-pair masks of a 24x24 brush (12 bytes per row, values 0x0F/0xF0/0xFF). */
+u16 D_800FBAB8_BuriedTreasure[24 * 12] = {
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x0000, 0x0000, 0x0000, 0x0000, 0x000F, 0x00FF, 0x0000, 0x00FF, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x0000, 0x0000, 0x0000, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x0000, 0x0000, 0x0000,
+    0x0000, 0x0000, 0x000F, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00F0, 0x0000, 0x0000,
+    0x0000, 0x0000, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x0000, 0x0000,
+    0x0000, 0x000F, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00F0, 0x0000,
+    0x0000, 0x000F, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x0000,
+    0x0000, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00F0,
+    0x0000, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00F0,
+    0x000F, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF,
+    0x000F, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF,
+    0x0000, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF,
+    0x000F, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00F0,
+    0x000F, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF,
+    0x000F, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF,
+    0x000F, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00F0,
+    0x0000, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00F0,
+    0x0000, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00F0,
+    0x0000, 0x000F, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x0000,
+    0x0000, 0x000F, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00F0, 0x0000,
+    0x0000, 0x0000, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x0000, 0x0000,
+    0x0000, 0x0000, 0x000F, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00F0, 0x0000, 0x0000,
+    0x0000, 0x0000, 0x0000, 0x000F, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x0000, 0x0000, 0x0000,
+    0x0000, 0x0000, 0x0000, 0x0000, 0x000F, 0x00F0, 0x00FF, 0x00F0, 0x0000, 0x0000, 0x0000, 0x0000,
+};
+u32 D_800FBCF8_BuriedTreasure[2] = { 0xDF000000, 0 };
+u8 D_800FBD00_BuriedTreasure[24 * 12] = {
+    0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+    0xFF, 0xFF, 0xFF, 0xFF, 0xF0, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0xFF, 0xFF,
+    0xFF, 0xFF, 0xFF, 0xF0, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0xFF,
+    0xFF, 0xFF, 0xF0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF,
+    0xFF, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0F, 0xFF,
+    0xFF, 0xF0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF,
+    0xFF, 0xF0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF,
+    0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0F,
+    0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0F,
+    0xF0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0xF0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0xF0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0xF0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0xF0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0xF0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0xF0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0F,
+    0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0F,
+    0xFF, 0xF0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF,
+    0xFF, 0xF0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF,
+    0xFF, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0F, 0xFF,
+    0xFF, 0xFF, 0xF0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF,
+    0xFF, 0xFF, 0xFF, 0xF0, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0xFF,
+    0xFF, 0xFF, 0xFF, 0xFF, 0xF0, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0xFF, 0xFF,
+};
+u8 D_800FBE20_BuriedTreasure[2] = { 0xF0, 0x0F };
+s8 D_800FBE24_BuriedTreasure[2] = { 0xF0, 0x0F };
+u32 D_800FBE28_BuriedTreasure[2] = { 0, 0 }; /* unreferenced */
+unkStructSize4 D_800FBE30_BuriedTreasure[9] = {
+    { 0, 0 }, { 0, 1 }, { 0, -1 }, { 1, 0 }, { 1, 1 }, { 1, -1 }, { -1, 0 }, { -1, 1 }, { -1, -1 },
+};
+u32 D_800FBE54_BuriedTreasure = 0x19971204; //rng sub seed
+s16 D_800FBE58_BuriedTreasure = 0;
+
 void func_800F8760_BuriedTreasure(void) {
     CZoom = 2000.0f;
     CRot.x = 0.0f;
@@ -147,7 +212,6 @@ void func_800F8C84_BuriedTreasure(s16 arg0, f32* arg1, f32* arg2, f32* arg3) {
     }
 }
 
-#ifdef NON_MATCHING // missing nop, matches without vr4300mul-off
 void func_800F8D1C_BuriedTreasure(unkStructSize0x5C* arg0) {
     unkStructSize0x5C* temp_v0;
     f32 var_f20;
@@ -190,16 +254,9 @@ void func_800F8D1C_BuriedTreasure(unkStructSize0x5C* arg0) {
         }
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/overlays/ovl_03_BuriedTreasure/EB0E0", func_800F8D1C_BuriedTreasure);
-#endif
-
-#ifdef NON_MATCHING // missing nops, doesn't match even without vr4300mul-off
-// rodata (func_800F8EF0_BuriedTreasure)
-extern const f64 D_800FBF30_BuriedTreasure; // 1.0
 
 s16 func_800F8EF0_BuriedTreasure(f32* arg0, f32* arg1, s16 arg2) {
-    unkStructSize0xC* temp_s6;
+    unk65770AnimC* temp_s6;
     u8* temp_s5;
     f64 incr;
     f32 var_f20;
@@ -217,14 +274,14 @@ s16 func_800F8EF0_BuriedTreasure(f32* arg0, f32* arg1, s16 arg2) {
     var_f24 = 0.0f;
     var_f28 = 0.0f;
     var_f26 = 65535.0f;
-    temp_s6 = D_800EC700[D_800FC198_BuriedTreasure[3]]->unk_00;
-    temp_s5 = temp_s6->unk_00 + ((s16) *arg0 + 148) / 2 + ((s16) *arg1 + 108) * temp_s6->unk_04 / 2;
+    temp_s6 = D_800EC700[D_800FC198_BuriedTreasure[3]]->unk0;
+    temp_s5 = temp_s6->unk0 + ((s16) *arg0 + 148) / 2 + ((s16) *arg1 + 108) * temp_s6->unk4 / 2;
 
     var_f22 = -12.0f;
     for (i = 0, temp_s7 = ((s16) *arg0) & 1; i < 24; i++) {
         var_f20 = -12.0f;
         for (j = 0; j < 24; j++) {
-            if ((*(temp_s5 + (j + temp_s7) / 2 + i * temp_s6->unk_04 / 2) & D_800FBE20_BuriedTreasure[(j + temp_s7) & 1])
+            if ((*(temp_s5 + (j + temp_s7) / 2 + i * temp_s6->unk4 / 2) & D_800FBE20_BuriedTreasure[(j + temp_s7) & 1])
                 && !(D_800FBD00_BuriedTreasure[i * 12 + j / 2] & D_800FBE20_BuriedTreasure[j & 1])) {
                 var_f4 = sqrtf(SQ(var_f20) + SQ(var_f22));
                 var_s2++;
@@ -252,9 +309,6 @@ s16 func_800F8EF0_BuriedTreasure(f32* arg0, f32* arg1, s16 arg2) {
 
     return 0;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/overlays/ovl_03_BuriedTreasure/EB0E0", func_800F8EF0_BuriedTreasure);
-#endif
 
 s16 func_800F9260_BuriedTreasure(f32* arg0, f32* arg1, s16 arg2) {
     s16 i;
@@ -265,8 +319,8 @@ s16 func_800F9260_BuriedTreasure(f32* arg0, f32* arg1, s16 arg2) {
 }
 
 u16 func_800F92D4_BuriedTreasure(f32 arg0, f32 arg1, s16 arg2, void* arg3, s16* arg4) {
-    unkStructSize0xC* temp_t3;
-    unkStructSize0xC* temp_t7;
+    unk65770AnimC* temp_t3;
+    unk65770AnimC* temp_t7;
     s16 sp10[574];
     s32 temp_a0;
     s32 temp_a1;
@@ -285,10 +339,10 @@ u16 func_800F92D4_BuriedTreasure(f32 arg0, f32 arg1, s16 arg2, void* arg3, s16* 
     var_a3 = arg3;
     var_s0 = 0;
     var_s1 = 0;
-    temp_t3 = D_800EC700[D_800FC198_BuriedTreasure[1]]->unk_00;
-    temp_t7 = D_800EC700[D_800FC198_BuriedTreasure[3]]->unk_00;
-    temp_t9 = temp_t7->unk_00 + ((s16) arg0 + 148 + ((s16) arg1 + 108) * temp_t7->unk_04) / 2;
-    temp_t5 = temp_t3->unk_00 + ((s16) arg0 + 148 + ((s16) arg1 + 108) * temp_t3->unk_04) * 2;
+    temp_t3 = D_800EC700[D_800FC198_BuriedTreasure[1]]->unk0;
+    temp_t7 = D_800EC700[D_800FC198_BuriedTreasure[3]]->unk0;
+    temp_t9 = temp_t7->unk0 + ((s16) arg0 + 148 + ((s16) arg1 + 108) * temp_t7->unk4) / 2;
+    temp_t5 = temp_t3->unk0 + ((s16) arg0 + 148 + ((s16) arg1 + 108) * temp_t3->unk4) * 2;
     temp_f0 = (s16) arg0;
     *arg4 = 0;
 
@@ -298,7 +352,7 @@ u16 func_800F92D4_BuriedTreasure(f32 arg0, f32 arg1, s16 arg2, void* arg3, s16* 
                 && arg1 + i - 12.0f >= -120.0f && arg1 + i - 12.0f < 120.0f) {
                 if (!(D_800FBD00_BuriedTreasure[i * 12 + j / 2] & D_800FBE24_BuriedTreasure[j & 1])) {
                     temp_a1 = j + (temp_f0 & 1);
-                    var_a3 = temp_t9 + temp_a1 / 2 + i * temp_t7->unk_04 / 2;
+                    var_a3 = temp_t9 + temp_a1 / 2 + i * temp_t7->unk4 / 2;
                     if (*var_a3 & D_800FBE24_BuriedTreasure[temp_a1 & 1]) {
                         if (!(temp_a1 & 1)) {
                             var_a1 = *var_a3 >> 4;
@@ -321,8 +375,8 @@ u16 func_800F92D4_BuriedTreasure(f32 arg0, f32 arg1, s16 arg2, void* arg3, s16* 
                 }
 
                 if (D_800FBAB8_BuriedTreasure[i * 12 + j / 2] & D_800FBE24_BuriedTreasure[j & 1]) {
-                    sp10[var_s1++] = (temp_t5[(j + i * temp_t3->unk_04) * 2] << 8) + temp_t5[(j + i * temp_t3->unk_04) * 2 + 1];
-                    temp_t5[(j + i * temp_t3->unk_04) * 2 + 1] &= 0xFE;
+                    sp10[var_s1++] = (temp_t5[(j + i * temp_t3->unk4) * 2] << 8) + temp_t5[(j + i * temp_t3->unk4) * 2 + 1];
+                    temp_t5[(j + i * temp_t3->unk4) * 2 + 1] &= 0xFE;
                 }
             }
         }
@@ -338,7 +392,7 @@ u16 func_800F92D4_BuriedTreasure(f32 arg0, f32 arg1, s16 arg2, void* arg3, s16* 
 }
 
 void func_800F9700_BuriedTreasure(Gfx* arg0) {
-    u8* timg = D_800EC700[D_800FC198_BuriedTreasure[1]]->unk_00->unk_00;
+    u8* timg = D_800EC700[D_800FC198_BuriedTreasure[1]]->unk0->unk0;
     s16 i;
 
     gDPPipeSync(arg0++);
@@ -480,7 +534,7 @@ void func_800F9E10_BuriedTreasure(void) {
 }
 
 void func_800F9F90_BuriedTreasure(void) {
-    unkStructSize0xC* var_a0;
+    unk65770AnimC* var_a0;
     u16 i;
 
     D_800FC05C_BuriedTreasure = omAddObj(5, 0, 0, -1, &func_800FA090_BuriedTreasure);
@@ -491,10 +545,10 @@ void func_800F9F90_BuriedTreasure(void) {
     D_800FC0B8_BuriedTreasure[2] = InitSprite(0x21);
     D_800FC0B8_BuriedTreasure[3] = InitSprite(0x2A);
 
-    var_a0 = D_800EC700[D_800FC0B8_BuriedTreasure[2]]->unk_00;
-    for (i = 0; i < D_800EC700[D_800FC0B8_BuriedTreasure[2]]->unk_10; i++) {
-        var_a0->unk_08 = 16;
-        var_a0->unk_0A = 16;
+    var_a0 = D_800EC700[D_800FC0B8_BuriedTreasure[2]]->unk0;
+    for (i = 0; i < D_800EC700[D_800FC0B8_BuriedTreasure[2]]->unk10; i++) {
+        var_a0->unk8 = 16;
+        var_a0->unkA = 16;
         var_a0++;
     }
 
@@ -656,26 +710,6 @@ void func_800FA138_BuriedTreasure(void) {
     }
 }
 
-#ifdef NON_MATCHING // missing nop, matches without vr4300mul-off
-// rodata (func_800FA90C_BuriedTreasure)
-extern const f64 D_800FBF80_BuriedTreasure; // 16.0
-extern const f64 D_800FBF88_BuriedTreasure; // 0.25
-extern const f64 D_800FBF90_BuriedTreasure; // 5.625
-extern const f64 D_800FBF98_BuriedTreasure; // 0.1
-extern const f64 D_800FBFA0_BuriedTreasure; // 46.0
-extern const f64 D_800FBFA8_BuriedTreasure; // 90.0
-extern const f64 D_800FBFB0_BuriedTreasure; // 0.5
-extern const f64 D_800FBFB8_BuriedTreasure; // 46.0
-extern const f64 D_800FBFC0_BuriedTreasure; // 0.75
-extern const f64 D_800FBFC8_BuriedTreasure; // 360.0
-extern const f64 D_800FBFD0_BuriedTreasure; // 0.07
-extern const f64 D_800FBFD8_BuriedTreasure; // 1.0
-extern const f64 D_800FBFE0_BuriedTreasure; // 1.0
-extern const f64 D_800FBFE8_BuriedTreasure; // 0.0666
-extern const f64 D_800FBFF0_BuriedTreasure; // 1.966
-extern const f64 D_800FBFF8_BuriedTreasure; // 360.0
-extern const f64 D_800FC000_BuriedTreasure; // 90.0
-
 void func_800FA90C_BuriedTreasure(void) {
     unkStructSize0x28* var_s1;
     omObjData* temp_s0;
@@ -703,11 +737,11 @@ void func_800FA90C_BuriedTreasure(void) {
                 if (var_s1->unk_0A == 1) {
                     temp_s0 = var_s1->unk_20;
                     if (temp_s0->work[0] & 7) {
-                        D_800F2B7C[temp_s0->unk_40[0]].unk_20 &= ~4;
-                        D_800F2B7C[temp_s0->unk_40[1]].unk_20 |= 4;
+                        D_800F2B7C[temp_s0->model[0]].unk_20 &= ~4;
+                        D_800F2B7C[temp_s0->model[1]].unk_20 |= 4;
                     } else {
-                        D_800F2B7C[temp_s0->unk_40[0]].unk_20 |= 4;
-                        D_800F2B7C[temp_s0->unk_40[1]].unk_20 &= ~4;
+                        D_800F2B7C[temp_s0->model[0]].unk_20 |= 4;
+                        D_800F2B7C[temp_s0->model[1]].unk_20 &= ~4;
                     }
                     temp_s0->work[0]++;
                 }
@@ -719,15 +753,15 @@ void func_800FA90C_BuriedTreasure(void) {
                     var_s1->unk_0A++;
                     temp_s0 = var_s1->unk_20;
                     var_v0 = var_s1->unk_0A;
-                    temp_f20_3 = func_800AEAC0((var_v0 - 2) * D_800FBF90_BuriedTreasure) * D_800FBF98_BuriedTreasure;
-                    func_80025830(temp_s0->unk_40[2], temp_f20_3 + temp_s0->unk_30, temp_f20_3 + temp_s0->unk_34, temp_f20_3 + temp_s0->unk_38);
+                    temp_f20_3 = func_800AEAC0((var_v0 - 2) * 5.625) * 0.1;
+                    func_80025830(temp_s0->model[2], temp_f20_3 + temp_s0->scale.x, temp_f20_3 + temp_s0->scale.y, temp_f20_3 + temp_s0->scale.z);
                 } else if (var_s1->unk_0A >= 32) {
                     if (var_s1->unk_0A == 32) {
                         temp_f22_2 = var_s1->unk_0C - 160 - var_s4->unk_0C;
-                        temp_f20_2 = var_s1->unk_0E - 120 - D_800FBFA0_BuriedTreasure - var_s4->unk_10;
+                        temp_f20_2 = var_s1->unk_0E - 120 - 46.0 - var_s4->unk_10;
 
                         var_s1->unk_14 = sqrtf(SQ(temp_f22_2) + SQ(temp_f20_2));
-                        var_s1->unk_18 = func_800B0CD8(temp_f22_2, temp_f20_2) - D_800FBFA8_BuriedTreasure;
+                        var_s1->unk_18 = func_800B0CD8(temp_f22_2, temp_f20_2) - 90.0;
 
                         if (var_s1->unk_18 < 0.0f) {
                             var_s1->unk_18 += 360.0f;
@@ -748,20 +782,20 @@ void func_800FA90C_BuriedTreasure(void) {
                         temp_s3 = var_s1->unk_00[j];
                         if (!(D_800FC1C0_BuriedTreasure[temp_s3].unk_00 & 0x80)) {
                             if (D_800FC1C0_BuriedTreasure[temp_s3].unk_10 < 16) {
-                                temp_f20_3 = D_800FC1C0_BuriedTreasure[temp_s3].unk_10 / D_800FBF80_BuriedTreasure;
-                                func_80067354(D_800FC1C0_BuriedTreasure[temp_s3].unk_04, 0, temp_f20_3 * D_800FBF88_BuriedTreasure + D_800FBFB0_BuriedTreasure, temp_f20_3 * D_800FBF88_BuriedTreasure + D_800FBFB0_BuriedTreasure);
+                                temp_f20_3 = D_800FC1C0_BuriedTreasure[temp_s3].unk_10 / 16.0;
+                                func_80067354(D_800FC1C0_BuriedTreasure[temp_s3].unk_04, 0, temp_f20_3 * 0.25 + 0.5, temp_f20_3 * 0.25 + 0.5);
                                 D_800FC1C0_BuriedTreasure[temp_s3].unk_08 = var_s1->unk_0C - 160;
-                                D_800FC1C0_BuriedTreasure[temp_s3].unk_0C = var_s1->unk_0E - 120 - temp_f20_3 * D_800FBFB8_BuriedTreasure;
+                                D_800FC1C0_BuriedTreasure[temp_s3].unk_0C = var_s1->unk_0E - 120 - temp_f20_3 * 46.0;
                             } else if (D_800FC1C0_BuriedTreasure[temp_s3].unk_10 < 32) {
-                                temp_f20_3 = (D_800FC1C0_BuriedTreasure[temp_s3].unk_10 - 16) / D_800FBF80_BuriedTreasure;
-                                func_80067354(D_800FC1C0_BuriedTreasure[temp_s3].unk_04, 0, D_800FBFC0_BuriedTreasure - temp_f20_3 * D_800FBF88_BuriedTreasure, D_800FBFC0_BuriedTreasure - temp_f20_3 * D_800FBF88_BuriedTreasure);
-                                D_800FC1C0_BuriedTreasure[temp_s3].unk_08 = func_800AEFD0(temp_f20_3 * D_800FBFC8_BuriedTreasure - var_s1->unk_18) * (var_s1->unk_14 - temp_f20_3 * var_s1->unk_14) + var_s4->unk_0C;
-                                D_800FC1C0_BuriedTreasure[temp_s3].unk_0C = func_800AEAC0(temp_f20_3 * D_800FBFC8_BuriedTreasure - var_s1->unk_18) * (var_s1->unk_14 - temp_f20_3 * var_s1->unk_14) + var_s4->unk_10;
+                                temp_f20_3 = (D_800FC1C0_BuriedTreasure[temp_s3].unk_10 - 16) / 16.0;
+                                func_80067354(D_800FC1C0_BuriedTreasure[temp_s3].unk_04, 0, 0.75 - temp_f20_3 * 0.25, 0.75 - temp_f20_3 * 0.25);
+                                D_800FC1C0_BuriedTreasure[temp_s3].unk_08 = func_800AEFD0(temp_f20_3 * 360.0 - var_s1->unk_18) * (var_s1->unk_14 - temp_f20_3 * var_s1->unk_14) + var_s4->unk_0C;
+                                D_800FC1C0_BuriedTreasure[temp_s3].unk_0C = func_800AEAC0(temp_f20_3 * 360.0 - var_s1->unk_18) * (var_s1->unk_14 - temp_f20_3 * var_s1->unk_14) + var_s4->unk_10;
                             }
 
                             D_800FC1C0_BuriedTreasure[temp_s3].unk_10++;
                             if (D_800FC1C0_BuriedTreasure[temp_s3].unk_10 == 32) {
-                                func_80067208(D_800FC1C0_BuriedTreasure[temp_s3].unk_04, 0, D_800FC0BE_BuriedTreasure, 0);
+                                func_80067208(D_800FC1C0_BuriedTreasure[temp_s3].unk_04, 0, D_800FC0B8_BuriedTreasure[3], 0);
                                 func_800674F4(D_800FC1C0_BuriedTreasure[temp_s3].unk_04, 0, 255, 255, 190);
                                 func_800672B0(D_800FC1C0_BuriedTreasure[temp_s3].unk_04, 0, 2);
                                 func_80067354(D_800FC1C0_BuriedTreasure[temp_s3].unk_04, 0, 2.0f, 2.0f);
@@ -776,7 +810,7 @@ void func_800FA90C_BuriedTreasure(void) {
 
                     if (var_s1->unk_0A < 63) {
                         temp_s0 = var_s1->unk_20;
-                        D_800F2B7C[temp_s0->unk_40[2]].unk_20 ^= 4;
+                        D_800F2B7C[temp_s0->model[2]].unk_20 ^= 4;
                     }
 
                     var_s1->unk_0A++;
@@ -801,24 +835,24 @@ void func_800FA90C_BuriedTreasure(void) {
                     func_800F8AE8_BuriedTreasure(sp28, sp18);
 
                     if (var_s1->unk_0A >= 2 && var_s1->unk_0A <= 16) {
-                        temp_f20_3 = (var_s1->unk_0A - 2) * D_800FBFD0_BuriedTreasure;
-                        if (D_800FBFD8_BuriedTreasure < temp_f20_3) {
+                        temp_f20_3 = (var_s1->unk_0A - 2) * 0.07;
+                        if (1.0 < temp_f20_3) {
                             temp_f20_3 = 1.0f;
                         }
 
-                        func_80067354(D_800FC1C0_BuriedTreasure[*var_s1->unk_00].unk_04, 0, temp_f20_3 + D_800FBFE0_BuriedTreasure, temp_f20_3 + D_800FBFE0_BuriedTreasure);
+                        func_80067354(D_800FC1C0_BuriedTreasure[*var_s1->unk_00].unk_04, 0, temp_f20_3 + 1.0, temp_f20_3 + 1.0);
 
                         D_800FC1C0_BuriedTreasure[*var_s1->unk_00].unk_08 = var_s1->unk_0C - 160 + temp_f20_3 * (sp28[0] - (var_s1->unk_0C - 160));
                         D_800FC1C0_BuriedTreasure[*var_s1->unk_00].unk_0C = var_s1->unk_0E - 120 + temp_f20_3 * (sp28[1] - 32.0f - (var_s1->unk_0E - 120));
 
                         var_s1->unk_0A++;
                     } else if (var_s1->unk_0A > 16 && var_s1->unk_0A < 32) {
-                        temp_f20_3 = (var_s1->unk_0A - 17) * D_800FBFE8_BuriedTreasure;
+                        temp_f20_3 = (var_s1->unk_0A - 17) * 0.0666;
 
-                        func_80067354(D_800FC1C0_BuriedTreasure[*var_s1->unk_00].unk_04, 0, D_800FBFF0_BuriedTreasure - 2.0f * temp_f20_3, D_800FBFF0_BuriedTreasure - 2.0f * temp_f20_3);
+                        func_80067354(D_800FC1C0_BuriedTreasure[*var_s1->unk_00].unk_04, 0, 1.966 - 2.0f * temp_f20_3, 1.966 - 2.0f * temp_f20_3);
 
-                        D_800FC1C0_BuriedTreasure[*var_s1->unk_00].unk_08 = func_800AEFD0(temp_f20_3 * D_800FBFF8_BuriedTreasure - D_800FC000_BuriedTreasure) * (32.0f - temp_f20_3 * 32.0f) + sp28[0];
-                        D_800FC1C0_BuriedTreasure[*var_s1->unk_00].unk_0C = func_800AEAC0(temp_f20_3 * D_800FBFF8_BuriedTreasure - D_800FC000_BuriedTreasure) * (32.0f - temp_f20_3 * 32.0f) + sp28[1];
+                        D_800FC1C0_BuriedTreasure[*var_s1->unk_00].unk_08 = func_800AEFD0(temp_f20_3 * 360.0 - 90.0) * (32.0f - temp_f20_3 * 32.0f) + sp28[0];
+                        D_800FC1C0_BuriedTreasure[*var_s1->unk_00].unk_0C = func_800AEAC0(temp_f20_3 * 360.0 - 90.0) * (32.0f - temp_f20_3 * 32.0f) + sp28[1];
 
                         var_s1->unk_0A++;
                     } else if (var_s1->unk_0A >= 32) {
@@ -832,9 +866,6 @@ void func_800FA90C_BuriedTreasure(void) {
         var_s1++;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/overlays/ovl_03_BuriedTreasure/EB0E0", func_800FA90C_BuriedTreasure);
-#endif
 
 s16 func_800FB380_BuriedTreasure(u16 arg0, u8* arg1) {
     unkStructSize0x28* temp_t0;
@@ -961,7 +992,7 @@ s16 func_800FB780_BuriedTreasure(void) {
     u8* temp_s3;
     s16 i;
 
-    temp_s3 = D_800EC700[D_800FC198_BuriedTreasure[3]]->unk_00->unk_00;
+    temp_s3 = D_800EC700[D_800FC198_BuriedTreasure[3]]->unk0->unk0;
 
     for (i = 0; i < 1; i++) {
         if (func_800FB380_BuriedTreasure(i, temp_s3) != 1) {

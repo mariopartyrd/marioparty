@@ -72,6 +72,6 @@ void func_800FB4DC_WhackAPlant(void) {
     D_800EE738[3] = 45.0f;
     D_800EE738[4] = 20000.0f;
     D_800EE738[5] = 10000.0f;
-    func_8001D420(0, &D_800FB724_WhackAPlant, (Vec3f*) &D_800FB710_WhackAPlant[2], &D_800FB734_WhackAPlant);
+    func_8001D420(0, &D_800FB724_WhackAPlant, &D_800FB714_WhackAPlant, &D_800FB734_WhackAPlant);
     func_8001D57C(0);
 }

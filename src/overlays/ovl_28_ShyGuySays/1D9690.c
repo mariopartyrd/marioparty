@@ -1,5 +1,84 @@
 #include "common.h"
 #include "ShyGuySays.h"
+int abs(int);
+
+/* .data (0x1E0670) */
+u32 D_800FD5C0_ShyGuySays = 0x19971204; /* random seed */
+u16 D_800FD5C4_ShyGuySays = 0;
+s16 D_800FD5C6_ShyGuySays = 0;
+s16 D_800FD5C8_ShyGuySays = 0;
+s16 D_800FD5CA_ShyGuySays = 0;
+s16 D_800FD5CC_ShyGuySays = 0;
+s16 D_800FD5CE_ShyGuySays = 0;
+f32 D_800FD5D0_ShyGuySays = 0.0f;
+f32 D_800FD5D4_ShyGuySays = 0.0f;
+f32 D_800FD5D8_ShyGuySays = 0.0f;
+u16 D_800FD5DC_ShyGuySays[2] = { 0, 180 };
+u32 D_800FD5E0_ShyGuySays = 180;
+u32 D_800FD5E4_ShyGuySays = 0;
+s16 D_800FD5E8_ShyGuySays = 0;
+u16 D_800FD5EA_ShyGuySays = 0;
+f32 D_800FD5EC_ShyGuySays = 60.0f;
+
+typedef struct unkStruct_ShyGuySays_06 {
+    /* 0x00 */ s16 unk0;
+    /* 0x02 */ s16 unk2;
+    /* 0x04 */ f32 unk4;
+    /* 0x08 */ f32 unk8;
+    /* 0x0C */ f32 unkC;
+    /* 0x10 */ s16 unk10;
+    /* 0x12 */ u16 unk12;
+} unkStruct_ShyGuySays_06; /* sizeof 0x14 */
+
+extern unkStruct_ShyGuySays_06 D_800FDC70_ShyGuySays[6];
+extern s16 D_800FDC5C_ShyGuySays[3];
+extern u32 D_800FDC28_ShyGuySays[4];
+extern unkStructShyGuySays_03 D_800FDC38_ShyGuySays[5];
+f32 func_80025D40(s16);
+void func_800FBE60_ShyGuySays(omObjData*);
+extern s16 D_800FD5C6_ShyGuySays;
+extern s16 D_800FD5C8_ShyGuySays;
+extern s16 D_800FD5CA_ShyGuySays;
+typedef struct ShyGuyGridCell {
+    /* 0x00 */ s16 unk_00;
+    /* 0x02 */ s16 unk_02;
+    /* 0x04 */ s16 unk_04;
+} ShyGuyGridCell; /* sizeof 6 */
+
+extern ShyGuyGridCell* D_800FD9B4_ShyGuySays;
+extern s16 D_800FD9B0_ShyGuySays;
+extern u16 D_800FD9B8_ShyGuySays[2];
+extern omObjData* D_800FD9AC_ShyGuySays;
+extern s16 D_800FDC68_ShyGuySays[];
+extern s16 D_800FDC6C_ShyGuySays;
+extern f32 D_800FD5D0_ShyGuySays;
+extern f32 D_800FD5D4_ShyGuySays;
+extern f32 D_800FD5D8_ShyGuySays;
+extern omObjData* D_800F3FB0[];
+
+s16 func_8001755C(s32);
+f32 func_80025D40(s16);
+void func_800FBE60_ShyGuySays(omObjData*);
+s16 func_80023FC8(s16);
+u16 func_800FB2C8_ShyGuySays(s32);
+void func_800FAA80_ShyGuySays(s16);
+void func_800FAED8_ShyGuySays(s16, s32);
+void func_800FA8F4_ShyGuySays(omObjData*);
+void func_800FA960_ShyGuySays(omObjData*);
+void func_80066DF4(s16, s16, s16, f32, f32, f32);
+void func_80067284(s16, s16, f32);
+void func_80060F04(s16, s16, s16, s16);
+s16 func_800FB520_ShyGuySays(f32, f32, f32, s16, u16);
+void func_800FB840_ShyGuySays(omObjData*);
+void func_800F8818_ShyGuySays(omObjData*);
+void func_800F9D80_ShyGuySays(unkShyGuySaysStruct*, u16);
+void func_800F9C50_ShyGuySays(u16*);
+void func_800F7680_ShyGuySays(s16*, u16);
+void func_800F702C_ShyGuySays(omObjData*, f32);
+/* retail calls func_80064EF4 unprototyped in func_800FA77C (int result narrowed to s16) */
+#define func_80064EF4_s32 ((s32 (*)(s32, s32))func_80064EF4)
+void func_800F82B0_ShyGuySays(omObjData*);
+
 
 void func_800F65E0_ShyGuySays(void) {
     u8 temp_s0;
@@ -90,10 +169,134 @@ void func_800F69F8_ShyGuySays(void) {
     omOvlReturnEx(1);
 }
 
-INCLUDE_RODATA("asm/nonmatchings/overlays/ovl_28_ShyGuySays/1D9690", D_800FD5FC_ShyGuySays);
 
-INCLUDE_ASM("asm/nonmatchings/overlays/ovl_28_ShyGuySays/1D9690", func_800F6A38_ShyGuySays);
+// decomp-permuter
+void func_800F6A38_ShyGuySays(omObjData *arg0)
+{
+  s16 sp10[6] = {0x451, 0x452, 0x453, 0x454, 0x455, 0x456};
+  s16 sp20[4];
+  f32 t;
+  s16 i;
+  s32 flag;
+  char done;
+  func_800F6F98_ShyGuySays(arg0);
+  func_800F72A4_ShyGuySays();
+  if (D_800FD5CA_ShyGuySays != 0)
+  {
+    if (D_800FD9A4_ShyGuySays == 1)
+    {
+      t = ((f32) D_800FD5CC_ShyGuySays) / 30.0;
+      if (t > 1.0)
+      {
+        t = 1.0f;
+        D_800FD5CA_ShyGuySays = 0;
+      }
+      func_800F9C50_ShyGuySays((u16 *) sp20);
+      for (i = 0; i < 4; i++)
+      {
+        if (sp20[i] == 1)
+        {
+          break;
+        }
+      }
 
+      func_800F702C_ShyGuySays(D_800F3FB0[i], t);
+    }
+    D_800FD5CC_ShyGuySays++;
+  }
+  switch (D_800FD5C6_ShyGuySays)
+  {
+    case 0:
+      if ((++D_800FD5C8_ShyGuySays) >= 0)
+    {
+      flag = 2;
+      if (D_800FD9A4_ShyGuySays == 0)
+      {
+        flag = 0x11;
+      }
+      GMesCreate(flag);
+      D_800FD5C8_ShyGuySays = 0;
+      D_800FD5C6_ShyGuySays = 1;
+    }
+      break;
+
+    case 1:
+      if (((++D_800FD5C8_ShyGuySays) >= 0) && (GMesStatAllGet() == 2))
+    {
+      flag = 0x32;
+      if (D_800FD9A4_ShyGuySays == 0)
+      {
+        flag = 0x34;
+      }
+      func_80060128(flag);
+      D_800FD5C8_ShyGuySays = 0;
+      D_800FD5C6_ShyGuySays = 2;
+    }
+      break;
+
+    case 2:
+      if ((++D_800FD5C8_ShyGuySays) >= 0)
+    {
+      D_800FDC1A_ShyGuySays = 1;
+      D_800FD5C8_ShyGuySays = 0;
+      D_800FD5C6_ShyGuySays = 3;
+    }
+      break;
+
+    case 3:
+      D_800FD5C8_ShyGuySays++;
+      if (D_800FD9A4_ShyGuySays != 0)
+    {
+      if (D_800FD5C8_ShyGuySays < 0x15)
+      {
+        break;
+      }
+      func_800F9C50_ShyGuySays((u16 *) sp20);
+      for (i = 0; i < 4; i++)
+      {
+        if (sp20[i] == 1)
+        {
+          break;
+        }
+      }
+
+      GMesCreate(4, D_800FDC10_ShyGuySays[i]);
+      PlaySound(sp10[D_800FDC10_ShyGuySays[i]]);
+      GwPlayer[i].coins_mg += 10;
+    }
+      D_800FD5C8_ShyGuySays = 0;
+      D_800FD5C6_ShyGuySays = 4;
+      break;
+
+    case 4:
+      D_800FD5C8_ShyGuySays++;
+      if (D_800FD9A4_ShyGuySays != 0)
+    {
+      done = 0x53 < D_800FD5C8_ShyGuySays;
+    }
+    else
+    {
+      done = D_800FD5C8_ShyGuySays >= 0x5A;
+    }
+      if (done && (GMesWait() == 0))
+    {
+      func_800726AC(0, 0x14);
+      func_800601D4(0x28);
+      D_800FD5C8_ShyGuySays = 0;
+      D_800FD5C6_ShyGuySays = 5;
+    }
+      break;
+
+    case 5:
+      if (func_80072718() == 0)
+    {
+      arg0->func_ptr = &func_800F69F8_ShyGuySays;
+    }
+      break;
+
+  }
+
+}
 void func_800F6E50_ShyGuySays(omObjData* arg0) {
     unkStruct_ShyGuySays_01* temp_v1_2;
 
@@ -277,15 +480,25 @@ f32 func_800F7608_ShyGuySays(f32 arg0, f32 arg1) {
     return var_f4;
 }
 
-INCLUDE_ASM("asm/nonmatchings/overlays/ovl_28_ShyGuySays/1D9690", func_800F7680_ShyGuySays);
+void func_800F7680_ShyGuySays(s16* arg0, u16 arg1) {
+    u16 i;
+    u16 j;
+    s16 tmp;
 
-INCLUDE_ASM("asm/nonmatchings/overlays/ovl_28_ShyGuySays/1D9690", func_800F7720_ShyGuySays);
-//TODO: NOP problem
-// f32 func_800F7720_ShyGuySays(f32 arg0, f32 arg1, f32 arg2, f32 arg3) {
-//     f32 temp_f2 = 1.0 - arg0;
-//     return temp_f2 * temp_f2 * arg1 + temp_f2 * arg0 * arg2 * 2.0 + arg0 * arg0 * arg3;
-// }
-
+    for (i = 0; i < arg1 - 1; i++) {
+        for (j = i + 1; j < arg1; j++) {
+            if (arg0[i] > arg0[j]) {
+                tmp = arg0[i];
+                arg0[i] = arg0[j];
+                arg0[j] = tmp;
+            }
+        }
+    }
+}
+f32 func_800F7720_ShyGuySays(f32 arg0, f32 arg1, f32 arg2, f32 arg3) {
+    f32 temp_f2 = 1.0 - arg0;
+    return temp_f2 * temp_f2 * arg1 + temp_f2 * arg0 * arg2 * 2.0 + arg0 * arg0 * arg3;
+}
 void func_800F7780_ShyGuySays(f32 arg0, Vec3f* arg1, Vec3f* arg2, Vec3f* arg3, Vec3f* arg4) {
     f32* var_s4 = &arg1->x;
     f32* var_s3 = &arg2->x;
@@ -350,12 +563,63 @@ void func_800F7A8C_ShyGuySays(s16 arg0, omObjData* arg1) {
     func_80025830(arg0, arg1->scale.x, arg1->scale.y, arg1->scale.z);
 }
 
-INCLUDE_ASM("asm/nonmatchings/overlays/ovl_28_ShyGuySays/1D9690", func_800F7AF8_ShyGuySays);
-
+f32 func_800F7AF8_ShyGuySays(f32 arg0, f32 arg1, f32 arg2) {
+    if (arg1 < arg0) {
+        if (fabs(arg0 - arg1) > arg2) {
+            return arg2;
+        }
+        return fabsf(arg0 - arg1);
+    }
+    if (fabs(arg1 - arg0) > arg2) {
+        return -arg2;
+    }
+    return -fabs(arg1 - arg0);
+}
+// register allocation: arg0/arg1 copies swap s2/s3 (masked 0, raw 5); a local element pointer fixes the
+// registers but not the folded 0x1C offset (tried p = &(&arg1->unk_1C)[arg2], inline and base forms)
+#ifdef NON_MATCHING
+void func_800F7B74_ShyGuySays(omObjData* arg0, unkStruct_ShyGuySays_01* arg1, u16 arg2, s32 arg3) {
+    arg0->motion[arg2] = func_8001755C(arg3);
+    (&arg1->unk_1C)[arg2].unk_00 = func_80025E48(arg0->motion[arg2]);
+    (&arg1->unk_1C)[arg2].unk_02 = func_80025D40(arg0->motion[arg2]);
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/overlays/ovl_28_ShyGuySays/1D9690", func_800F7B74_ShyGuySays);
+#endif
+void func_800F7C0C_ShyGuySays(s16 arg0, s16 arg1, u16 arg2) {
+    unk2C0C0StructC0* src;
+    unk2C0C0StructC0* dst;
+    unk2C0C0Struct40* ent;
+    unk2C0C0Struct50* grp;
+    u16 i;
+    u16 j;
 
-INCLUDE_ASM("asm/nonmatchings/overlays/ovl_28_ShyGuySays/1D9690", func_800F7C0C_ShyGuySays);
-
+    src = D_800F2B7C[arg0].unk_6C;
+    dst = D_800F2B7C[arg1].unk_6C;
+    if (arg2 < src->unk_6A && arg2 < dst->unk_6A) {
+        if (dst->unk_A0 == (unk2C0C0Struct50*)-1) {
+            for (j = 0; j < src->unk_84; j++) {
+                ent = &dst->unk_88[j];
+                if (ent->unk_00 == arg2) {
+                    ent->unk_48 = dst;
+                    ent->unk_00 = arg2;
+                    break;
+                }
+            }
+        } else {
+            for (i = 0; i < dst->unk_70; i++) {
+                grp = &dst->unk_A0[i];
+                for (j = 0; j < grp->unk_00; j++) {
+                    if (grp->unk_04[j] == arg2) {
+                        grp->unk_60 = src;
+                        grp->unk_04[j] = arg2;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+}
 void func_800F7D88_ShyGuySays(s16 arg0, s16 arg1, u16 arg2, f32 arg3) {
     unk2C0C0StructC0* temp_a3;
     unk2C0C0StructC0* temp_t0;
@@ -394,23 +658,181 @@ void func_800F7D88_ShyGuySays(s16 arg0, s16 arg1, u16 arg2, f32 arg3) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/overlays/ovl_28_ShyGuySays/1D9690", func_800F8068_ShyGuySays);
+void func_800F8068_ShyGuySays(void) {
+    D_800FDC5C_ShyGuySays[0] = func_800174C0(0x3C0004, 0x99);
+    D_800FDC5C_ShyGuySays[1] = func_800174C0(0x3C0005, 0x99);
+    D_800FDC5C_ShyGuySays[2] = func_800174C0(0x3C0004, 0x499);
+    func_800258EC(D_800FDC5C_ShyGuySays[0], 4, 4);
+    func_800258EC(D_800FDC5C_ShyGuySays[1], 4, 4);
+    func_800258EC(D_800FDC5C_ShyGuySays[2], 4, 4);
+}
+s16 func_800F80F8_ShyGuySays(s16 arg0) {
+    s16 ret;
 
-INCLUDE_ASM("asm/nonmatchings/overlays/ovl_28_ShyGuySays/1D9690", func_800F80F8_ShyGuySays);
+    switch (arg0) {
+    case 2:
+        ret = func_80023FC8(D_800FDC5C_ShyGuySays[0]);
+        break;
+    case 3:
+        ret = func_80023FC8(D_800FDC5C_ShyGuySays[1]);
+        break;
+    case 4:
+        ret = func_80023FC8(D_800FDC5C_ShyGuySays[2]);
+        break;
+    default:
+        return -1;
+    }
+    func_800258EC(ret, 4, 0);
+    return ret;
+}
+void func_800F81A4_ShyGuySays(void) {
+    u16 i;
+    omObjData* obj;
 
-INCLUDE_ASM("asm/nonmatchings/overlays/ovl_28_ShyGuySays/1D9690", func_800F81A4_ShyGuySays);
+    for (i = 0; i < 5; i++) {
+        D_800FDC10_ShyGuySays[i] = 0;
+    }
+    for (i = 0; i < 4; i++) {
+        obj = D_800F3FB0[D_800F2BC0] = omAddObj(3, 0x10, 4, -1, &func_800F82B0_ShyGuySays);
+        obj->work[0] = i;
+        omSetStatBit(D_800F3FB0[D_800F2BC0], 0xA0);
+        D_800F2BC0++;
+        D_800FD9A4_ShyGuySays++;
+        D_800FD9A6_ShyGuySays++;
+    }
+}
 
-INCLUDE_RODATA("asm/nonmatchings/overlays/ovl_28_ShyGuySays/1D9690", D_800FD6C8_ShyGuySays);
+const ShyGuyMotTbl D_800FD6C8_ShyGuySays = { { { 9, 12 }, { 9, 12 }, { 5, 8 }, { 4, 7 }, { 9, 11 }, { 5, 8 } } };
 
-INCLUDE_ASM("asm/nonmatchings/overlays/ovl_28_ShyGuySays/1D9690", func_800F82B0_ShyGuySays);
+void func_800F82B0_ShyGuySays(omObjData* arg0) {
+    ShyGuyMotTbl sp10 = D_800FD6C8_ShyGuySays;
+    s32 file0 = 0;
+    s32 file1 = 0;
+    s16 player;
+    s32 chr;
+    s32 form;
+    s32 dir;
+    s32 i;
+    unkStruct_ShyGuySays_01* p;
+    s16 level;
 
+    arg0->func_ptr = &func_800F8818_ShyGuySays;
+    player = 0;
+    switch (arg0->work[0]) {
+    case 0:
+        player = 0;
+        break;
+    case 1:
+        player = 1;
+        break;
+    case 2:
+        player = 2;
+        break;
+    case 3:
+        player = 3;
+        break;
+    }
+    D_800FDC10_ShyGuySays[arg0->work[0]] = chr = GwPlayer[player].character;
+    dir = D_800C59AC[chr].unk_00;
+    form = D_800C59AC[chr].unk_04;
+    switch (chr) {
+    case 0:
+        file0 = 0x3C000B;
+        file1 = 0x3C0011;
+        break;
+    case 1:
+        file0 = 0x3C000C;
+        file1 = 0x3C0012;
+        break;
+    case 2:
+        file0 = 0x3C000D;
+        file1 = 0x3C0013;
+        break;
+    case 3:
+        file0 = 0x3C000E;
+        file1 = 0x3C0014;
+        break;
+    case 4:
+        file0 = 0x3C000F;
+        file1 = 0x3C0015;
+        break;
+    case 5:
+        file0 = 0x3C0010;
+        file1 = 0x3C0016;
+        break;
+    }
+    arg0->model[0] = LoadFormFile(dir | form, 0xA99);
+    if (chr == 4) {
+        arg0->model[1] = LoadFormFile(file0, 0xA8D);
+        arg0->model[2] = LoadFormFile(file1, 0xA8D);
+        func_80025930(arg0->model[1], 0x20000, 0x20000);
+        func_80025930(arg0->model[2], 0x20000, 0x20000);
+        func_80025AD4(arg0->model[1]);
+        func_80025AD4(arg0->model[2]);
+        func_80025B34(arg0->model[1]);
+        func_80025B34(arg0->model[2]);
+        func_800258EC(arg0->model[1], 0x10, 0x10);
+        func_800258EC(arg0->model[2], 0x10, 0x10);
+    } else {
+        arg0->model[1] = LoadFormFile(file0, 0xA9D);
+        arg0->model[2] = LoadFormFile(file1, 0xA9D);
+    }
+    arg0->model[3] = func_800F80F8_ShyGuySays(3);
+    func_80026040(arg0->model[1]);
+    for (i = 0; i < 8; i++) {
+        arg0->model[4 + i] = func_800F80F8_ShyGuySays(2);
+    }
+    for (i = 0; i < 4; i++) {
+        arg0->model[12 + i] = func_800F80F8_ShyGuySays(4);
+    }
+    p = &D_800FD9C0_ShyGuySays[arg0->work[0]];
+    func_800F9D80_ShyGuySays((unkShyGuySaysStruct*)p, arg0->work[0]);
+    switch (GwPlayer[player].cpu_difficulty) {
+    case 0:
+        level = 4;
+        break;
+    case 1:
+        level = 3;
+        break;
+    case 2:
+        level = 2;
+        break;
+    case 3:
+        level = 1;
+        break;
+    default:
+        level = 3;
+        break;
+    }
+    p->unk_0C = level;
+    p->unk_08 = GwPlayer[player].port;
+    if (GwPlayer[player].flags & 1) {
+        p->unk_08 = -1;
+    } else {
+        D_800FDC1E_ShyGuySays = player;
+    }
+    func_800F7C0C_ShyGuySays(arg0->model[1], arg0->model[0], sp10.unk_00[chr].unk_00);
+    func_800F7C0C_ShyGuySays(arg0->model[1], arg0->model[0], sp10.unk_00[chr].unk_02);
+    func_800F7B74_ShyGuySays(arg0, p, 0, dir | 0x5C);
+    func_800F7B74_ShyGuySays(arg0, p, 1, dir | 0x5D);
+    func_800F7B74_ShyGuySays(arg0, p, 2, dir | 0x94);
+    func_800F7B74_ShyGuySays(arg0, p, 3, dir | 0x80);
+    func_800F79E4_ShyGuySays(arg0->model[0], &p->unk_1C, -1);
+    D_800F2B7C[arg0->model[0]].unk_48 = 0.0f;
+    arg0->work[1] = 1;
+    arg0->trans.x = p->unk_84 = arg0->work[0] * 300.0 + -450.0;
+    arg0->trans.y = 0.0f;
+    arg0->trans.z = -1000.0f;
+    arg0->rot.x = arg0->rot.y = arg0->rot.z = 0.0f;
+    arg0->scale.x = arg0->scale.y = arg0->scale.z = 1.0f;
+}
 void func_800F8818_ShyGuySays(omObjData* arg0) {
-    struct { u16 unk_00; u16 unk_02; } sp10[5];
+    ShyGuyMotTbl sp10;
     unkStruct_ShyGuySays_01* temp_s2;
     s32 temp_s0;
     u16 var_s0;
 
-    *((UnknownBlock24*) sp10) = D_800FD6C8_ShyGuySays;
+    sp10 = D_800FD6C8_ShyGuySays;
     temp_s2 = &D_800FD9C0_ShyGuySays[arg0->work[0]];
 
     if (func_8005FD5C() + D_800F64F8 == 0) {
@@ -420,8 +842,8 @@ void func_800F8818_ShyGuySays(omObjData* arg0) {
         }
     }
 
-    func_800F7D88_ShyGuySays(arg0->model[1], arg0->model[2], sp10[D_800FDC10_ShyGuySays[arg0->work[0]]].unk_00, func_800AEAC0(temp_s2->unk_90));
-    func_800F7D88_ShyGuySays(arg0->model[1], arg0->model[2], sp10[D_800FDC10_ShyGuySays[arg0->work[0]]].unk_02, func_800AEAC0(temp_s2->unk_90));
+    func_800F7D88_ShyGuySays(arg0->model[1], arg0->model[2], sp10.unk_00[D_800FDC10_ShyGuySays[arg0->work[0]]].unk_00, func_800AEAC0(temp_s2->unk_90));
+    func_800F7D88_ShyGuySays(arg0->model[1], arg0->model[2], sp10.unk_00[D_800FDC10_ShyGuySays[arg0->work[0]]].unk_02, func_800AEAC0(temp_s2->unk_90));
 
     if (func_8005FD5C() + D_800F64F8 != 0 || temp_s2->unk_00 == 0) {
         return;
@@ -665,18 +1087,101 @@ void func_800F9118_ShyGuySays(omObjData* arg0, s16 arg1) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/overlays/ovl_28_ShyGuySays/1D9690", func_800F94A8_ShyGuySays);
+void func_800F94A8_ShyGuySays(void) {
+    u16 i;
+    unkStruct_ShyGuySays_01* p = D_800FD9C0_ShyGuySays;
+    omObjData* obj;
 
-INCLUDE_ASM("asm/nonmatchings/overlays/ovl_28_ShyGuySays/1D9690", func_800F95BC_ShyGuySays);
+    for (i = 0; i < 4; i++, p++) {
+        obj = D_800F3FB0[i];
+        if (p->unk_00 != 0 && p->unk_04 != 0x200 && p->unk_08 == -1 && p->unk_10 == 1 && p->unk_14 == 1) {
+            if (func_800F740C_ShyGuySays(0) & 1) {
+                func_800F9118_ShyGuySays(obj, 1);
+                p->unk_04 = 1;
+            } else {
+                func_800F9118_ShyGuySays(obj, 2);
+                p->unk_04 = 2;
+            }
+            p->unk_8C = 0;
+        }
+    }
+}
+void func_800F95BC_ShyGuySays(void) {
+    u16 i;
+    unkStruct_ShyGuySays_01* p = D_800FD9C0_ShyGuySays;
+    omObjData* obj;
 
-INCLUDE_ASM("asm/nonmatchings/overlays/ovl_28_ShyGuySays/1D9690", func_800F96D4_ShyGuySays);
+    for (i = 0; i < 4; i++, p++) {
+        obj = D_800F3FB0[i];
+        if (p->unk_00 != 0 && p->unk_04 != 0x200 && p->unk_08 != -1 && p->unk_10 == 1 && p->unk_14 == 1) {
+            if (func_800F740C_ShyGuySays(0) & 1) {
+                func_800F9118_ShyGuySays(obj, 1);
+                p->unk_04 = 1;
+            } else {
+                func_800F9118_ShyGuySays(obj, 2);
+                p->unk_04 = 2;
+            }
+            p->unk_8E = 1;
+            p->unk_8C = 0;
+        }
+    }
+}
+void func_800F96D4_ShyGuySays(void) {
+    s16 i;
+    unk_ovl_2D_struct* m;
+    unkStruct_ShyGuySays_01* p;
 
-INCLUDE_ASM("asm/nonmatchings/overlays/ovl_28_ShyGuySays/1D9690", func_800F97A8_ShyGuySays);
+    for (i = 0; i < 4; i++) {
+        m = &D_800F2B7C[D_800F3FB0[i]->model[0]];
+        p = &D_800FD9C0_ShyGuySays[i];
+        if (D_800FD9C0_ShyGuySays[i].unk_00 != 0 && D_800FD9C0_ShyGuySays[i].unk_04 != 0x200 && p->unk_8E != 0) {
+            m->unk_4C = 0.0f;
+            m->unk_50 = m->unk_48;
+            p->unk_04 = 0;
+            p->unk_10 = 1;
+            p->unk_14 = 1;
+        }
+    }
+}
+s16 func_800F97A8_ShyGuySays(void) {
+    unkStruct_ShyGuySays_01* p = D_800FD9C0_ShyGuySays;
+    u16 i;
 
-INCLUDE_ASM("asm/nonmatchings/overlays/ovl_28_ShyGuySays/1D9690", func_800F9828_ShyGuySays);
+    for (i = 0; i < 4; i++, p++) {
+        if (p->unk_00 == 0 || D_800FD9C0_ShyGuySays[i].unk_04 == 0x200) {
+            continue;
+        }
+        if (p->unk_10 != 1 || p->unk_14 != 1) {
+            return 0;
+        }
+    }
+    return 1;
+}
+s16 func_800F9828_ShyGuySays(void) {
+    s16 i;
+    unk_ovl_2D_struct* m;
 
-INCLUDE_ASM("asm/nonmatchings/overlays/ovl_28_ShyGuySays/1D9690", func_800F98EC_ShyGuySays);
+    for (i = 0; i < 4; i++) {
+        m = &D_800F2B7C[D_800F3FB0[i]->model[0]];
+        if (D_800FD9C0_ShyGuySays[i].unk_00 != 0 && D_800FD9C0_ShyGuySays[i].unk_04 != 0x200 && m->unk_48 != m->unk_50) {
+            return 0;
+        }
+    }
+    return 1;
+}
+void func_800F98EC_ShyGuySays(void) {
+    s16 i;
+    unk_ovl_2D_struct* m;
 
+    for (i = 0; i < 4; i++) {
+        m = &D_800F2B7C[D_800F3FB0[i]->model[0]];
+        if (D_800FD9C0_ShyGuySays[i].unk_00 != 0 && D_800FD9C0_ShyGuySays[i].unk_04 != 0x200 && m->unk_4C == 0.0f) {
+            m->unk_0A = 4;
+            m->unk_4C = 1.0f;
+            m->unk_50 = 0.0f;
+        }
+    }
+}
 s16 func_800F99C0_ShyGuySays(void) {
     s16 i;
 
@@ -691,10 +1196,29 @@ s16 func_800F99C0_ShyGuySays(void) {
     return 1;
 }
 
-INCLUDE_ASM("asm/nonmatchings/overlays/ovl_28_ShyGuySays/1D9690", func_800F9A7C_ShyGuySays);
+s16 func_800F9A7C_ShyGuySays(u16 arg0, s16 arg1) {
+    if (D_800FD9C0_ShyGuySays[arg0].unk_00 == 0 || D_800FD9C0_ShyGuySays[arg0].unk_04 == 0x200) {
+        return 1;
+    }
+    return D_800FD9C0_ShyGuySays[arg0].unk_04 == arg1;
+}
+void func_800F9AFC_ShyGuySays(u16 arg0) {
+    s16 sp18[6] = { 0x45F, 0x460, 0x461, 0x462, 0x463, 0x464 };
+    unkStruct_ShyGuySays_01* p;
+    s16 fx;
 
-INCLUDE_ASM("asm/nonmatchings/overlays/ovl_28_ShyGuySays/1D9690", func_800F9AFC_ShyGuySays);
-
+    p = &D_800FD9C0_ShyGuySays[arg0];
+    p->unk_18 = 0x78;
+    p->unk_04 = 0x200;
+    fx = func_800FB520_ShyGuySays(p->unk_2C.x, p->unk_2C.y, p->unk_2C.z, 2, 3);
+    func_80067284(D_800FDC70_ShyGuySays[fx].unk2, 0, 1.0f);
+    D_800FDC70_ShyGuySays[fx].unk10 = 4;
+    PlaySound(0x2FB);
+    if (p->unk_08 != -1) {
+        func_80060F04(arg0, 0x14, 0, 0x14);
+    }
+    func_800F7244_ShyGuySays(sp18[D_800FDC10_ShyGuySays[arg0]], 0xA);
+}
 void func_800F9C50_ShyGuySays(u16 arg0[]) {
     u16 i;
     
@@ -769,32 +1293,30 @@ void func_800F9D80_ShyGuySays(unkShyGuySaysStruct* arg0, u16 playerIndex) {
     arg0->unk92 = 0;
 }
 
-INCLUDE_RODATA("asm/nonmatchings/overlays/ovl_28_ShyGuySays/1D9690", D_800FD768_ShyGuySays);
 
-#ifdef NON_MATCHING // needs rodata; missing nops
-void func_800F9F60_ShyGuySays(unkObjectStruct* arg0, s16* arg1, u16 arg2) {
+void func_800F9F60_ShyGuySays(omObjData* arg0, s16* arg1, u16 arg2) {
     unkStruct_ShyGuySays_01* temp_s2;
     f32 sp18[3];
     f32 temp_f20;
     f32 var_f2;
     u16 i;
 
-    temp_s2 = &D_800FD9C0_ShyGuySays[arg0->unk_4C[0]];
+    temp_s2 = &D_800FD9C0_ShyGuySays[arg0->work[0]];
 
     if (D_800FDC20_ShyGuySays == NULL) {
         var_f2 = 0.0f;
     } else {
-        var_f2 = D_800FDC20_ShyGuySays->unk_1C;
+        var_f2 = D_800FDC20_ShyGuySays->trans.y;
     }
 
-    if (arg0->unk_1C == 1.0f || arg0->unk_1C == 2.0f) {
+    if (arg0->trans.y == 1.0f || arg0->trans.y == 2.0f) {
         temp_s2->unk_2C.y = var_f2 - 0.0;
     } else {
         temp_s2->unk_2C.y = var_f2 - 4.0;
     }
 
-    sp18[0] = func_800F7608_ShyGuySays(arg0->unk_1C - temp_s2->unk_2C.y, arg0->unk_20 - temp_s2->unk_2C.z);
-    sp18[1] = func_800F7608_ShyGuySays(arg0->unk_18 - temp_s2->unk_2C.x, arg0->unk_20 - temp_s2->unk_2C.z);
+    sp18[0] = func_800F7608_ShyGuySays(arg0->trans.y - temp_s2->unk_2C.y, arg0->trans.z - temp_s2->unk_2C.z);
+    sp18[1] = func_800F7608_ShyGuySays(arg0->trans.x - temp_s2->unk_2C.x, arg0->trans.z - temp_s2->unk_2C.z);
     sp18[2] = 0.0f;
 
     temp_s2->unk_80 += func_800F740C_ShyGuySays(0) & 7;
@@ -802,12 +1324,12 @@ void func_800F9F60_ShyGuySays(unkObjectStruct* arg0, s16* arg1, u16 arg2) {
         temp_s2->unk_80 -= 360;
     }
 
-    temp_s2->unk_5C.x = arg0->unk_18;
-    temp_s2->unk_5C.y = arg0->unk_1C;
-    temp_s2->unk_5C.z = arg0->unk_20;
+    temp_s2->unk_5C.x = arg0->trans.x;
+    temp_s2->unk_5C.y = arg0->trans.y;
+    temp_s2->unk_5C.z = arg0->trans.z;
 
     temp_s2->unk_50.x = temp_s2->unk_2C.x + func_800AEAC0(sp18[1]) * 20.0f * 20.0f + func_800AEAC0(temp_s2->unk_80) * 20.0f * 2.0f;
-    temp_s2->unk_50.y = arg0->unk_1C - 40.0f;
+    temp_s2->unk_50.y = arg0->trans.y - 40.0f;
     temp_s2->unk_50.z = temp_s2->unk_2C.z + func_800AEFD0(sp18[1]) * 20.0f * 20.0f;
 
     for (i = 1; i < arg2 + 1; i++) {
@@ -831,36 +1353,382 @@ void func_800F9F60_ShyGuySays(unkObjectStruct* arg0, s16* arg1, u16 arg2) {
         }
     }
 }
+
+// register allocation in the joint loop: (f32)i lands in t's $f20, retail uses a $f2 temp (masked 2, raw 7);
+// tried swapped operands, t/sway declaration order
+#ifdef NON_MATCHING
+void func_800FA308_ShyGuySays(omObjData* arg0, s16* arg1, u16 arg2) {
+    f32 sp18[3];
+    unkStruct_ShyGuySays_01* p;
+    f32 sway;
+    f32 t;
+    u16 i;
+
+    sway = 0.0f;
+    p = &D_800FD9C0_ShyGuySays[arg0->work[0]];
+    if (D_800FDC20_ShyGuySays == NULL) {
+        p->unk_44.y = -90.0f;
+    } else {
+        p->unk_44.y = D_800FDC20_ShyGuySays->trans.y - 90.0;
+    }
+    if (p->unk_04 & 0x200) {
+        for (i = 0; i < arg2; i++) {
+            func_800258EC(arg1[i], 4, 4);
+        }
+    }
+    switch (arg0->work[0]) {
+    case 0:
+        sway = func_800AEAC0(p->unk_80) * 20.0f * 0.5;
+        if (sway > 0.0f) {
+            sway = 0.0f;
+        }
+        break;
+    case 1:
+    case 2:
+        sway = func_800AEAC0(p->unk_80) * 20.0f * 0.5;
+        break;
+    case 3:
+        sway = func_800AEAC0(p->unk_80) * 20.0f * 0.5;
+        if (sway < 0.0f) {
+            sway = 0.0f;
+        }
+        break;
+    }
+    p->unk_50.x = p->unk_44.x + (p->unk_2C.x - p->unk_44.x) * 0.5 - sway;
+    switch (arg0->work[0]) {
+    case 0:
+    case 3:
+        p->unk_50.y = p->unk_2C.y + 40.0;
+        p->unk_38.y *= 0.8;
+        p->unk_38.x *= 0.9;
+        break;
+    case 1:
+    case 2:
+        p->unk_50.y = p->unk_2C.y + 28.0;
+        break;
+    }
+    p->unk_50.z = p->unk_44.z + 15.0;
+    for (i = 0; i < arg2; i++) {
+        t = (f32)i * D_800FDC64_ShyGuySays->unk_00[arg2];
+        func_800F7780_ShyGuySays(t, &p->unk_44, &p->unk_50, &p->unk_38, &p->unk_68);
+        func_800F7874_ShyGuySays(t, &p->unk_44, &p->unk_50, &p->unk_38, &p->unk_74);
+        func_80025798(arg1[i], p->unk_68.x, p->unk_68.y, p->unk_68.z);
+        sp18[0] = func_800F7608_ShyGuySays(p->unk_74.y, -p->unk_74.z);
+        sp18[1] = func_800F7608_ShyGuySays(-p->unk_74.x, -p->unk_74.z);
+        sp18[2] = 0.0f;
+        func_800257E4(arg1[i], sp18[0], sp18[1], sp18[2]);
+        func_80025830(arg1[i], 1.0f, 1.0f, 0.5f);
+    }
+}
 #else
-INCLUDE_ASM("asm/nonmatchings/overlays/ovl_28_ShyGuySays/1D9690", func_800F9F60_ShyGuySays);
-#endif
-
 INCLUDE_ASM("asm/nonmatchings/overlays/ovl_28_ShyGuySays/1D9690", func_800FA308_ShyGuySays);
+#endif
+void func_800FA77C_ShyGuySays(omObjData* arg0) {
+    s32 ret;
+    s16 sprite;
 
-INCLUDE_ASM("asm/nonmatchings/overlays/ovl_28_ShyGuySays/1D9690", func_800FA77C_ShyGuySays);
+    arg0->func_ptr = NULL;
+    D_800FD9AC_ShyGuySays = omAddObj(1, 1, 0, -1, &func_800FA8F4_ShyGuySays);
+    omSetStatBit(D_800FD9AC_ShyGuySays, 0xA0);
+    D_800FDC68_ShyGuySays[0] = func_800FB2C8_ShyGuySays(0x350013);
+    sprite = ret = func_80064EF4_s32(1, 0);
+    func_80067208(sprite, 0, D_800FDC68_ShyGuySays[0], 0);
+    func_800674BC(sprite, 0, 0x4000);
+    func_80066DC4(sprite, 0, D_800FDC64_ShyGuySays->unk_00[2] * 320.0f, 0x3C);
+    func_80067354(sprite, 0, 2.0f, 2.0f);
+    func_800674BC(sprite, 0, 0x503C);
+    func_80067384(sprite, 0, 0xFFFF);
+    arg0->work[0] = (u32)(ret << 16) >> 24;
+    arg0->work[1] = ret;
+    SetFadeInTypeAndTime(0, 0x10);
+}
+void func_800FA8D4_ShyGuySays(void) {
+    HuMemDirectFree(D_800FD9B4_ShyGuySays);
+}
+void func_800FA8F4_ShyGuySays(omObjData* arg0) {
+    arg0->func_ptr = &func_800FA960_ShyGuySays;
+    arg0->model[0] = func_800174C0(0x350001, 0x99);
+    D_800FD9B0_ShyGuySays = arg0->model[0];
+    func_80026040(arg0->model[0]);
+    func_800FAA80_ShyGuySays(arg0->model[0]);
+}
+void func_800FA960_ShyGuySays(omObjData* arg0) {
+    if (func_8005FD5C() + D_800F64F8 == 0) {
+        D_800FD5D8_ShyGuySays -= 1.0;
+    }
+    func_80027C1C(arg0->model[0], D_800FD5D4_ShyGuySays, D_800FD5D8_ShyGuySays, 0x20, 0x20);
+    if (func_8005FD5C() + D_800F64F8 == 0) {
+        D_800FD5D0_ShyGuySays += 1.5;
+    }
+    if (D_800FD5D0_ShyGuySays > 360.0) {
+        D_800FD5D0_ShyGuySays -= 360.0;
+    }
+    func_800FAED8_ShyGuySays(arg0->model[0], D_800FD5D0_ShyGuySays);
+}
+void func_800FAA80_ShyGuySays(s16 arg0) {
+    s16 xs[32];
+    s16 zs[32];
+    unk2C0C0StructC0* m;
+    unk2C0C0StructE0* v;
+    s16 nx;
+    s16 nz;
+    s16 n;
+    s16 i;
+    s16 j;
 
-INCLUDE_ASM("asm/nonmatchings/overlays/ovl_28_ShyGuySays/1D9690", func_800FA8D4_ShyGuySays);
+    m = D_800F2B7C[arg0].unk_6C;
+    v = m->unk_04;
+    nz = 0;
+    nx = 0;
+    n = m->unk_72;
+    for (i = 0; i < n; i++, v++) {
+        for (j = 0; j < nx; j++) {
+            if (xs[j] == v->unk_00) {
+                break;
+            }
+        }
+        if (j >= nx) {
+            xs[nx] = v->unk_00;
+            nx++;
+        }
+        for (j = 0; j < nz; j++) {
+            if (zs[j] == v->unk_04) {
+                break;
+            }
+        }
+        if (j >= nz) {
+            zs[nz] = v->unk_04;
+            nz++;
+        }
+    }
+    func_800F7680_ShyGuySays(xs, nx);
+    func_800F7680_ShyGuySays(zs, nz);
+    D_800FD9B4_ShyGuySays = HuMemDirectMalloc(n * sizeof(ShyGuyGridCell));
+    for (i = 0; i < n; i++) {
+        D_800FD9B4_ShyGuySays[i].unk_00 = 1;
+    }
+    v = m->unk_04;
+    for (i = 0; i < n; i++, v++) {
+        for (j = 0; j < nx; j++) {
+            if (xs[j] == v->unk_00) {
+                break;
+            }
+        }
+        if (j >= nx) {
+            j = nx - 1;
+        }
+        D_800FD9B4_ShyGuySays[i].unk_02 = j;
+        if (j == 0 || j == nx - 1) {
+            D_800FD9B4_ShyGuySays[i].unk_00 = 0;
+        }
+    }
+    v = m->unk_04;
+    for (i = 0; i < n; i++, v++) {
+        for (j = 0; j < nz; j++) {
+            if (zs[j] == v->unk_04) {
+                break;
+            }
+        }
+        if (j >= nz) {
+            j = nz - 1;
+        }
+        D_800FD9B4_ShyGuySays[i].unk_04 = j;
+        if (j == 0 || j == nz - 1) {
+            D_800FD9B4_ShyGuySays[i].unk_00 = 0;
+        }
+    }
+    D_800FD9B8_ShyGuySays[0] = abs(xs[0] - xs[1]);
+    D_800FD9B8_ShyGuySays[1] = abs(zs[0] - zs[1]);
+}
 
-INCLUDE_ASM("asm/nonmatchings/overlays/ovl_28_ShyGuySays/1D9690", func_800FA8F4_ShyGuySays);
+void func_800FAED8_ShyGuySays(s16 arg0, s32 arg1) {
+    unk2C0C0StructC0* m = D_800F2B7C[arg0].unk_6C;
+    ShyGuyGridCell* cell = D_800FD9B4_ShyGuySays;
+    unk2C0C0StructE0* src = m->unk_04;
+    unk2C0C0StructE0* dst = m->unk_08[D_800F37F0];
+    u16 n = m->unk_72;
+    s16 first = 0;
+    f32 s1;
+    f32 s2;
+    f32 ax;
+    f32 az;
+    u16 i;
 
-INCLUDE_ASM("asm/nonmatchings/overlays/ovl_28_ShyGuySays/1D9690", func_800FA960_ShyGuySays);
+    s1 = func_800AEAC0(arg1);
+    s2 = func_800AEAC0(arg1 * 2);
+    ax = D_800FD9B8_ShyGuySays[0] * D_800FDC64_ShyGuySays->unk_00[6] * D_800F2B7C[arg0].unk_3C;
+    az = D_800FD9B8_ShyGuySays[0] * D_800FDC64_ShyGuySays->unk_00[9] * D_800F2B7C[arg0].unk_40;
+    if (arg1 == 0) {
+        first = 1 - first; /* == 1; spelled so GCC keeps the branch */
+    }
+    for (i = 0; i < n; src++, dst++, i++, cell++) {
+        if (cell->unk_00 != 0) {
+            if (cell->unk_04 & 1) {
+                dst->unk_00 = src->unk_00 + s1 * ax;
+            } else {
+                dst->unk_00 = src->unk_00 - s1 * ax;
+            }
+            if (first) {
+                if ((cell->unk_02 & 1) && (cell->unk_04 & 1)) {
+                    dst->unk_02 = src->unk_02 + s2 * az;
+                } else if ((cell->unk_02 + cell->unk_04) & 1) {
+                    dst->unk_02 = src->unk_02 - s2 * az;
+                } else {
+                    dst->unk_02 = src->unk_02;
+                }
+            } else {
+                if (!(cell->unk_02 & 1) && !(cell->unk_04 & 1)) {
+                    dst->unk_02 = src->unk_02 + s2 * az;
+                } else if ((cell->unk_02 & 1) && (cell->unk_04 & 1)) {
+                    dst->unk_02 = src->unk_02 - s2 * az;
+                } else {
+                    dst->unk_02 = src->unk_02;
+                }
+            }
+        } else {
+            dst->unk_00 = src->unk_00;
+            dst->unk_02 = src->unk_02;
+            dst->unk_04 = src->unk_04;
+        }
+    }
+}
 
-INCLUDE_ASM("asm/nonmatchings/overlays/ovl_28_ShyGuySays/1D9690", func_800FAA80_ShyGuySays);
+// decomp-permuter
+f32 func_800FB190_ShyGuySays(f32 arg0, f32 arg1)
+{
+  unk2C0C0StructC0 *m = D_800F2B7C[D_800FD9B0_ShyGuySays].unk_6C;
+  unk2C0C0StructE0 *v = m->unk_08[D_800F37F0];
+  u16 n = m->unk_72;
+  u16 i;
+  unsigned int new_var;
+  u16 cnt = 0;
+  f64 sum = 0.0;
+  f32 dx;
+  f32 dz;
+  for (i = 0; i < n; i++, v++)
+  {
+    dx = fabsf(v->unk_00 - arg0);
+    dz = fabsf(v->unk_04 - arg1);
+    if ((dx < (D_800FD9B8_ShyGuySays[0] * 1.5)) && (dz < (D_800FD9B8_ShyGuySays[0] * 1.5)))
+    {
+      sum += v->unk_02;
+      cnt++;
+      if (cnt >= 10)
+      {
+        break;
+      }
+    }
+  }
 
-INCLUDE_ASM("asm/nonmatchings/overlays/ovl_28_ShyGuySays/1D9690", func_800FAED8_ShyGuySays);
+  new_var = cnt;
+  return -(sum * D_800FDC64_ShyGuySays->unk_00[new_var]);
+}
+u16 func_800FB2C8_ShyGuySays(s32 arg0) {
+    void* data;
+    u16 ret;
 
-INCLUDE_ASM("asm/nonmatchings/overlays/ovl_28_ShyGuySays/1D9690", func_800FB190_ShyGuySays);
+    data = DataRead(arg0);
+    ret = func_800678A4(data);
+    DataClose(data);
+    return ret;
+}
+void func_800FB30C_ShyGuySays(void) {
+    unkStruct_ShyGuySays_06* p;
+    u16 i;
 
-INCLUDE_ASM("asm/nonmatchings/overlays/ovl_28_ShyGuySays/1D9690", func_800FB2C8_ShyGuySays);
+    D_800FDC6C_ShyGuySays = func_800FB2C8_ShyGuySays(0x3C0017);
+    p = D_800FDC70_ShyGuySays;
+    for (i = 0; i < 6; i++, p++) {
+        p->unk0 = 0;
+        p->unk2 = func_80064EF4(1, 0);
+        func_80067208(p->unk2, 0, D_800FDC6C_ShyGuySays, 0);
+        func_800674BC(p->unk2, 0, 0x9000);
+        func_80066DC4(p->unk2, 0, 0, 0);
+        func_80067354(p->unk2, 0, 1.0f, 1.0f);
+        func_80067384(p->unk2, 0, i - 0x10);
+        func_800672B0(p->unk2, 0, 0);
+        p->unk10 = 0;
+        p->unk4 = p->unk8 = p->unkC = 0.0f;
+        p->unk12 = 0;
+    }
+}
+void func_800FB424_ShyGuySays(void) {
+    unkStruct_ShyGuySays_06* p;
+    u16 i;
 
-INCLUDE_ASM("asm/nonmatchings/overlays/ovl_28_ShyGuySays/1D9690", func_800FB30C_ShyGuySays);
+    p = D_800FDC70_ShyGuySays;
+    for (i = 0; i < 6; i++, p++) {
+        if (p->unk0 != 0) {
+            if (p->unk12 & 1) {
+                func_80066DF4(p->unk2, 0, 0, p->unk4, p->unk8, p->unkC);
+            } else {
+                func_80066DC4(p->unk2, 0, p->unk4, p->unk8);
+            }
+            if (p->unk10 > 0) {
+                if (--p->unk10 <= 0) {
+                    func_800674BC(p->unk2, 0, 0x8000);
+                    p->unk12 = 0;
+                    p->unk10 = 0;
+                    p->unk0 = 0;
+                }
+            }
+        }
+    }
+}
+s16 func_800FB520_ShyGuySays(f32 arg0, f32 arg1, f32 arg2, s16 arg3, u16 arg4) {
+    unkStruct_ShyGuySays_06* p = D_800FDC70_ShyGuySays;
+    u16 i;
 
-INCLUDE_ASM("asm/nonmatchings/overlays/ovl_28_ShyGuySays/1D9690", func_800FB424_ShyGuySays);
+    for (i = 0; i < 6; i++, p++) {
+        if (p->unk0 == 0) {
+            p->unk0 = 1;
+            p->unk4 = arg0;
+            p->unk8 = arg1;
+            p->unkC = arg2;
+            p->unk10 = 0;
+            p->unk12 = arg4;
+            func_80067208(p->unk2, 0, D_800FDC68_ShyGuySays[arg3], 0);
+            func_800671DC(p->unk2, 0, 0);
+            func_80067480(p->unk2, 0, 0x8000);
+            if (arg4 & 1) {
+                func_80066DF4(p->unk2, 0, 0, arg0, arg1, arg2);
+            } else {
+                func_80066DC4(p->unk2, 0, arg0, arg1);
+            }
+            if (arg4 & 2) {
+                func_800672B0(p->unk2, 0, 2);
+            } else if (arg4 & 4) {
+                func_800672B0(p->unk2, 0, 3);
+            } else if (arg4 & 8) {
+                func_800672B0(p->unk2, 0, 1);
+            } else {
+                func_800672B0(p->unk2, 0, 0);
+            }
+            return i;
+        }
+    }
+    return -1;
+}
+void func_800FB6E0_ShyGuySays(omObjData* arg0) {
+    s16 sp10[2];
+    u16 i;
 
-INCLUDE_ASM("asm/nonmatchings/overlays/ovl_28_ShyGuySays/1D9690", func_800FB520_ShyGuySays);
-
-INCLUDE_ASM("asm/nonmatchings/overlays/ovl_28_ShyGuySays/1D9690", func_800FB6E0_ShyGuySays);
-
+    arg0->func_ptr = &func_800FB840_ShyGuySays;
+    D_800FDC68_ShyGuySays[1] = func_800FB2C8_ShyGuySays(0x350011);
+    for (i = 0; i < 2; i++) {
+        sp10[i] = func_80064EF4_s32(1, 0);
+        func_80067208(sp10[i], 0, D_800FDC68_ShyGuySays[1], 0);
+        func_800674BC(sp10[i], 0, 0x4000);
+        func_80066DC4(sp10[i], 0, i * 50 + 0x87, 0x1E);
+        func_80067354(sp10[i], 0, 1.0f, 1.0f);
+        func_800674BC(sp10[i], 0, 0x503C);
+        func_80067384(sp10[i], 0, 0xFFF0);
+    }
+    arg0->work[0] = (u16)sp10[0] >> 8;
+    arg0->work[1] = (u8)sp10[0];
+    arg0->work[2] = (u16)sp10[1] >> 8;
+    arg0->work[3] = (u8)sp10[1];
+}
 void func_800FB840_ShyGuySays(omObjData* arg0) {
     u16 phi_v0;
     s32 phi_s3, phi_s4;
@@ -903,13 +1771,60 @@ void func_800FB840_ShyGuySays(omObjData* arg0) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/overlays/ovl_28_ShyGuySays/1D9690", func_800FBAE4_ShyGuySays);
+void func_800FBAE4_ShyGuySays(omObjData* arg0) {
+    unk2C0C0StructC0* m;
+    u16 i;
 
-INCLUDE_RODATA("asm/nonmatchings/overlays/ovl_28_ShyGuySays/1D9690", D_800FD850_ShyGuySays);
+    arg0->func_ptr = &func_800FBE60_ShyGuySays;
+    arg0->model[0] = func_800174C0(0x3C0006, 0x499);
+    arg0->model[1] = func_800174C0(0x3C0007, 0x499);
+    arg0->model[2] = func_800174C0(0x3C0008, 0x499);
+    arg0->model[3] = func_800174C0(0x3C0009, 0x499);
+    arg0->model[4] = func_800174C0(0x3C000A, 0x499);
+    func_800258EC(arg0->model[1], 4, 4);
+    func_800258EC(arg0->model[2], 4, 4);
+    func_800258EC(arg0->model[3], 4, 4);
+    func_800258EC(arg0->model[4], 4, 4);
+    arg0->model[5] = func_800174C0(6, 0x499);
+    arg0->model[6] = func_800174C0(0x3C0001, 0x499);
+    func_80026040(arg0->model[0]);
+    for (i = 0; i < 5; i++) {
+        D_800F2B7C[arg0->model[i]].unk_4C = 0.0f;
+        D_800FDC38_ShyGuySays[i].unk_00 = func_80025E48(arg0->model[i]);
+        D_800FDC38_ShyGuySays[i].unk_02 = func_80025D40(arg0->model[i]);
+    }
+    D_800F2B7C[arg0->model[3]].unk_48 = D_800FDC38_ShyGuySays[3].unk_02;
+    D_800F2B7C[arg0->model[3]].unk_50 = D_800FDC38_ShyGuySays[3].unk_02;
+    D_800F2B7C[arg0->model[4]].unk_48 = D_800FDC38_ShyGuySays[4].unk_02;
+    D_800F2B7C[arg0->model[4]].unk_50 = D_800FDC38_ShyGuySays[4].unk_02;
+    D_800FDC28_ShyGuySays[0] = 1;
+    D_800FDC28_ShyGuySays[1] = 1;
+    D_800FDC28_ShyGuySays[2] = 1;
+    D_800FDC28_ShyGuySays[3] = 0;
+    arg0->trans.x = 0.0f;
+    arg0->trans.z = arg0->trans.y = 100.0f;
+    arg0->scale.x = arg0->scale.y = arg0->scale.z = 0.8f;
+    arg0->rot.y = 180.0f;
+    D_800FDC4C_ShyGuySays = 0;
+    D_800FDC54_ShyGuySays = 30.0f;
+    arg0->work[0] = 3;
+    arg0->work[1] = 4;
+    arg0->work[2] = 5;
+    arg0->work[3] = 6;
+    m = D_800F2B7C[arg0->model[0]].unk_6C;
+    D_800FDC50_ShyGuySays[0] = func_80033718(m, "sentyo_r2-hata_r");
+    D_800FDC50_ShyGuySays[1] = func_80033718(m, "sentyo_r2-hata_w");
+}
 
-INCLUDE_RODATA("asm/nonmatchings/overlays/ovl_28_ShyGuySays/1D9690", D_800FD858_ShyGuySays);
+const UnknownBlock8 D_800FD850_ShyGuySays = { { 9, 10, 16, 19 } };
 
-INCLUDE_RODATA("asm/nonmatchings/overlays/ovl_28_ShyGuySays/1D9690", D_800FD860_ShyGuySays);
+const UnknownBlock8 D_800FD858_ShyGuySays = { { 8, 11, 17, 18 } };
+
+/* func_80060268 ids for rounds 1-15 */
+const UnknownBlock36 D_800FD860_ShyGuySays = { {
+    0x88, 0x8C, 0x90, 0x94, 0x98, 0x9C, 0xA0, 0xA4, 0xA8,
+    0xAC, 0xB0, 0xB4, 0xB8, 0xBB, 0xBB, 0xBB, 0xBB, 0xBB,
+} };
 
 void func_800FBE60_ShyGuySays(omObjData* arg0) {
     UnknownBlock8 sp18;
@@ -934,10 +1849,10 @@ void func_800FBE60_ShyGuySays(omObjData* arg0) {
     }
 
     var_f12 = D_800FD5E4_ShyGuySays;
-    func_800FD274_ShyGuySays(arg0->model[0], D_800FDC50_ShyGuySays, func_800AEAC0(var_f12), sp18.unk_00, sp1C.unk_00.unk_00);
+    func_800FD274_ShyGuySays(arg0->model[0], D_800FDC50_ShyGuySays[0], func_800AEAC0(var_f12), sp18.unk_00, sp1C.unk_00.unk_00);
 
     var_f12 = D_800FD5E4_ShyGuySays;
-    func_800FD274_ShyGuySays(arg0->model[0], D_800FDC52_ShyGuySays, func_800AEFD0(var_f12), sp18.unk_00, sp1C.unk_00.unk_00);
+    func_800FD274_ShyGuySays(arg0->model[0], D_800FDC50_ShyGuySays[1], func_800AEFD0(var_f12), sp18.unk_00, sp1C.unk_00.unk_00);
 
     if (func_8005FD5C() + D_800F64F8 != 0) {
         return;
@@ -978,7 +1893,7 @@ void func_800FBE60_ShyGuySays(omObjData* arg0) {
                         }
                     }
                     if (D_800FD9A8_ShyGuySays < 16) {
-                        func_80060268(sp18.unk_00[D_800FD9A8_ShyGuySays + 7]);
+                        func_80060268(sp1C.unk_08.unk_00[D_800FD9A8_ShyGuySays - 1]);
                     }
                     PlaySound(0x2FC);
                     switch (var_s3) {
@@ -1059,7 +1974,7 @@ void func_800FBE60_ShyGuySays(omObjData* arg0) {
                     if (func_800F9A7C_ShyGuySays(i, D_800FD5E8_ShyGuySays) != 0) {
                         continue;
                     }
-                    if (D_800FDC30_ShyGuySays == 2) {
+                    if (D_800FDC28_ShyGuySays[2] == 2) {
                         if (i == 0) {
                             var_f12_2 = 325.0f;
                         } else if (i == 1) {
@@ -1091,7 +2006,7 @@ void func_800FBE60_ShyGuySays(omObjData* arg0) {
                     i = 5;
                 }
                 if (i == 4) {
-                    if (D_800FDC30_ShyGuySays == 1) {
+                    if (D_800FDC28_ShyGuySays[2] == 1) {
                         D_800FD99C_ShyGuySays = 0;
                         D_800FDC4C_ShyGuySays = 0;
                     } else if (arg0->rot.y == 180.0) {
@@ -1165,14 +2080,159 @@ void func_800FBE60_ShyGuySays(omObjData* arg0) {
     arg0->trans.y = func_800AEAC0(var_f12) * 24.0 + 100.0;
 }
 
+// register allocation (a3/t0, v0/v1) and one sll scheduled after the lui in case 4 (masked 3)
+#ifdef NON_MATCHING
+void func_800FCA8C_ShyGuySays(omObjData* arg0, u16 arg1) {
+    s16 m0 = arg0->model[0];
+    s16 m3 = arg0->model[3];
+    s16 m4 = arg0->model[4];
+    unk_ovl_2D_struct* e;
+    unk_ovl_2D_struct* e4;
+    unkStructShyGuySays_03* p;
+
+    if (D_800FDC28_ShyGuySays[2] == 1) {
+        e = &D_800F2B7C[m0];
+        if (D_800FDC28_ShyGuySays[3] != 0) {
+            if (--D_800FDC28_ShyGuySays[3] == 0) {
+                e->unk_0A = 0;
+                e->unk_48 = D_800FDC38_ShyGuySays[1].unk_02;
+                e->unk_50 = D_800FDC38_ShyGuySays[1].unk_02;
+            }
+            return;
+        }
+        if (e->unk_48 != e->unk_50) {
+            return;
+        }
+        switch (arg1) {
+        case 2:
+            if (D_800FDC28_ShyGuySays[0] & 1) {
+                D_800FDC28_ShyGuySays[0] = 2;
+                func_800F79E4_ShyGuySays(m0, &D_800FDC38_ShyGuySays[0], 1);
+            }
+            break;
+        case 5:
+            if ((D_800FDC28_ShyGuySays[0] & 2) && (D_800FDC28_ShyGuySays[1] & 2)) {
+                D_800FDC28_ShyGuySays[3] = D_800FDC38_ShyGuySays[1].unk_02 * 0.5;
+                D_800FDC28_ShyGuySays[0] = 1;
+                D_800FDC28_ShyGuySays[1] = 2;
+                p = &D_800FDC38_ShyGuySays[1];
+                goto anim;
+            } else if (D_800FDC28_ShyGuySays[0] & 2) {
+                D_800FDC28_ShyGuySays[0] = 1;
+                func_800F79E4_ShyGuySays(m0, &D_800FDC38_ShyGuySays[0], -1);
+            }
+            break;
+        case 1:
+            if (D_800FDC28_ShyGuySays[1] & 1) {
+                D_800FDC28_ShyGuySays[1] = 2;
+                func_800F79E4_ShyGuySays(m0, &D_800FDC38_ShyGuySays[1], 1);
+            }
+            break;
+        case 4:
+            if (D_800FDC28_ShyGuySays[0] & 2) {
+                if (D_800FDC28_ShyGuySays[1] & 2) {
+                    D_800FDC28_ShyGuySays[3] = D_800FDC38_ShyGuySays[0].unk_02 * 0.5;
+                    D_800FDC28_ShyGuySays[1] = 1;
+                    D_800FDC28_ShyGuySays[0] = 2;
+                    p = &D_800FDC38_ShyGuySays[0];
+                anim:
+                    func_80025C20(m0, p->unk_00, p->unk_02 * 0.5, p->unk_02 * 0.5, 0);
+                }
+            } else if (D_800FDC28_ShyGuySays[1] & 2) {
+                D_800FDC28_ShyGuySays[1] = 1;
+                func_800F79E4_ShyGuySays(m0, &D_800FDC38_ShyGuySays[1], -1);
+            }
+            break;
+        case 3:
+            if ((D_800FDC28_ShyGuySays[0] & 1) && (D_800FDC28_ShyGuySays[1] & 1)) {
+                D_800FDC28_ShyGuySays[0] = 2;
+                D_800FDC28_ShyGuySays[1] = 2;
+                func_800F79E4_ShyGuySays(m0, &D_800FDC38_ShyGuySays[2], 1);
+            }
+            break;
+        case 6:
+            if ((D_800FDC28_ShyGuySays[0] & 2) && (D_800FDC28_ShyGuySays[1] & 2)) {
+                D_800FDC28_ShyGuySays[0] = 1;
+                D_800FDC28_ShyGuySays[1] = 1;
+                func_800F79E4_ShyGuySays(m0, &D_800FDC38_ShyGuySays[2], -1);
+            } else if (D_800FDC28_ShyGuySays[0] & 2) {
+                D_800FDC28_ShyGuySays[0] = 1;
+                func_800F79E4_ShyGuySays(m0, &D_800FDC38_ShyGuySays[0], -1);
+            } else if (D_800FDC28_ShyGuySays[1] & 2) {
+                D_800FDC28_ShyGuySays[1] = 1;
+                func_800F79E4_ShyGuySays(m0, &D_800FDC38_ShyGuySays[1], -1);
+            }
+            break;
+        case 7:
+            if ((D_800FDC28_ShyGuySays[0] & 1) && (D_800FDC28_ShyGuySays[1] & 1)) {
+                D_800FDC28_ShyGuySays[2] = 2;
+                func_800258EC(m0, 4, 4);
+                func_800258EC(m4, 4, 0);
+                func_800F79E4_ShyGuySays(m4, &D_800FDC38_ShyGuySays[4], 1);
+                PlaySound(0x2FD);
+            }
+            break;
+        }
+    } else {
+        e = &D_800F2B7C[m3];
+        e4 = &D_800F2B7C[m4];
+        if (D_800FDC28_ShyGuySays[3] != 0) {
+            if (--D_800FDC28_ShyGuySays[3] == 0) {
+                D_800FDC28_ShyGuySays[2] = 1;
+                func_800258EC(m0, 4, 0);
+                func_800258EC(m4, 4, 4);
+            }
+            return;
+        }
+        if (e->unk_48 == e->unk_50 && e4->unk_48 == e4->unk_50) {
+            switch (arg1) {
+            case 8:
+                func_800258EC(m3, 4, 0);
+                func_800258EC(m4, 4, 4);
+                func_800F79E4_ShyGuySays(m3, &D_800FDC38_ShyGuySays[3], 1);
+                D_800F2B7C[m3].unk_4C = 2.0f;
+                break;
+            case 9:
+                func_800258EC(m3, 4, 4);
+                func_800258EC(m4, 4, 0);
+                func_800F79E4_ShyGuySays(m4, &D_800FDC38_ShyGuySays[4], -1);
+                D_800FDC28_ShyGuySays[3] = D_800FDC38_ShyGuySays[4].unk_02 * 0.5;
+                break;
+            }
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/overlays/ovl_28_ShyGuySays/1D9690", func_800FCA8C_ShyGuySays);
+#endif
 
-INCLUDE_ASM("asm/nonmatchings/overlays/ovl_28_ShyGuySays/1D9690", func_800FD124_ShyGuySays);
+s16 func_800FD124_ShyGuySays(omObjData* arg0) {
+    unk_ovl_2D_struct* a = &D_800F2B7C[arg0->model[0]];
+    unk_ovl_2D_struct* b = &D_800F2B7C[arg0->model[3]];
+    unk_ovl_2D_struct* c = &D_800F2B7C[arg0->model[4]];
 
-INCLUDE_ASM("asm/nonmatchings/overlays/ovl_28_ShyGuySays/1D9690", func_800FD1D0_ShyGuySays);
+    if (D_800FDC28_ShyGuySays[3] == 0 && a->unk_48 == a->unk_50 && b->unk_48 == b->unk_50 && c->unk_48 == c->unk_50) {
+        return 1;
+    }
+    return 0;
+}
+f32 func_800FD1D0_ShyGuySays(void) {
+    unk_ovl_2D_struct* m = &D_800F2B7C[D_800FDC20_ShyGuySays->model[0]];
 
-INCLUDE_ASM("asm/nonmatchings/overlays/ovl_28_ShyGuySays/1D9690", func_800FD200_ShyGuySays);
-
+    return m->unk_48;
+}
+s16 func_800FD200_ShyGuySays(void) {
+    if (D_800FDC28_ShyGuySays[0] == 2 && D_800FDC28_ShyGuySays[1] == 1) {
+        return 1;
+    }
+    if (D_800FDC28_ShyGuySays[0] == 1 && D_800FDC28_ShyGuySays[1] == 2) {
+        return 2;
+    }
+    if (D_800FDC28_ShyGuySays[0] == 2 && D_800FDC28_ShyGuySays[1] == 2) {
+        return 3;
+    }
+    return 0;
+}
 void func_800FD274_ShyGuySays(s16 arg0, s16 arg1, f32 arg2, u16* arg3, u16* arg4) {
     unk2C0C0StructC0* temp_t3;
     unk2C0C0StructE0* temp_a3;

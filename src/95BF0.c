@@ -1,3 +1,5 @@
-#include "common.h"
+#include <libaudio.h>
 
-INCLUDE_ASM("asm/nonmatchings/95BF0", alSynSetPriority);
+void alSynSetPriority(ALSynth* s, ALVoice* voice, s16 priority) {
+    voice->priority = priority;
+}

@@ -1,3 +1,13 @@
-#include "common.h"
+#include "PR/os_internal.h"
 
-INCLUDE_ASM("asm/nonmatchings/9AC00", func_8009A000);
+#ifndef OS_IM_RCP
+#define OS_IM_RCP 0x00000401
+#endif
+
+/* __osResetGlobalIntMask */
+void func_8009A000(OSHWIntr mask) {
+    register u32 saveMask = __osDisableInt();
+
+    __OSGlobalIntMask &= ~(mask & ~OS_IM_RCP);
+    __osRestoreInt(saveMask);
+}

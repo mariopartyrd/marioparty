@@ -1,3 +1,6 @@
 #include "common.h"
 
-INCLUDE_ASM("asm/nonmatchings/9CC90", func_8009C090);
+/* KMC libm matherr: the default handler (returns 0, so the caller sets errno). */
+s32 func_8009C090(void* exc) { /* matherr */
+    return 0;
+}

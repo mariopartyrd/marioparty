@@ -39,7 +39,7 @@
 #include <libaudio.h>
 #include <os_internal.h>
 #include <ultraerror.h>
-#include <assert.h>
+#include <libc/assert.h>
 #include "seqp.h"
 #include "cseqp.h"
 #include "cseq.h"

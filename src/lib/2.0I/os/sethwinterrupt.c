@@ -1,3 +1,16 @@
-#include "common.h"
+#include "PR/os_internal.h"
+#include "osint.h"
 
-INCLUDE_ASM("asm/nonmatchings/lib/2.0I/os/sethwinterrupt", func_80093660);
+struct __osHwInt {
+    s32 (*handler)(void);
+    void* stackEnd;
+};
+
+extern struct __osHwInt __osHwIntTable[];
+
+void __osSetHWIntrRoutine(OSHWIntr interrupt, s32 (*handler)(void), void* stackEnd) {
+    register u32 saveMask = __osDisableInt();
+    __osHwIntTable[interrupt].handler = handler;
+    __osHwIntTable[interrupt].stackEnd = stackEnd;
+    __osRestoreInt(saveMask);
+}

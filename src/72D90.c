@@ -1,7 +1,7 @@
 #include "common.h"
 #include "engine/mallocblock.h"
 #include "engine/process.h"
-#include "stdarg.h"
+#include "libc/stdarg.h"
 
 typedef struct unk72D90Struct0 {
     /* 0x00 */ Vtx* unk_00;
@@ -11,7 +11,7 @@ typedef struct unk72D90Struct0 {
 typedef struct unk72D90Struct1 {
     /* 0x00 */ s16 unk_00;
     /* 0x02 */ s16 unk_02;
-    /* 0x04 */ s32 unk_04;
+    /* 0x04 */ void* unk_04;
 } unk72D90Struct1; //sizeof unknown
 
 typedef struct unk72D90Struct2 {
@@ -20,6 +20,71 @@ typedef struct unk72D90Struct2 {
     /* 0x02 */ u16 unk_02;
     /* 0x04 */ u16 unk_04;
 } unk72D90Struct2; //sizeof 6
+
+u8 D_800C6100 = 0;
+void* D_800C6104 = NULL;
+Gfx D_800C6108[] = {
+    gsDPPipeSync(),
+    gsDPSetCycleType(G_CYC_1CYCLE),
+    gsDPSetCombineMode(G_CC_DECALRGBA, G_CC_DECALRGBA),
+    gsDPSetRenderMode(G_RM_AA_OPA_SURF, G_RM_AA_OPA_SURF2),
+    gsDPSetPrimColor(0, 0, 0x00, 0x00, 0x00, 0xC0),
+    gsDPSetTexturePersp(G_TP_NONE),
+    gsDPSetTextureFilter(G_TF_POINT),
+    gsDPSetTextureLUT(G_TT_NONE),
+    gsDPSetAlphaDither(G_AD_DISABLE),
+    gsSPEndDisplayList(),
+};
+s32 D_800C6158[4] = { -1, -1, -1, -1 };
+Vp D_800C6168 = { { { 640, 480, 511, 0 }, { 640, 480, 511, 0 } } };
+Gfx D_800C6178[] = {
+    gsDPPipeSync(),
+    gsDPSetCycleType(G_CYC_FILL),
+    gsDPSetRenderMode(G_RM_NOOP, G_RM_NOOP2),
+    gsDPSetFillColor(0x00000000),
+    gsDPFillRectangle(0, 0, 319, 239),
+    gsDPPipeSync(),
+    gsDPSetCycleType(G_CYC_1CYCLE),
+    gsSPEndDisplayList(),
+};
+s16 D_800C61B8[] = { 0x102, 0x106, 0x107, 0x101 };
+u8 D_800C61C0[] = {
+    0x03, 0x03, 0x03, 0x00, 0x02, 0x03, 0x03, 0x01, 0x03, 0x01, 0x03, 0x01, 0x03, 0x01, 0x01, 0x03,
+    0x01, 0x01, 0x03, 0x00, 0x01, 0x01, 0x00, 0x01, 0x00, 0x03, 0x02, 0x03, 0x01, 0x00, 0x02, 0x02,
+    0x03, 0x01, 0x02, 0x03, 0x03, 0x03, 0x03, 0x00, 0x02, 0x03, 0x01, 0x02, 0x01, 0x01, 0x01, 0x03,
+    0x03, 0x02, 0x00, 0x00, 0x02, 0x03, 0x02, 0x03
+};
+u8 D_800C61F8[] = {
+    0x91, 0x92, 0x93, 0x94, 0x95, 0x96, 0x97, 0x98, 0x99, 0x9A, 0x9B, 0x9C, 0x9D, 0x9E, 0x9F, 0xA0,
+    0xA1, 0xA2, 0xA3, 0xA4, 0xA5, 0xA6, 0xA7, 0xA8, 0xA9, 0xAA, 0xAB, 0xAC, 0xAD, 0xAE, 0xAF, 0xB0,
+    0xB1, 0xB2, 0xB3, 0xB4, 0xB5, 0xB6, 0xB7, 0xB8, 0xB9, 0xBA, 0xBB, 0xBC, 0x86, 0xBD, 0x87, 0x88,
+    0x89, 0x8A, 0x8B, 0x8F, 0x8C, 0x8D, 0x8E, 0x00
+};
+u8 D_800C6230[] = {
+    0x96, 0x97, 0x98, 0x99, 0x9A, 0x9B, 0x9C, 0x9D, 0x9E, 0x9F, 0xA0, 0xA1, 0xA2, 0xA3, 0xA4, 0xAA,
+    0xAB, 0xAC, 0xAD, 0xAE, 0xAA, 0xAB, 0xAC, 0xAD, 0xAE, 0x00, 0x00, 0x00
+};
+extern const char D_800CBA68[], D_800CBA60[], D_800CBA58[], D_800CBA50[], D_800CBA48[], D_800CBA44[], D_800CBA40[];
+char* D_800C624C[] = {
+    (char*)D_800CBA68, (char*)D_800CBA60, (char*)D_800CBA58, (char*)D_800CBA50, (char*)D_800CBA48, (char*)D_800CBA44, (char*)D_800CBA40,
+};
+unk72D90Struct2 D_800C6268[57] = {
+    { 0, 0, 0x39A, 0x0 }, { 0, 0, 0x39B, 0x0 }, { 0, 0, 0x39C, 0x0 }, { 1, 0, 0x39D, 0x0 },
+    { 1, 0, 0x39E, 0x0 }, { 0, 0, 0x39F, 0x0 }, { 0, 0, 0x3A0, 0x0 }, { 1, 0, 0x3A1, 0x0 },
+    { 1, 0, 0x3A2, 0x0 }, { 3, 0, 0x3A3, 0x0 }, { 0, 0, 0x3A4, 0x0 }, { 1, 0, 0x3A5, 0x0 },
+    { 0, 0, 0x3A6, 0x0 }, { 1, 0, 0x3A7, 0x0 }, { 1, 0, 0x3A8, 0x0 }, { 0, 0, 0x3A9, 0x0 },
+    { 3, 0, 0x3AA, 0x3AB }, { 3, 0, 0x3AC, 0x3AD }, { 0, 0, 0x3AE, 0x0 }, { 1, 0, 0x3AF, 0x0 },
+    { 1, 0, 0x3B0, 0x0 }, { 3, 0, 0x3B1, 0x3B2 }, { 1, 0, 0x3B3, 0x0 }, { 1, 0, 0x3B4, 0x0 },
+    { 1, 0, 0x3B5, 0x0 }, { 0, 0, 0x3B6, 0x0 }, { 1, 0, 0x3B7, 0x0 }, { 0, 0, 0x3B8, 0x0 },
+    { 1, 0, 0x3B9, 0x0 }, { 2, 0, 0x3BA, 0x0 }, { 1, 0, 0x3BB, 0x0 }, { 3, 0, 0x3BC, 0x3BD },
+    { 0, 0, 0x3BE, 0x0 }, { 1, 0, 0x3BF, 0x0 }, { 1, 0, 0x3C0, 0x0 }, { 3, 0, 0x3C1, 0x3C2 },
+    { 1, 0, 0x3C3, 0x0 }, { 1, 0, 0x3C4, 0x0 }, { 1, 0, 0x3C5, 0x0 }, { 2, 0, 0x3C6, 0x0 },
+    { 1, 0, 0x3C7, 0x0 }, { 0, 0, 0x3C8, 0x0 }, { 2, 0, 0x3C9, 0x3CA }, { 1, 0, 0x3CB, 0x0 },
+    { 1, 0, 0x3CC, 0x0 }, { 1, 0, 0x3CD, 0x3CE }, { 1, 0, 0x3CF, 0x0 }, { 2, 0, 0x3D0, 0x0 },
+    { 1, 0, 0x3D1, 0x0 }, { 2, 0, 0x3D2, 0x3D3 }, { 3, 0, 0x3D4, 0x3D5 }, { 3, 0, 0x3D6, 0x0 },
+    { 3, 0, 0x3D7, 0x0 }, { 0, 0, 0x3D8, 0x0 }, { 3, 0, 0x3D9, 0x3DA }, { 1, 0, 0x3DB, 0x0 },
+    { 0, 0, 0x0, 0x0 }
+};
 
 extern void guLookAt(Mtx*, f32, f32, f32, f32, f32, f32, f32, f32, f32);
 extern void guPerspective(Mtx*, u16*, f32, f32, f32, f32, f32);
@@ -49,7 +114,9 @@ Gfx* func_80073100(Gfx*, Vtx*);
 s32 func_80073560(Gfx**);
 s32 func_80073F84(Gfx**);
 s32 func_80074040(Gfx**);
-void func_80074124(s32);
+void* func_80074124(s32);
+s16 func_8006D93C(u8*);
+s32 func_80076B2C(u8*, s32);
 void func_8007420C(Gfx**, f32, f32);
 s32 func_80074C20(Gfx**);
 s32 func_80074CE0(Gfx**);
@@ -96,25 +163,12 @@ void func_8007B52C();
 s32 func_8007BCA8(s32, s16);
 
 extern u8 fadeStatus;
-extern u8 D_800C6100;
-extern void* D_800C6104;
-extern Gfx D_800C6108[];
-extern s32 D_800C6158;
-extern Vp D_800C6168;
-extern Gfx D_800C6178;
-extern s16 D_800C61B8[];
-extern u8 D_800C61C0[];
-extern u8 D_800C61F8[];
-extern u8 D_800C6230[];
-extern char* D_800C624C[];
-extern unk72D90Struct2 D_800C6268[];
 extern f64 D_800CBA78;
 extern f64 D_800CBA80;
 extern f64 D_800CBA88;
 extern f64 D_800CBA90;
 extern f64 D_800CBAA0;
 extern f64 D_800CBAA8;
-extern char D_800CBAB0[];
 extern char D_800CBAD0[];
 extern char D_800CBAD8[];
 extern char D_800CBAE4[];
@@ -172,7 +226,7 @@ void func_800721D8(Gfx** arg0) {
         if (D_800C6100 == 254) {
             func_80072E1C(arg0);
         } else {
-            func_800728F4(arg0, 255, &D_800C6158);
+            func_800728F4(arg0, 255, D_800C6158);
         }
         return;
     }
@@ -327,7 +381,7 @@ s32 func_80072740(Gfx** arg0) {
         return 0;
     }
 
-    func_800728F4(arg0, 255.0f - D_800F5024 / D_800F3288 * 255.0f, &D_800C6158);
+    func_800728F4(arg0, 255.0f - D_800F5024 / D_800F3288 * 255.0f, D_800C6158);
 
     if (D_800F5024 >= D_800F3288) {
         return 0;
@@ -341,7 +395,7 @@ s32 func_8007281C(Gfx** arg0) {
         return 0;
     }
 
-    func_800728F4(arg0, D_800F5024 / D_800F3288 * 255.0f, &D_800C6158);
+    func_800728F4(arg0, D_800F5024 / D_800F3288 * 255.0f, D_800C6158);
 
     if (D_800F5024 >= D_800F3288) {
         return 0;
@@ -358,37 +412,18 @@ void func_800728F4(Gfx** arg0, u8 arg1, s32* arg2) {
     gDPFillRectangle((*arg0)++, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 }
 
-#if NON_MATCHING
-s32 func_800729C8(Gfx** arg0) {
-    if (D_800C6104 == NULL) {
-        return 0;
-    }
-
-    if (D_800F3288 != 0.0f) {
-        u8 var_a1 = 255.0f - D_800F5024 / D_800F3288 * 255.0f;
-
-        gSPDisplayList((*arg0)++, D_800C6108);
-        gDPSetCombineMode((*arg0)++, G_CC_MODULATEI_PRIM, G_CC_MODULATEI_PRIM);
-        gDPSetRenderMode((*arg0)++, G_RM_AA_XLU_SURF, G_RM_AA_XLU_SURF2);
-        gDPSetPrimColor((*arg0)++, 0, 0, 255, 255, 255, var_a1);
-
-        func_80072E5C(arg0, D_800F545C);
-
-        if (!(D_800F5024 >= D_800F3288)) {
-            return 1;
-        }
-    }
-
-    if (D_800F50B8 == 0) {
-        HuMemDirectFree(D_800C6104);
-    }
-
-    D_800C6104 = NULL;
+// decomp-permuter
+s32 func_800729C8(Gfx **arg0)
+{
+  f32 new_var;
+  if (D_800C6104 == 0)
+  {
     return 0;
+  }
+ do { if ((new_var = D_800F3288) != 0.0f) { u8 var_a1 = 255.0f - ((D_800F5024 / D_800F3288) * 255.0f); gSPDisplayList((*arg0)++, D_800C6108); gDPSetCombineMode((*arg0)++, G_CC_MODULATEI_PRIM, G_CC_MODULATEI_PRIM); gDPSetRenderMode((*arg0)++, G_RM_AA_XLU_SURF, G_RM_AA_XLU_SURF2); gDPSetPrimColor((*arg0)++, 0, 0, 255, 255, 255, var_a1); func_80072E5C(arg0, D_800F545C); if (!(D_800F5024 >= D_800F3288)) { return 1; } } if (D_800F50B8 == 0) { HuMemDirectFree(D_800C6104); } } while (0);
+  D_800C6104 = 0;
+  return 0;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/72D90", func_800729C8);
-#endif
 
 s32 func_80072B5C(Gfx** arg0) {
     gSPDisplayList((*arg0)++, D_800C6108);
@@ -540,17 +575,15 @@ Gfx* func_80073100(Gfx* arg0, Vtx* arg1) {
     return sp4C;
 }
 
-// Matches without --vr4300mul-off
-#ifdef NON_MATCHING
 s32 func_80073560(Gfx** arg0) {
     f32 temp_f22;
     f32 temp_f24;
-    s32 var_s8;
+    s32 var_s8; /* s32 on the N64: a framebuffer address */
     s16 i;
     s16 j;
 
     if (D_800F3288 - 1.0f <= D_800F5024) {
-        func_800728F4(arg0, 255, &D_800C6158);
+        func_800728F4(arg0, 255, D_800C6158);
         return 0;
     }
 
@@ -566,7 +599,7 @@ s32 func_80073560(Gfx** arg0) {
     var_s8 = D_800ECB1C;
 
     gDPSetColorImage((*arg0)++, G_IM_FMT_RGBA, G_IM_SIZ_16b, SCREEN_WIDTH, 0x003D0800);
-    gSPDisplayList((*arg0)++, &D_800C6178);
+    gSPDisplayList((*arg0)++, D_800C6178);
     gDPSetCombineMode((*arg0)++, G_CC_DECALRGB, G_CC_DECALRGB);
     gDPSetRenderMode((*arg0)++, G_RM_OPA_SURF, G_RM_OPA_SURF2);
 
@@ -599,9 +632,6 @@ s32 func_80073560(Gfx** arg0) {
 
     return 1;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/72D90", func_80073560);
-#endif
 
 s32 func_80073F84(Gfx** arg0) {
     if (D_800F3288 == 0.0f) {
@@ -642,7 +672,21 @@ s32 func_80074040(Gfx** arg0) {
     return 1;
 }
 
-INCLUDE_ASM("asm/nonmatchings/72D90", func_80074124);
+void* func_80074124(s32 arg0) {
+    u8* data;
+    u8* p;
+
+    data = DataRead(arg0);
+    p = data + (data[2] << 8) + data[3];
+    D_800F3744.unk_00 = (p[4] << 8) + p[5];
+    D_800F3744.unk_02 = (p[6] << 8) + p[7];
+    p = data + (p[2] << 8) + p[3];
+    D_800F3744.unk_04 = func_80023684(D_800F3744.unk_00 * D_800F3744.unk_02, 0x6D60);
+    func_80023A38(p, D_800F3744.unk_04, D_800F3744.unk_00 * D_800F3744.unk_02);
+    DataClose(data);
+    return data;
+}
+
 
 void func_8007420C(Gfx** arg0, f32 arg1, f32 arg2) {
     s16 var_t1;
@@ -652,7 +696,7 @@ void func_8007420C(Gfx** arg0, f32 arg1, f32 arg2) {
     f32 temp_f4;
 
     if (arg1 == 0) {
-        func_800728F4(arg0, 255, &D_800C6158);
+        func_800728F4(arg0, 255, D_800C6158);
         return;
     }
 
@@ -1349,7 +1393,62 @@ void GMesSprKill(unkCommonStruct0* arg0) {
     }
 }
 
+// unk_04 kept in a register across the "< 10" branch where retail reloads it (masked 8)
+#ifdef NON_MATCHING
+s32 func_800763CC(unkCommonStruct0* arg0, Gfx** arg1) {
+    f32 temp_f24;
+    f32 n;
+    f32 i;
+    s32 d;
+
+    n = 5.0f;
+
+    if (arg0->unk_04 == 0) {
+        GMesFontCreate(arg0, "START", 1, -12, 0);
+        func_80066DC4(arg0->unk_14[0], 0, 83, arg0->unk_58);
+    }
+
+    if (arg0->unk_04 > arg0->unk_06 || GMesCloseF != 0 || arg0->unk_01 == 4) {
+        GMesSprKill(arg0);
+        omSysPauseEnableFlag = 0;
+        return 0;
+    }
+
+    if (arg0->unk_04 == 10) {
+        PlaySound(0x41A);
+    }
+
+    if (arg0->unk_04 == 38) {
+        PlaySound(D_800C61B8[D_800C61C0[GwSystem.unk_1E]]);
+    }
+
+    if (arg0->unk_04 > arg0->unk_06 - 10) {
+        arg0->unk_01 = 2;
+        d = arg0->unk_04 + 10;
+        temp_f24 = d - arg0->unk_06;
+        func_800673B0(arg0->unk_14[0], 0, temp_f24 * 5.0f);
+
+        for (i = 0.0f; i < n; i++) {
+            func_80067354(arg0->unk_14[0], i + 1.0f, 1.0f - temp_f24 / 10.0f, 1.0f - temp_f24 / 10.0f);
+            func_8006752C(arg0->unk_14[0], i + 1.0f, 255.0f - temp_f24 * 25.5f);
+        }
+        return 1;
+    }
+
+    if (arg0->unk_04 < 10) {
+        func_800673B0(arg0->unk_14[0], 0, 180.0f - arg0->unk_04 * 20.0f);
+
+        for (i = 0.0f; i < n;) {
+            i++;
+            func_80067354(arg0->unk_14[0], i, arg0->unk_04 / 7.0f, arg0->unk_04 / 7.0f);
+        }
+    }
+
+    return 1;
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/72D90", func_800763CC);
+#endif
 
 s16 GMesFontMesCreate(unkCommonStruct0* arg0, char* arg1, u8 arg2, s16 arg3, s16 arg4) {
     s16 i;
@@ -1362,7 +1461,85 @@ s16 GMesFontMesCreate(unkCommonStruct0* arg0, char* arg1, u8 arg2, s16 arg3, s16
     return GMesFontCreate(arg0, arg1, arg2, arg3, arg4);
 }
 
+// register allocation: retail loads the unused arg4 into s3 and copies w per loop (masked 24)
+#ifdef NON_MATCHING
+s16 GMesFontCreate(unkCommonStruct0* arg0, void* arg1, u8 arg2, s16 arg3, s16 arg4) {
+    u16 hi;
+    s16 id;
+    u8* str;
+    u8* p;
+    s16 i;
+    s16 len;
+    s16 total;
+    s16 x;
+    s16 idx;
+    u8 w;
+    u32 v;
+
+    str = arg1;
+    len = func_8006D93C(str);
+
+    for (i = 0; i < 16; i++) {
+        if (arg0->unk_34[i] == -1 && arg0->unk_14[i] == -1) {
+            break;
+        }
+    }
+
+    id = arg0->unk_14[i] = func_80064EF4((u16)(len + 1), 5);
+
+    w = 15;
+    if (arg2 & 1) {
+        w = 22;
+    }
+
+    p = str;
+    for (total = 0; *p != 0; p++) {
+        if ((u32)(*p - 'a') < 26) {
+            total += 10;
+        } else if (*p == '\\') {
+            total += (w == 15) ? 4 : 8;
+        } else if ((*p == 0x10) | (*p == ' ')) {
+            total += (w == 15) ? 8 : 11;
+        } else {
+            total = w + total;
+        }
+    }
+
+    x = -arg3;
+    if (arg3 == -1) {
+        x = (w >> 1) - total / 2;
+    }
+
+    for (idx = 1; *str != 0; idx++) {
+        v = func_80076B2C(str, arg2);
+        hi = v >> 16;
+        func_80067208(id, idx, hi, v & 0xFF);
+        func_80066DC4(id, idx, x, (u32)(*str - 'a') < 26);
+        func_8006752C(id, idx, 255);
+        func_80067384(id, idx, 5);
+        func_80067480(id, idx, 0xFFFF);
+        func_800674BC(id, idx, 0x1008);
+        if ((u32)(*str - 'a') < 26) {
+            x += 10;
+        } else if (*str == '\\') {
+            x += (w != 15) ? 12 : 8;
+        } else if ((*str == 0x10) | (*str == ' ')) {
+            x += (w == 15) ? 8 : 11;
+        } else {
+            x = w + x;
+        }
+        func_80067598(id, idx, 0);
+        str += ((u8)(str[1] + 0x80) < 2) + 1;
+    }
+
+    func_80067208(id, 0, hi, 0);
+    func_800674BC(id, 0, 0x8000);
+    func_80067598(id, 0, -1);
+    return i;
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/72D90", GMesFontCreate);
+#endif
 
 s32 func_80076B2C(u8* arg0, s32 arg1) {
     u16 var_v0;
@@ -1656,26 +1833,20 @@ void func_8007767C(unkCommonStruct0* arg0, s32 arg1) {
     func_80067598(temp_v0_5, 1, 0);
 }
 
-INCLUDE_RODATA("asm/nonmatchings/72D90", D_800CBA40);
+const char D_800CBA40[] = "ALL";
 
-INCLUDE_RODATA("asm/nonmatchings/72D90", D_800CBA44);
+const char D_800CBA44[] = "DK";
 
-INCLUDE_RODATA("asm/nonmatchings/72D90", D_800CBA48);
+const char D_800CBA48[] = "WARIO";
 
-INCLUDE_RODATA("asm/nonmatchings/72D90", D_800CBA50);
+const char D_800CBA50[] = "YOSHI";
 
-INCLUDE_RODATA("asm/nonmatchings/72D90", D_800CBA58);
+const char D_800CBA58[] = "PEACH";
 
-INCLUDE_RODATA("asm/nonmatchings/72D90", D_800CBA60);
+const char D_800CBA60[] = "LUIGI";
 
-INCLUDE_RODATA("asm/nonmatchings/72D90", D_800CBA68);
+const char D_800CBA68[] = "MARIO";
 
-INCLUDE_RODATA("asm/nonmatchings/72D90", D_800CBA70);
-
-extern char D_800CBA70[]; //probably need to write the string directly in all funcs it occurs in
-
-//matches, but the string gives issues. likely due to what the comment explains on the symbol
-#ifdef NON_MATCHING
 s32 func_80077838(unkCommonStruct0* arg0, Gfx** arg1) {
     char sp18[] = "WINS\xC4"; // D_800CBA70
     f64 var_f2;
@@ -1766,9 +1937,6 @@ s32 func_80077838(unkCommonStruct0* arg0, Gfx** arg1) {
     return 1;
 }
 
-#else
-INCLUDE_ASM("asm/nonmatchings/72D90", func_80077838);
-#endif
 
 s32 func_80077FC4(unkCommonStruct0* arg0, Gfx** arg1) {
     char sp18[] = "LOSES";
@@ -1921,15 +2089,13 @@ s32 func_800789C0(unkCommonStruct0* arg0, Gfx** arg1) {
     return 1;
 }
 
-// Matches without --vr4300mul-off
-#ifdef NON_MATCHING
 s32 func_80078B6C(unkCommonStruct0* arg0, Gfx** arg1) {
     f32 temp_f22;
     u8 temp_s0;
     u8 temp_s2;
 
     if (arg0->unk_04 == 0) {
-        GMesFontCreate(arg0, D_800CBAB0, 0, -1, -1);
+        GMesFontCreate(arg0, "99", 0, -1, -1);
         func_80066DC4(arg0->unk_14[0], 0, arg0->unk_54, arg0->unk_58);
         func_8006752C(arg0->unk_14[0], 1, 230);
         func_8006752C(arg0->unk_14[0], 2, 230);
@@ -2006,9 +2172,6 @@ s32 func_80078B6C(unkCommonStruct0* arg0, Gfx** arg1) {
 
     return 1;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/72D90", func_80078B6C);
-#endif
 
 void func_80079078(s16 arg0) {
     // Checks if both sign bits are zero. Seems some kind of compiler optimization.
@@ -2028,7 +2191,76 @@ s32 func_80079104(unkCommonStruct0* arg0, Gfx** arg1) {
     return func_80079128(arg0, "GREAT\xC4", -1);
 }
 
-INCLUDE_ASM("asm/nonmatchings/72D90", func_80079128);
+s32 func_80079128(unkCommonStruct0* arg0, char* arg1, s16 arg2) {
+    f32 a;
+    f32 x;
+    f32 y;
+    f32 b;
+    s16 i;
+    u16 t;
+    f32 c;
+    f32 c2;
+    f32 nb;
+    f32 y2;
+
+    if (arg0->unk_04 == 0) {
+        GMesFontCreate(arg0, arg1, 1, -1, -1);
+        func_80066DC4(arg0->unk_14[0], 0, arg0->unk_54, arg0->unk_58);
+        arg0->unk_08 = strlen(arg1);
+        for (i = 0; i < arg0->unk_08; i++) {
+            func_800674BC(arg0->unk_14[0], i + 1, 0x8000);
+        }
+        omSysPauseEnableFlag = 1;
+    }
+
+    if (GMesCloseF != 0 || arg0->unk_01 == 4) {
+        GMesSprKill(arg0);
+        return 0;
+    }
+
+    if ((arg0->unk_04 == 20) & (arg2 != -1)) {
+        PlaySound(arg2);
+    }
+
+    if (arg0->unk_04 >= 69) {
+        arg0->unk_01 = 2;
+    }
+
+    if (arg0->unk_04 > 20 && arg0->unk_04 < 39) {
+        t = arg0->unk_04 - 20;
+        for (i = 0; i < arg0->unk_08; i++) {
+            func_80067354(arg0->unk_14[0], i + 1, func_800AEAC0((s16)t * 10) * 0.5f + 1.0, func_800AEAC0((s16)t * 10) * 0.5f + 1.0);
+        }
+    } else if (arg0->unk_04 < 16) {
+        for (i = 0; i < arg0->unk_08; i++) {
+            t = arg0->unk_04;
+            if (t >= 15) {
+                func_80066DC4(arg0->unk_14[0], i + 1, -(arg0->unk_08 * 22) / 2 + i * 22 + 12, 0);
+            } else {
+                a = func_800AEAC0(i * 10 + 430) * 100.0f;
+                c = arg0->unk_08 * -11 + 12;
+                if (!(i & 1)) {
+                    a = -a;
+                }
+                x = c - a;
+                y = -(func_800AEFD0(i * 20 + 430) * 50.0f);
+                func_80067480(arg0->unk_14[0], i + 1, 0x8000);
+                b = (15 - (s16)t) * 10 + func_800AEAC0((s16)t * 20 + 130 + i * 10) * 100.0f;
+                c2 = x + i * 22;
+                if (!(i & 1)) {
+                    nb = -b;
+                    x = c2 + nb;
+                } else {
+                    x = c2 + b;
+                }
+                y2 = y + func_800AEFD0((s16)t * 20 + 130 + i * 20) * 50.0f;
+                func_80066DC4(arg0->unk_14[0], i + 1, x, y2);
+            }
+        }
+    }
+
+    return 1;
+}
 
 s32 func_80079608(unkCommonStruct0* arg0, Gfx** arg1) {
     return func_80079128(arg0, "BRAVO\xC4", -1);
@@ -2218,7 +2450,78 @@ s32 func_80079B2C(unkCommonStruct0* arg0, Gfx** arg1) {
     return 1;
 }
 
-INCLUDE_ASM("asm/nonmatchings/72D90", func_8007A0FC);
+s32 func_8007A0FC(unkCommonStruct0* arg0, Gfx** arg1) {
+    f32 scale;
+    f32 alpha;
+    f32 dx;
+    s16 n;
+    s16 len0;
+    s16 len1;
+    s16 i;
+    s32 d;
+
+    n = 5;
+    len0 = strlen(D_800C624C[arg0->unk_08]);
+    len1 = strlen(D_800C624C[arg0->unk_0A]);
+
+    if (arg0->unk_04 == 0) {
+        GMesFontCreate(arg0, D_800C624C[arg0->unk_08], 1, -1, -1);
+        GMesFontCreate(arg0, D_800C624C[arg0->unk_0A], 1, -1, -1);
+        GMesFontCreate(arg0, "WINS\xC4", 1, -1, -1);
+        for (i = 0; i < len0; i++) {
+            func_80067354(arg0->unk_14[0], i + 1, 5.0f, 5.0f);
+        }
+        for (i = 0; i < len1; i++) {
+            func_80067354(arg0->unk_14[1], i + 1, 5.0f, 5.0f);
+        }
+        for (i = 0; i < n; i++) {
+            func_800674BC(arg0->unk_14[2], i + 1, 0x8000);
+        }
+        func_80066DC4(arg0->unk_14[0], 0, 288, arg0->unk_58);
+        func_80066DC4(arg0->unk_14[1], 0, 32, arg0->unk_58);
+        func_80066DC4(arg0->unk_14[2], 0, 160, arg0->unk_58 + 40.0f);
+    }
+
+    if (GMesCloseF != 0 || arg0->unk_01 == 4) {
+        GMesSprKill(arg0);
+        return 0;
+    }
+
+    if (arg0->unk_04 <= 20) {
+        scale = (20 - arg0->unk_04) * 0.4f + 1.0f;
+        alpha = arg0->unk_04 * 12;
+        dx = arg0->unk_04 * 10;
+        func_80066DC4(arg0->unk_14[0], 0, 320.0f - (dx + 32.0f), arg0->unk_58);
+        for (i = 0; i < len0; i++) {
+            func_8006752C(arg0->unk_14[0], i + 1, alpha);
+            func_80067354(arg0->unk_14[0], i + 1, scale, scale);
+        }
+        func_80066DC4(arg0->unk_14[1], 0, dx + 32.0f, arg0->unk_58);
+        for (i = 0; i < len1; i++) {
+            func_8006752C(arg0->unk_14[1], i + 1, alpha);
+            func_80067354(arg0->unk_14[1], i + 1, scale, scale);
+        }
+    } else if (arg0->unk_04 >= 31 && arg0->unk_04 <= 50) {
+        if (arg0->unk_04 <= 40) {
+            d = arg0->unk_04 - 30;
+            alpha = d * 25;
+            func_800673B0(arg0->unk_14[2], 0, d * 36);
+            for (i = 0; i < n; i++) {
+                func_80067480(arg0->unk_14[2], i + 1, 0x8000);
+                func_8006752C(arg0->unk_14[2], i + 1, alpha);
+            }
+        } else {
+            scale = func_800AEAC0((arg0->unk_04 - 40) * 18) + 1.0f;
+            for (i = 0; i < n; i++) {
+                func_80067354(arg0->unk_14[2], i + 1, scale, scale);
+            }
+        }
+    } else if (arg0->unk_04 >= 81) {
+        arg0->unk_01 = 2;
+    }
+
+    return 1;
+}
 
 s32 func_8007A7A4(unkCommonStruct0* arg0, Gfx** arg1) {
     f32 temp_f20;
@@ -2275,7 +2578,7 @@ s32 func_8007A978(unkCommonStruct0* arg0, Gfx** arg1) {
         GMesFontCreate(arg0, D_800C624C[arg0->unk_08], 1, -1, -1);
         GMesFontCreate(arg0, D_800C624C[arg0->unk_0A], 1, -1, -1);
         GMesFontCreate(arg0, D_800C624C[arg0->unk_0C], 1, -1, -1);
-        GMesFontCreate(arg0, D_800CBA70, 1, -1, -1);
+        GMesFontCreate(arg0, "WINS\xC4", 1, -1, -1);
 
         for (i = 0; i < temp_s6; i++) {
             func_80067354(arg0->unk_14[0], i + 1, 5.0f, 5.0f);
@@ -2372,7 +2675,7 @@ void func_8007B210(void) {
     sp10 = D_800E434C = func_80023668(6400);
 
     D_800E4344 = ((s32) D_800E4340 + 63) & ~63;
-    D_800E4350 = func_8002451C(0, &func_8007B420, 6);
+    D_800E4350 = func_8002451C(0, (&func_8007B420), 6);
 
     gSPDisplayList(sp10++, D_800C6108);
     func_80072C34(&sp10, D_800E4344);
@@ -2396,7 +2699,7 @@ void func_8007B310(void) {
     Gfx* sp10;
 
     sp10 = D_800E434C = func_80023668(6400);
-    D_800E4352 = func_8002451C(0, &func_8007B458, 0);
+    D_800E4352 = func_8002451C(0, (&func_8007B458), 0);
 
     gSPDisplayList(sp10++, D_800C6108);
     gDPSetCombineMode(sp10++, G_CC_MODULATEI_PRIM, G_CC_MODULATEI_PRIM);

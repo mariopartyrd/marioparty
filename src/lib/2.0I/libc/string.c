@@ -1,4 +1,4 @@
-#include "string.h"
+#include "libc/string.h"
 
 // TODO: this comes from a header
 #ident "$Revision: 1.23 $"

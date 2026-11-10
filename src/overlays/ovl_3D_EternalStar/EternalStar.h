@@ -89,7 +89,7 @@ extern Object* D_800F91E0_EternalStar[];
 // extern s16 D_800F8C38_EternalStar[];
 extern Object* D_800F91E4_EternalStar;
 // extern s16 D_800EE320;
-extern s32 D_800F91E8_EternalStar;
+extern s32 D_800F91E8_EternalStar; /* label windows (func_80045D84): pointers on the host */
 extern s32 D_800F91EC_EternalStar;
 extern s32 D_800F91F0_EternalStar;
 extern s32 D_800F91F4_EternalStar;

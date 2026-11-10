@@ -1,3 +1,6 @@
-#include "common.h"
+#include "PR/os_internal.h"
+#include "lib/2.0I/io/viint.h"
 
-INCLUDE_ASM("asm/nonmatchings/95E40", __osViGetCurrentContext);
+__OSViContext* __osViGetCurrentContext(void) {
+    return __osViCurr;
+}

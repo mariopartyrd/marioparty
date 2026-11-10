@@ -1,6 +1,18 @@
 #include "common.h"
 #include "engine/mallocblock.h"
 
+extern Gfx D_800C30C8[];
+
+
+extern u8 D_800C30C0;
+extern u8 D_800C30C1;
+extern u8 D_800C30C2;
+extern u8 D_800EC6DE;
+extern s16 D_800ED738;
+extern void* D_800F33C8;
+extern s16 D_800F3960;
+
+
 s16 func_8001B290(unk2C0C0StructC0*, u8*);
 s16 func_8001B608(unk2C0C0StructC0*, s16);
 void func_8001B6FC(unk2C0C0StructC0*);
@@ -10,6 +22,8 @@ s16 func_8001BF64(unk2C0C0StructC0*, u16, u8*);
 u8* func_8001C2E8(s32, u8*, u8*);
 u8* func_8001C378(u8*);
 void func_8001C3A8(unk2C0C0StructC0*, s16, s16, s16);
+void func_8001C75C(unk2C0C0Struct20*, u8*, unk2C0C0StructC0*, u16*);
+void func_8001C9F4(s8*, unk2C0C0StructA0*, unk2C0C0StructA0*, unk2C0C0StructA0*);
 s16 func_8001CBD8(unk2C0C0StructC0*, u8*, s16);
 void func_8001CD60(unk2C0C0StructC0*);
 void func_8003394C(unk2C0C0StructC0*);
@@ -519,12 +533,211 @@ u8* func_8001C378(u8* arg0) {
     return arg0;
 }
 
+// the unk_80 base load is emitted after the index multiply instead of before it (masked 2)
+#ifdef NON_MATCHING
+void func_8001C3A8(unk2C0C0StructC0* arg0, s16 arg1, s16 arg2, s16 arg3) {
+    u16 flags;
+    unk2C0C0Struct20* faces;
+    u8* p;
+    u8* next;
+    unk2C0C0StructA0* v;
+    s16 i;
+    s16 j;
+    s16 n;
+    s16 minX;
+    s16 minY;
+    s16 minZ;
+    s16 maxX;
+    s16 maxY;
+    s16 maxZ;
+    s16 c;
+    u32 temp;
+    unk2C0C0Struct30* entry;
+    unk2C0C0StructA0* box;
+
+    if (arg0->unk_6E == 0) {
+        return;
+    }
+    arg0->unk_80[arg1].unk_34 = func_80023684(arg3 * sizeof(unk2C0C0Struct20), D_800F502C);
+    faces = arg0->unk_80[arg1].unk_34;
+    p = (u8*)arg0->unk_44 + 0x10;
+    for (i = 0; i < arg2; i++) {
+        if (*p == 0x16) {
+            next = p + 0x2A;
+        } else if (*p == 0x35) {
+            next = p + 0x36;
+        } else {
+            next = p + 0xC;
+        }
+        p = next;
+    }
+    minX = minY = minZ = 0x7FFF;
+    maxX = maxY = maxZ = -0x8000;
+    flags = 0;
+    for (i = 0; i < arg3; i++) {
+        func_8001C75C(&faces[i], p, arg0, &flags);
+        if (*p == 0x16) {
+            n = 3;
+        } else if (*p == 0x35) {
+            n = 4;
+        } else {
+            n = 2;
+        }
+        for (j = 0; j < n; j++) {
+            v = &arg0->unk_78[faces[i].unk_04[j]];
+            c = v->unk_00;
+            if (minX > v->unk_00) {
+                minX = c;
+            }
+            if (maxX < c) {
+                maxX = c;
+            }
+            c = v->unk_02;
+            if (minY > v->unk_02) {
+                minY = c;
+            }
+            if (maxY < c) {
+                maxY = c;
+            }
+            c = v->unk_04;
+            if (minZ > v->unk_04) {
+                minZ = c;
+            }
+            if (maxZ < c) {
+                maxZ = c;
+            }
+        }
+        if (*p != 0x16) {
+            if (*p == 0x35) {
+                next = p + 0x36;
+            } else {
+                next = p + 0xC;
+            }
+        } else {
+            next = p + 0x2A;
+        }
+        p = next;
+    }
+    entry = &arg0->unk_80[arg1];
+    temp = entry->unk_14;
+    if (flags & 1) {
+        temp |= 0x10000;
+    }
+    entry->unk_14 = temp;
+    box = (unk2C0C0StructA0*)&arg0->unk_80[arg1].unk_4A;
+    box->unk_00 = minX;
+    box->unk_02 = minY;
+    box->unk_04 = minZ;
+    box = (unk2C0C0StructA0*)&arg0->unk_80[arg1].unk_50;
+    box->unk_00 = maxX;
+    box->unk_02 = maxY;
+    box->unk_04 = maxZ;
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/1B800", func_8001C3A8);
+#endif
+// register allocation of the two packed-word sums (masked 0, raw 4)
+#ifdef NON_MATCHING
+void func_8001C75C(unk2C0C0Struct20* arg0, u8* arg1, unk2C0C0StructC0* arg2, u16* arg3) {
+    s32* uv0;
+    s32* uv1;
+    s16 stride;
+    s16 translucent;
+    s16 i;
+    s16 tex;
+    s16 n;
 
+    switch (*arg1) {
+        case 0x35:
+            n = 4;
+            stride = 12;
+            break;
+        case 0x16:
+            n = 3;
+            stride = 12;
+            break;
+        default:
+            n = 2;
+            stride = 4;
+            break;
+    }
+    arg0->unk_00 = n;
+    arg1++;
+    uv0 = (s32*)arg0->unk_0C;
+    uv1 = (s32*)arg0->unk_1C;
+    for (i = 0, translucent = 0; i < n; i++) {
+        arg0->unk_04[i] = (arg1[0] << 8) + arg1[1];
+        if (arg1[3] != 0xFF) {
+            translucent = -1;
+        }
+        arg0->unk_2C[i] = arg1[3];
+        *uv0 = (arg1[4] << 24) + (arg1[5] << 16) + (arg1[6] << 8) + arg1[7];
+        uv0++;
+        *uv1 = (arg1[8] << 24) + (arg1[9] << 16) + (arg1[10] << 8) + arg1[11];
+        uv1++;
+        arg0->unk_04[i] = (arg1[0] << 8) + arg1[1];
+        arg1 += stride;
+    }
+    arg0->unk_30 = (arg1[0] << 8) + arg1[1];
+    if (translucent != 0) {
+        arg0->unk_00 |= 0x80;
+    }
+    func_8001C9F4((s8*)arg0->unk_01, &arg2->unk_78[arg0->unk_04[0]], &arg2->unk_78[arg0->unk_04[1]],
+                  &arg2->unk_78[arg0->unk_04[2]]);
+    if (arg2->unk_4C != NULL) {
+        *arg3 |= (u8)arg2->unk_A8[arg0->unk_30].unk_0C;
+        if (n == 2) {
+            arg0->unk_32 = -1;
+        } else {
+            arg0->unk_32 = tex = (arg1[2] << 8) + arg1[3];
+            if (tex != -1 &&
+                (arg2->unk_A4[tex].unk_0C->unk_18 == 3 || arg2->unk_A4[tex].unk_0C->unk_19 == 3)) {
+                *arg3 |= 1;
+            }
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/1B800", func_8001C75C);
+#endif
+void func_8001C9F4(s8* arg0, unk2C0C0StructA0* arg1, unk2C0C0StructA0* arg2, unk2C0C0StructA0* arg3) {
+    s16 ax;
+    s16 bx;
+    s16 ay;
+    s16 by;
+    s16 az;
+    s16 bz;
+    f32 nx;
+    f32 ny;
+    f32 nz;
+    f32 scale;
 
-INCLUDE_ASM("asm/nonmatchings/1B800", func_8001C9F4);
-
+    ax = arg1->unk_00 - arg2->unk_00;
+    bx = arg3->unk_00 - arg1->unk_00;
+    ay = arg1->unk_02 - arg2->unk_02;
+    by = arg3->unk_02 - arg1->unk_02;
+    az = arg1->unk_04 - arg2->unk_04;
+    bz = arg3->unk_04 - arg1->unk_04;
+    nx = ax * by - ay * bx;
+    ny = ay * bz - az * by;
+    nz = az * bx - ax * bz;
+    scale = 127.0f / sqrtf(nx * nx + ny * ny + nz * nz);
+    if (nx != 0.0f) {
+        arg0[0] = nx * scale;
+    } else {
+        arg0[0] = 0;
+    }
+    if (ny != 0.0f) {
+        arg0[1] = ny * scale;
+    } else {
+        arg0[1] = 0;
+    }
+    if (nz != 0.0f) {
+        arg0[2] = nz * scale;
+    } else {
+        arg0[2] = 0;
+    }
+}
 s16 func_8001CBD8(unk2C0C0StructC0* arg0, u8* arg1, s16 arg2) {
     s16 var_a0_2;
     s16 var_t0;
@@ -590,6 +803,72 @@ s16 func_8001CD00(u8* arg0) {
 }
 
 
-INCLUDE_ASM("asm/nonmatchings/1B800", func_8001CD60);
+void func_8001CD60(unk2C0C0StructC0* arg0) {
+    u8* view;
+    u8* back;
+    s32 size;
 
-INCLUDE_ASM("asm/nonmatchings/1B800", func_8001CEB4);
+    D_800EC6DE = 0;
+    view = func_8001C2E8(0x56494557 /* 'VIEW' */, arg0->unk_3C, arg0->unk_38);
+    if (view == NULL) {
+        return;
+    }
+    D_800EC6DE = 1;
+    back = func_8001C2E8(0x4241434B /* 'BACK' */, view + 8, view + (view[5] << 16) + (view[6] << 8) + view[7] + 8);
+    if (back == NULL) {
+        return;
+    }
+    D_800EC6DE = 2;
+    if (back[8] == 0) {
+        D_800EC6DE = 3;
+        D_800C30C0 = back[9];
+        D_800C30C1 = back[10];
+        D_800C30C2 = back[11];
+    } else {
+        D_800EC6DE = 4;
+        D_800ED738 = (back[11] << 8) + back[12];
+        D_800F3960 = (back[13] << 8) + back[14];
+        size = (back[16] << 16) + (back[17] << 8) + back[18];
+        D_800F33C8 = func_80023668(size);
+        func_80023A38(back + 19, D_800F33C8, size);
+    }
+}
+void func_8001CEB4(void) {
+    s16 cols;
+    s16 x;
+    s16 y;
+    s16 i;
+    s16 j;
+    s16 rows;
+
+    do { rows = 16; } while (0); // block found by decomp-permuter
+    if (D_800EC6DE != 4) {
+        return;
+    }
+    gSPDisplayList(D_800F37DC++, D_800C30C8);
+    for (y = 0; y < D_800F3960; y += 16) {
+        if (y >= D_800F3960 - 16) {
+            rows = D_800F3960 - y;
+        }
+        cols = 64;
+        for (x = 0; x < D_800ED738; x += 64) {
+            if (x >= D_800ED738 - 64) {
+                cols = D_800ED738 - x;
+            }
+            gDPSetTextureImage(D_800F37DC++, G_IM_FMT_RGBA, G_IM_SIZ_16b, D_800ED738,
+                               &((u16*)D_800F33C8)[x + y * D_800ED738]);
+            gDPSetTile(D_800F37DC++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 17, 0, G_TX_LOADTILE, 0, 0, 0, 0, 0, 0, 0);
+            gDPLoadSync(D_800F37DC++);
+            gDPLoadTile(D_800F37DC++, G_TX_LOADTILE, 0, 0, 64 << 2, rows << 2);
+            gDPPipeSync(D_800F37DC++);
+            gDPSetTile(D_800F37DC++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 17, 0, G_TX_RENDERTILE, 0, 0, 0, 0, 0, 0, 0);
+            gDPSetTileSize(D_800F37DC++, G_TX_RENDERTILE, 0, 0, 64 << 2, rows << 2);
+            for (j = 0; j < 240; j += D_800F3960) {
+                for (i = 0; i < 320; i += D_800ED738) {
+                    gSPTextureRectangle(D_800F37DC++, (x + i) << 2, (y + j) << 2, (x + i + cols) << 2,
+                                        (y + j + rows) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+                }
+            }
+        }
+    }
+}

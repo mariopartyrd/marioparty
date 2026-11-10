@@ -5,9 +5,10 @@ extern u16 ContDStkTrg[4];
 extern u16 ContBtn[4];
 
 extern u16 D_800F2CF0[4];
-extern u16 D_800F32A4[4];
+extern s16 D_800F32A4[4];
 extern u16 D_800F3396[4];
-extern u8 *ContStkY;
+extern s8 ContStkX[4];
+extern s8 ContStkY[4];
 extern u16 ContDStk[4];
 
 typedef struct mainfsTableHeader {
@@ -52,7 +53,7 @@ void func_80014220(void) {
     s16 i;
 
     u16 *ContDStk_ptr;
-    u16 *D_800F32A4_ptr;
+    s16 *D_800F32A4_ptr;
     u16 *D_800F2CF0_ptr;
     u16 *ContDStkTrg_ptr;
     u16 *D_800F3396_ptr;
@@ -72,7 +73,47 @@ void func_80014220(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/engine/data", func_8001429C);
+void func_8001429C(void) {
+    s16 i;
+    s32 sign;
+    u16 btn;
+    s8 stk;
+
+    for (i = 0; i < 4; ++i) {
+        D_800F3396[i] = ContDStk[i];
+        btn = ContBtn[i];
+        stk = ContStkX[i];
+        sign = (stk >> 7) | 1;
+        if ((stk * sign) - 30 > 0) {
+            if (sign > 0) {
+                btn = (btn & 0xFDFF) | 0x100;
+            } else {
+                btn = (btn & 0xFEFF) | 0x200;
+            }
+        }
+        stk = ContStkY[i];
+        sign = (stk >> 7) | 1;
+        if ((stk * sign) - 30 > 0) {
+            if (sign > 0) {
+                btn = (btn & 0xFBFF) | 0x800;
+            } else {
+                btn = (btn & 0xF7FF) | 0x400;
+            }
+        }
+        ContDStk[i] = btn;
+        ContDStkTrg[i] = btn & (btn ^ D_800F3396[i]);
+        if ((btn & 0xFFFF) != D_800F3396[i]) {
+            D_800F32A4[i] = 15;
+            D_800F2CF0[i] = ContDStkTrg[i];
+        } else if (D_800F32A4[i] > 0) {
+            D_800F32A4[i] = D_800F32A4[i] - 1;
+            D_800F2CF0[i] = ContDStkTrg[i];
+        } else {
+            D_800F32A4[i] = 5;
+            D_800F2CF0[i] = btn;
+        }
+    }
+}
 
 extern void *D_800D12F0; // FS ROM location
 extern u32 D_800D12F4; // Directory count

@@ -1,9 +1,11 @@
 #include "engine/process.h"
 
+
 void HuPrcInit(void) {
     processcnt = 0; //processcnt
     processtop = NULL;
 }
+
 
 void HuLinkProcess(Process** root, Process* process) {
     Process* src_process = *root;
@@ -64,6 +66,7 @@ Process* HuPrcCreate(process_func func, u16 priority, s32 stack_size, s32 extra_
     if (process_heap == NULL) {
         return NULL;
     }
+
 
     HuMemHeapInit(process_heap, alloc_size);
 
@@ -283,6 +286,7 @@ void HuPrcCall(s32 time) {
         }
     }
 }
+
 
 void* HuPrcMemAlloc(s32 size) {
     Process* process = HuPrcCurrentGet();

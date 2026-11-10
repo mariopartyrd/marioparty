@@ -3,6 +3,17 @@
 
 #define U32_MAX 0xFFFFFFFF
 
+s16 D_800FBA70_BuriedTreasure = 0;
+s16 D_800FBA72_BuriedTreasure = 60;
+s16 D_800FBA74_BuriedTreasure[4] = { 0, 1, 2, 3 };
+unkStructSize6 D_800FBA7C_BuriedTreasure[4] = {
+    { -120, -128, -200 },
+    { 168, -88, -200 },
+    { -168, 88, -200 },
+    { 120, 128, -200 },
+};
+f32 D_800FBA94_BuriedTreasure[4] = { 0.0f, 270.0f, 90.0f, 180.0f };
+
 void func_800F65E0_BuriedTreasure(void) {
     u8 temp_s0;
     unk_Struct00* temp_s0_2;
@@ -70,7 +81,6 @@ void func_800F692C_BuriedTreasure(omObjData* arg0) {
     SetFadeInTypeAndTime(0, 16);
 }
 
-#ifdef NON_MATCHING // matches but needs rodata (jtbl)
 void func_800F6958_BuriedTreasure(void) {
     switch (D_800FC020_BuriedTreasure) {
         case 0:
@@ -178,9 +188,6 @@ void func_800F6958_BuriedTreasure(void) {
 
     func_800F6D6C_BuriedTreasure();
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/overlays/ovl_03_BuriedTreasure/E8F60", func_800F6958_BuriedTreasure);
-#endif
 
 void func_800F6D6C_BuriedTreasure(void) {
     if (D_800FC026_BuriedTreasure < 0 && func_80072718() == 0) {
@@ -248,20 +255,6 @@ void func_800F6EC4_BuriedTreasure(omObjData* arg0) {
     func_800F87A8_BuriedTreasure(arg0)->unk_40 = D_800FC02C_BuriedTreasure++;
 }
 
-#ifdef NON_MATCHING // matches but needs rodata
-// rodata (func_800F7164_BuriedTreasure)
-extern const f64 D_800FBE88_BuriedTreasure; // 6.0
-extern const f64 D_800FBE90_BuriedTreasure; // 16.0
-extern const f64 D_800FBE98_BuriedTreasure; // 1.5
-extern const f64 D_800FBEA0_BuriedTreasure; // 8.0
-extern const f64 D_800FBEA8_BuriedTreasure; // 180.0
-extern const f64 D_800FBEB0_BuriedTreasure; // 360.0
-extern const f64 D_800FBEB8_BuriedTreasure; // 360.0
-extern const f64 D_800FBEC0_BuriedTreasure; // 360.0
-extern const f64 D_800FBEC8_BuriedTreasure; // 180.0
-extern const f64 D_800FBED0_BuriedTreasure; // 10.0
-extern const f64 D_800FBED8_BuriedTreasure; // 180.0
-
 void func_800F7164_BuriedTreasure(omObjData* arg0) {
     unkGlobalStruct_00* temp_s1;
     unkStructSize0x5C* temp_v0;
@@ -288,11 +281,11 @@ void func_800F7164_BuriedTreasure(omObjData* arg0) {
         temp_v0->unk_02 = 1;
         temp_v0->unk_06 = 14;
         temp_v0->unk_04 = 14;
-        temp_v0->unk_0C = D_800F2B7C[*arg0->unk_40].unk_24;
-        temp_v0->unk_10 = D_800F2B7C[*arg0->unk_40].unk_28;
-        temp_v0->unk_14 = D_800F2B7C[*arg0->unk_40].unk_2C;
+        temp_v0->unk_0C = D_800F2B7C[arg0->model[0]].unk_24;
+        temp_v0->unk_10 = D_800F2B7C[arg0->model[0]].unk_28;
+        temp_v0->unk_14 = D_800F2B7C[arg0->model[0]].unk_2C;
         temp_v0->unk_3C = 64;
-        temp_v0->unk_3E = arg0->unk_2C + 180.0f;
+        temp_v0->unk_3E = arg0->rot.z + 180.0f;
         temp_v0->unk_44 = 0;
         temp_v0->unk_46 = 0;
         temp_v0->unk_48 = 0;
@@ -301,7 +294,7 @@ void func_800F7164_BuriedTreasure(omObjData* arg0) {
         temp_v0->unk_50 = 2;
         temp_v0->unk_54 = 0;
 
-        D_800F2B7C[*arg0->unk_40].unk_20 &= ~4;
+        D_800F2B7C[arg0->model[0]].unk_20 &= ~4;
     }
 
     func_800184BC(arg0, 0);
@@ -315,7 +308,7 @@ void func_800F7164_BuriedTreasure(omObjData* arg0) {
     temp_v0->unk_1C = temp_v0->unk_10;
 
     if (D_800FC024_BuriedTreasure == 0) {
-        if (!(GwPlayer[temp_v0->unk_40].unk_06 & 1)) {
+        if (!(GwPlayer[temp_v0->unk_40].flags & 1)) {
             temp_v0_4 = func_80009C90(arg0, ContStkX[temp_s0], ContStkY[temp_s0]);
             var_s4 = temp_v0_4 >> 16;
             var_s5 = temp_v0_4;
@@ -343,35 +336,35 @@ void func_800F7164_BuriedTreasure(omObjData* arg0) {
         temp_v0->unk_4C = 8;
     }
 
-    temp_s1->unk_40 = (sqrtf(SQ(var_s4) + SQ(var_s5))) / D_800FBE88_BuriedTreasure;
-    if (temp_s1->unk_40 > D_800FBE90_BuriedTreasure) {
+    temp_s1->unk_40 = (sqrtf(SQ(var_s4) + SQ(var_s5))) / 6.0;
+    if (temp_s1->unk_40 > 16.0) {
         temp_s1->unk_40 = 16.0f;
     }
 
     if (temp_v0->unk_02 & 2) {
-        temp_s1->unk_40 *= D_800FBE98_BuriedTreasure;
+        temp_s1->unk_40 *= 1.5;
     }
 
     if (temp_v0->unk_4C == 0) {
-        D_800F2B7C[*arg0->unk_40].unk_4C = temp_s1->unk_40 / D_800FBEA0_BuriedTreasure;
+        D_800F2B7C[arg0->model[0]].unk_4C = temp_s1->unk_40 / 8.0;
     } else {
         if (temp_v0->unk_02 & 2) {
-            D_800F2B7C[*arg0->unk_40].unk_4C = 6.0f;
+            D_800F2B7C[arg0->model[0]].unk_4C = 6.0f;
         } else {
-            D_800F2B7C[*arg0->unk_40].unk_4C = 2.0f;
+            D_800F2B7C[arg0->model[0]].unk_4C = 2.0f;
         }
         temp_v0->unk_4C--;
     }
 
     if (temp_s1->unk_40 != 0.0) {
-        if (!(GwPlayer[temp_v0->unk_40].unk_06 & 1) && temp_v0->unk_08 != 0) {
-            var_f22 = func_800B0CD8(var_s4, -var_s5) + D_800FBEA8_BuriedTreasure;
+        if (!(GwPlayer[temp_v0->unk_40].flags & 1) && temp_v0->unk_08 != 0) {
+            var_f22 = func_800B0CD8(var_s4, -var_s5) + 180.0;
         } else {
             var_f22 = temp_v0->unk_3E;
         }
 
-        if (var_f22 >= D_800FBEB0_BuriedTreasure) {
-            var_f22 -= D_800FBEB0_BuriedTreasure;
+        if (var_f22 >= 360.0) {
+            var_f22 -= 360.0;
         }
 
         if (var_f22 != var_f20) {
@@ -380,8 +373,8 @@ void func_800F7164_BuriedTreasure(omObjData* arg0) {
                 if ((var_f22 - var_f20 > -180.0f && var_f22 - var_f20 < 0.0f) || (var_f22 - var_f20 > 180.0f && var_f22 - var_f20 > 0.0f)) {
                     var_f20 = var_f22;
                 }
-                if (D_800FBEB8_BuriedTreasure < var_f20) {
-                    var_f20 -= D_800FBEB8_BuriedTreasure;
+                if (360.0 < var_f20) {
+                    var_f20 -= 360.0;
                 }
             } else {
                 var_f20 -= 20.0f;
@@ -389,15 +382,15 @@ void func_800F7164_BuriedTreasure(omObjData* arg0) {
                     var_f20 = var_f22;
                 }
                 if (var_f20 < 0.0) {
-                    var_f20 += D_800FBEC0_BuriedTreasure;
+                    var_f20 += 360.0;
                 }
             }
         }
 
         temp_s1->unk_3C = var_f20;
-        arg0->unk_2C = var_f20 - D_800FBEC8_BuriedTreasure;
-        temp_v0->unk_0C -= func_800AEAC0(var_f22) * temp_s1->unk_40 / D_800FBED0_BuriedTreasure;
-        temp_v0->unk_10 -= func_800AEFD0(var_f22) * temp_s1->unk_40 / D_800FBED0_BuriedTreasure;
+        arg0->rot.z = var_f20 - 180.0;
+        temp_v0->unk_0C -= func_800AEAC0(var_f22) * temp_s1->unk_40 / 10.0;
+        temp_v0->unk_10 -= func_800AEFD0(var_f22) * temp_s1->unk_40 / 10.0;
     }
 
     if (var_s0 & 0x8000) {
@@ -440,7 +433,7 @@ void func_800F7164_BuriedTreasure(omObjData* arg0) {
                     D_800FC100_BuriedTreasure[(s16) temp_v1_2] += sp28;
                 }
 
-                temp_v0->unk_2C = arg0->unk_2C + D_800FBED8_BuriedTreasure;
+                temp_v0->unk_2C = arg0->rot.z + 180.0;
                 func_800F9C40_BuriedTreasure(1, temp_v0->unk_0C, temp_v0->unk_10, temp_v0->unk_0A);
             }
         }
@@ -458,17 +451,17 @@ void func_800F7164_BuriedTreasure(omObjData* arg0) {
     }
 
     func_800F8BB8_BuriedTreasure(temp_v0->unk_0C, temp_v0->unk_10, temp_v0->unk_14, &sp18);
-    arg0->unk_18 = sp18.x;
-    arg0->unk_1C = sp18.y;
-    arg0->unk_20 = sp18.z;
+    arg0->trans.x = sp18.x;
+    arg0->trans.y = sp18.y;
+    arg0->trans.z = sp18.z;
 
     if (temp_v0->unk_4E != 0) {
-        D_800F2B7C[*arg0->unk_40].unk_20 ^= 4;
+        D_800F2B7C[arg0->model[0]].unk_20 ^= 4;
 
         temp_v0->unk_4E--;
         if (temp_v0->unk_4E == 0) {
             temp_v0->unk_02 &= 0xFFFD;
-            D_800F2B7C[*arg0->unk_40].unk_20 &= ~4;
+            D_800F2B7C[arg0->model[0]].unk_20 &= ~4;
             temp_v0->unk_50 = 2;
         }
 
@@ -481,9 +474,6 @@ void func_800F7164_BuriedTreasure(omObjData* arg0) {
 
     func_80017DB0(arg0);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/overlays/ovl_03_BuriedTreasure/E8F60", func_800F7164_BuriedTreasure);
-#endif
 
 void func_800F7D50_BuriedTreasure(s16 arg0) {
     if (D_800FC1C0_BuriedTreasure[arg0].unk_00 >= 0) {

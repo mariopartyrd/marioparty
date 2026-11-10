@@ -16,7 +16,7 @@ void func_800F692C_FirstMap(void);
 void func_800F6E20_FirstMap(void);
 void func_800F77B4_FirstMap(void);
 void func_800F83D4_FirstMap(void);
-extern EventTableEntry D_800F87A8_FirstMap;
+extern EventTableEntry D_800F87A8_FirstMap[];
 
 extern s16 D_800F88A0_FirstMap;
 extern s8 D_800F384E;
@@ -29,7 +29,7 @@ extern Object* D_800F8894_FirstMap;
 extern Object* D_800F8898_FirstMap;
 extern Object* D_800F889C_FirstMap;
 extern GW_SYSTEM D_800ED154;
-extern s32 D_800F8788_FirstMap;
+extern s16 D_800F8788_FirstMap[];
 extern s16 D_800F8790_FirstMap[];
 typedef struct ovl_3E_HeapStruct {
 s16 unk0;
@@ -39,3 +39,5 @@ s16 unk6;
 } ovl_3E_HeapStruct;
 
 extern s32 D_800F87D8_FirstMap[];
+extern s32 D_800F87F8_FirstMap[];
+extern mystery_struct_ret_func_80048224* D_800F88A4_FirstMap;

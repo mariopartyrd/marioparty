@@ -10,4 +10,4 @@ void func_800F67F0_BowserVisitYoshiBoard(void);
 void func_800F7264_BowserVisitYoshiBoard(void);
 void func_800F744C_BowserVisitYoshiBoard(void);
 extern u8 D_800F7620_BowserVisitYoshiBoard;
-void func_800F7218_BowserVisitYoshiBoard(void);
+void func_800F7218_BowserVisitYoshiBoard(omObjData*);

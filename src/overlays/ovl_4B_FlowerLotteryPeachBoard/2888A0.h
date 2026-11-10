@@ -19,12 +19,10 @@ void func_800F72D4_FlowerLotteryPeachBoard(void);
 void func_800F7364_FlowerLotteryPeachBoard(void);
 
 extern s32 D_800F78EC_FlowerLotteryPeachBoard;
-extern s16 D_800F78EE_FlowerLotteryPeachBoard[];
 extern s32 D_800F78F0_FlowerLotteryPeachBoard;
-extern s16 D_800F78F2_FlowerLotteryPeachBoard;
 extern unkOvl4BStruct D_800ED178;
 extern u8 D_800F78E0_FlowerLotteryPeachBoard;
-extern void* D_800F77C0_FlowerLotteryPeachBoard;
-extern void* D_800F77C4_FlowerLotteryPeachBoard[];
-extern void* D_800F78E4_FlowerLotteryPeachBoard;
-extern void* D_800F78E8_FlowerLotteryPeachBoard;
+extern Object* D_800F77C0_FlowerLotteryPeachBoard;
+extern Object* D_800F77C4_FlowerLotteryPeachBoard[];
+extern Object* D_800F78E4_FlowerLotteryPeachBoard;
+extern Object* D_800F78E8_FlowerLotteryPeachBoard;
